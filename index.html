@@ -1,0 +1,2768 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quem Faz Festa - Marketplace Recife</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #087F70;
+      --primary-dark: #075E55;
+      --accent: #FF6B5E;
+      --festive: #FFC857;
+      --bg-color: #FAFAF7;
+      --text-main: #17212B;
+      --card-bg: #FFFFFF;
+      --input-bg: #F3F4F0;
+      --text-muted: #52606D;
+      --border-color: #E2E8F0;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(8, 127, 112, 0.08);
+      --danger: #EF4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 0;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url('background.png');
+      background-size: 90%; background-position: center; background-repeat: no-repeat;
+      opacity: 0.03; z-index: -1; pointer-events: none;
+    }
+
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 2rem; height: 80px;
+      display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 100;
+    }
+
+    .logo { cursor: pointer; display: flex; align-items: center; height: 100%; }
+    .logo-img { height: 95px; width: auto; display: block; object-fit: contain; }
+
+    .nav-tabs {
+      display: flex; gap: 8px; background-color: var(--input-bg);
+      padding: 4px; border-radius: 12px; border: 1px solid var(--border-color);
+      align-items: center; position: relative;
+    }
+
+    .nav-btn {
+      border: 1px solid transparent; background: transparent; padding: 8px 16px;
+      border-radius: 8px; font-weight: 600; font-size: 0.9rem;
+      color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+      position: relative; display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    .nav-btn.active {
+      background-color: var(--card-bg);
+      color: var(--primary);
+      border-color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .menu-icon-img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .saldo-icon-img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      vertical-align: middle;
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    .card-title-icon {
+      width: 35px;
+      height: 35px;
+      object-fit: contain;
+      vertical-align: sub;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .faq-title-icon {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      vertical-align: text-bottom;
+      display: inline-block;
+      margin-right: 0px;
+      transform: translateY(22px); 
+    }
+
+    .badge-notif {
+      background-color: var(--accent); color: white; border-radius: 10px;
+      padding: 2px 6px; font-size: 0.75rem; font-weight: 800; margin-left: 4px;
+    }
+
+    .dropdown-wrapper { position: relative; display: none; }
+
+    .btn-user-dropdown {
+      background-color: var(--card-bg); color: var(--primary);
+      border: 1px solid var(--border-color); padding: 8px 16px;
+      border-radius: 8px; font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; display: flex; align-items: center; gap: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .dropdown-menu {
+      display: none; position: absolute; right: 0; top: 110%;
+      background-color: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      width: 260px; overflow: hidden; z-index: 200;
+    }
+
+    .dropdown-menu.show { display: block; }
+
+    .dropdown-item {
+      width: 100%; padding: 12px 16px; text-align: left;
+      background: transparent; border: none; font-size: 0.9rem;
+      font-weight: 600; color: var(--text-main); cursor: pointer;
+      transition: background-color 0.2s; display: flex; align-items: center; gap: 8px;
+    }
+
+    .dropdown-item:hover { background-color: var(--input-bg); }
+    .dropdown-item.logout { color: var(--danger); border-top: 1px solid var(--border-color); }
+    .dropdown-item.logout:hover { background-color: #FEE2E2; }
+
+    .main-content { flex: 1; }
+
+    .container { max-width: 950px; margin: 30px auto 40px; padding: 0 20px; }
+
+    .home-hero { text-align: center; margin-bottom: 40px; }
+    .home-hero h1 { font-size: 2.3rem; font-weight: 700; line-height: 1.2; margin-bottom: 12px; color: var(--primary-dark); }
+    .home-hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+    .como-funciona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px; }
+
+    .card-publico {
+      background: var(--card-bg); border-radius: var(--radius);
+      padding: 28px; border: 1px solid var(--border-color); box-shadow: var(--shadow);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+
+    .card-publico h2 { font-size: 1.3rem; margin-bottom: 12px; display: flex; align-items: center; }
+    .card-publico ul { list-style: none; margin-bottom: 24px; }
+    .card-publico li { margin-bottom: 10px; font-size: 0.95rem; color: var(--text-muted); }
+
+    .btn-card {
+      width: 100%; padding: 14px; border-radius: 10px; font-weight: 700;
+      border: none; cursor: pointer; font-size: 1rem; transition: background-color 0.2s;
+    }
+    .btn-pais { background-color: var(--accent); color: white; }
+    .btn-pais:hover { background-color: #E05548; }
+    .btn-fornecedores { background-color: var(--primary); color: white; }
+    .btn-fornecedores:hover { background-color: var(--primary-dark); }
+
+    .dashboard-header {
+      background: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: var(--radius); padding: 24px 28px; box-shadow: var(--shadow);
+      margin-bottom: 24px; display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+
+    .cta-big {
+      background-color: var(--accent); color: white; border: none;
+      padding: 16px 28px; border-radius: 12px; font-weight: 700; font-size: 1.1rem;
+      cursor: pointer; box-shadow: 0 4px 14px rgba(255, 107, 94, 0.3);
+      transition: transform 0.2s, background-color 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .cta-big:hover { transform: translateY(-2px); background-color: #E05548; }
+
+    .card-dicas {
+      background-color: #FEFCE8; border: 1px solid #FEF08A;
+      border-radius: var(--radius); padding: 20px 24px; margin-top: 24px; color: #854D0E;
+    }
+
+    .filtros-categoria { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; }
+
+    .btn-filtro {
+      background: var(--card-bg); border: 1px solid var(--border-color);
+      padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;
+      color: var(--text-muted); cursor: pointer; white-space: nowrap;
+    }
+    .btn-filtro.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .filter-box-multi {
+      background-color: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .filter-box-multi h3 { font-size: 0.95rem; margin-bottom: 10px; color: var(--primary-dark); font-weight: 700; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 16px; }
+    .checkbox-item { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 600; cursor: pointer; color: var(--text-main); }
+    .checkbox-item input { width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary); }
+
+    .checkbox-termos-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      background-color: var(--input-bg);
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .checkbox-termos-box input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .checkbox-termos-box a {
+      color: var(--primary-dark);
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .card-atalho-liberados {
+      background-color: #ECFDF5; border: 1px solid #A7F3D0;
+      border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      color: #065F46; font-weight: 600; cursor: pointer;
+    }
+
+    .section-title { text-align: center; font-size: 1.5rem; margin-bottom: 24px; color: var(--primary-dark); }
+    .depoimentos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+    .card-depoimento { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; font-size: 0.95rem; }
+    .author-info { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; background-color: var(--festive); color: var(--text-main); display: flex; align-items: center; justify-content: center; font-weight: 700; }
+
+    .card-form {
+      background-color: var(--card-bg); border-radius: var(--radius);
+      padding: 32px; box-shadow: var(--shadow); border: 1px solid var(--border-color);
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; }
+    input, select, textarea {
+      width: 100%; padding: 12px 16px; border: 1px solid var(--border-color);
+      border-radius: 10px; font-size: 1rem; background-color: var(--input-bg); color: var(--text-main);
+    }
+
+    .checkbox-inline {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; margin-top: 6px;
+    }
+    .checkbox-inline input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
+
+    .btn-submit {
+      width: 100%; background-color: var(--primary); color: white; border: none;
+      padding: 16px; border-radius: 12px; font-size: 1.1rem; font-weight: 700;
+      cursor: pointer; transition: background-color 0.2s;
+    }
+    .btn-submit:hover { background-color: var(--primary-dark); }
+
+    .link-alternativo { text-align: center; margin-top: 16px; font-size: 0.9rem; color: var(--text-muted); }
+    .link-alternativo a { color: var(--accent); font-weight: 700; text-decoration: none; cursor: pointer; }
+
+    .fornecedor-bar {
+      background-color: var(--card-bg); border: 1px solid var(--border-color);
+      padding: 16px 20px; border-radius: 12px; display: flex;
+      justify-content: space-between; align-items: center; margin-bottom: 24px;
+    }
+
+    .mural-grid { display: flex; flex-direction: column; gap: 16px; }
+    
+    .categoria-grupo-titulo {
+      font-size: 1.2rem; font-weight: 700; color: var(--primary-dark);
+      margin-top: 12px; margin-bottom: -4px; border-bottom: 2px solid var(--festive);
+      padding-bottom: 4px; display: inline-block;
+    }
+
+    .festa-card {
+      background-color: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 16px;
+      scroll-margin-top: 100px;
+    }
+
+    .festa-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .tag-servico {
+      background-color: var(--festive); color: var(--text-main);
+      padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.85rem;
+    }
+
+    .festa-detalhes {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px; background-color: var(--input-bg); padding: 16px; border-radius: 10px;
+    }
+
+    .detalhe-item strong { display: block; font-size: 0.8rem; color: var(--text-muted); }
+    .detalhe-item span { font-weight: 600; font-size: 0.95rem; }
+    .detalhe-item.full-width { grid-column: 1 / -1; }
+
+    .festa-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 12px; border-top: 1px dashed var(--border-color);
+      gap: 12px; flex-wrap: wrap;
+    }
+
+    .btn-desbloquear {
+      background-color: var(--accent); color: white; border: none;
+      padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-desbloquear:hover { background-color: #E05548; }
+    .btn-desbloquear:disabled { background-color: #CBD5E1; cursor: not-allowed; }
+
+    .btn-ja-liberado {
+      background-color: #DCFCE7; color: #166534; border: 1px solid #86EFAC;
+      padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+    }
+
+    .whatsapp-revelado {
+      background-color: #DCFCE7; color: #166534; padding: 10px 16px;
+      border-radius: 10px; font-weight: 700; text-decoration: none; text-align: center; display: block;
+    }
+
+    .notif-card-item {
+      background: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 16px 20px; margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 8px;
+    }
+    .notif-header-line { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; }
+    .notif-tag { padding: 2px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.7rem; }
+    .tag-wpp { background-color: #DCFCE7; color: #15803D; }
+    .tag-email { background-color: #E0F2FE; color: #0369A1; }
+    .tag-site { background-color: #FEF3C7; color: #B45309; }
+
+    .btn-link-notif {
+      background-color: var(--primary); color: white; border: none;
+      padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      align-self: flex-start; margin-top: 4px; transition: background-color 0.2s;
+    }
+    .btn-link-notif:hover { background-color: var(--primary-dark); }
+
+    .pacotes-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px; margin-top: 24px;
+    }
+
+    .card-pacote {
+      background-color: var(--card-bg); border: 2px solid var(--border-color);
+      border-radius: var(--radius); padding: 20px; text-align: center;
+      box-shadow: var(--shadow); display: flex; flex-direction: column;
+      justify-content: space-between; position: relative; transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card-pacote:hover { transform: translateY(-4px); border-color: var(--primary); }
+    .card-pacote.destaque { border-color: var(--accent); }
+
+    .badge-destaque {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background-color: var(--accent); color: white; padding: 2px 12px;
+      border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .badge-novo {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background-color: var(--primary); color: white; padding: 2px 12px;
+      border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .pacote-nome { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+    .pacote-creditos { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+    .pacote-preco { font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 20px; }
+
+    .btn-comprar-pacote {
+      background-color: var(--primary); color: white; border: none; padding: 12px;
+      border-radius: 10px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: background-color 0.2s;
+    }
+    .btn-comprar-pacote:hover { background-color: var(--primary-dark); }
+    .btn-comprar-pacote.destaque { background-color: var(--accent); }
+    .btn-comprar-pacote.destaque:hover { background-color: #E05548; }
+
+    .btn-comprar-topo {
+      background-color: var(--accent); color: white; border: none; padding: 6px 14px;
+      border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; margin-left: 10px;
+    }
+
+    .stars-selector { display: flex; gap: 8px; font-size: 1.8rem; cursor: pointer; color: #CBD5E1; }
+    .stars-selector span.selected, .stars-selector span:hover { color: #F59E0B; }
+
+    .card-pratica, .card-politica-conteudo, .card-faq { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); max-width: 850px; margin: 0 auto 30px; }
+    .card-pratica h3 { font-size: 1.3rem; color: var(--primary-dark); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid var(--festive); padding-bottom: 8px; }
+    .card-pratica ul { list-style: none; }
+    .card-pratica li { margin-bottom: 16px; position: relative; padding-left: 28px; font-size: 1rem; color: var(--text-main); }
+    .card-pratica li::before { content: "✔"; position: absolute; left: 0; color: var(--primary); font-weight: bold; font-size: 1.1rem; }
+    .card-pratica li.alerta-contrato::before { content: "📄"; font-size: 1.1rem; }
+
+    .faq-item { margin-bottom: 20px; border-bottom: 1px dashed var(--border-color); padding-bottom: 16px; }
+    .faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .faq-item h4 { font-size: 1.05rem; color: var(--primary-dark); margin-bottom: 6px; font-weight: 700; }
+    .faq-item p { font-size: 0.95rem; color: var(--text-main); line-height: 1.6; }
+
+    .card-sobre { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); max-width: 850px; margin: 0 auto; }
+    .card-politica-conteudo h1 { font-size: 1.8rem; color: var(--primary-dark); margin-bottom: 8px; text-align: center; }
+    .card-politica-conteudo .subtitulo-documento { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+    .card-sobre h2, .card-politica-conteudo h2 { font-size: 1.25rem; color: var(--primary-dark); margin-top: 24px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; font-weight: 700; }
+    .card-sobre h2:first-of-type, .card-politica-conteudo h2:first-of-type { margin-top: 0; }
+    .card-sobre p, .card-politica-conteudo p { margin-bottom: 14px; color: var(--text-main); font-size: 0.95rem; line-height: 1.7; }
+    .card-sobre ul, .card-politica-conteudo ul { margin-bottom: 18px; padding-left: 20px; color: var(--text-main); }
+    .card-sobre li, .card-politica-conteudo li { margin-bottom: 8px; font-size: 0.93rem; line-height: 1.6; }
+
+    .cookie-banner {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      width: 90%; max-width: 850px; background-color: var(--card-bg);
+      border: 1px solid var(--primary); border-radius: 16px;
+      padding: 18px 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      display: none; justify-content: space-between; align-items: center;
+      gap: 16px; z-index: 9999; flex-wrap: wrap;
+    }
+
+    .cookie-banner-text { font-size: 0.88rem; color: var(--text-main); flex: 1; min-width: 280px; }
+    .cookie-banner-text a { color: var(--primary-dark); font-weight: 700; text-decoration: underline; cursor: pointer; }
+    .cookie-banner-btn {
+      background-color: var(--primary); color: white; border: none;
+      padding: 10px 20px; border-radius: 8px; font-weight: 700;
+      font-size: 0.9rem; cursor: pointer; transition: background-color 0.2s; white-space: nowrap;
+    }
+    .cookie-banner-btn:hover { background-color: var(--primary-dark); }
+
+    footer {
+      background-color: var(--card-bg);
+      border-top: 1px solid var(--border-color);
+      padding: 28px 20px;
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .footer-links a {
+      color: var(--primary-dark);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .simulacao-wpp-modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;
+    }
+    .simulacao-wpp-card {
+      background: #E5DDD5; width: 90%; max-width: 450px; border-radius: 16px;
+      overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .wpp-header { background: #075E54; color: white; padding: 16px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+    .wpp-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .wpp-bubble { background: white; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-shadow: 0 1px 2px rgba(0,0,0,0.1); color: var(--text-main); }
+
+    .modal-acoes-duplas { display: flex; gap: 10px; }
+    .btn-modal-cancelar { background-color: #94A3B8; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; flex: 1; }
+    .btn-modal-confirmar { background-color: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; flex: 1; }
+
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+
+    .btn-ver-mural-completo {
+      width: 100%; background-color: transparent; border: 2px dashed var(--primary);
+      color: var(--primary); padding: 14px; border-radius: 12px; font-weight: 700;
+      font-size: 1rem; cursor: pointer; margin-top: 12px; transition: all 0.2s; text-align: center;
+    }
+    .btn-ver-mural-completo:hover { background-color: var(--input-bg); }
+
+    @media (max-width: 650px) {
+      .como-funciona-grid, .depoimentos-grid, .form-row { grid-template-columns: 1fr; }
+      .footer-links { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo" onclick="trocarAba('home')">
+      <img src="logo.png" alt="Quem Faz Festa Logo" class="logo-img">
+    </div>
+    
+    <div class="nav-tabs">
+      <button class="nav-btn active" id="btn-nav-home" onclick="trocarAba('home')">Início</button>
+      <button class="nav-btn" id="btn-nav-login" onclick="trocarAba('login')">Entrar</button>
+      <button class="nav-btn" id="btn-nav-pais" onclick="trocarAba('cadastro-pais')">Área dos Pais</button>
+      <button class="nav-btn" id="btn-nav-fornecedores" onclick="trocarAba('cadastro-fornecedor')"><img src="negócios.png" alt="Área do Fornecedor" class="menu-icon-img"> Área do Fornecedor</button>
+      
+      <button class="nav-btn" id="btn-nav-criar" style="display:none;" onclick="trocarAba('criar-festa')">Criar Festa</button>
+      <button class="nav-btn" id="btn-nav-mural" style="display:none;" onclick="trocarAba('mural')">Mural de Oportunidades</button>
+      <button class="nav-btn" id="btn-nav-notificacoes" style="display:none;" onclick="trocarAba('notificacoes')"><img src="notificações.png" alt="Notificações" class="menu-icon-img"> Notificações <span id="badgeNotifCount" class="badge-notif">0</span></button>
+
+      <div class="dropdown-wrapper" id="userDropdownWrapper">
+        <button class="btn-user-dropdown" onclick="toggleUserDropdown(event)">
+          <span id="nav-user-name">Usuário</span> ▾
+        </button>
+        <div class="dropdown-menu" id="userDropdownMenu">
+          <button class="dropdown-item" onclick="trocarAba('minha-conta'); closeUserDropdown();"><img src="minhaconta.png" alt="Minha Conta" class="menu-icon-img"> Minha Conta</button>
+          <button class="dropdown-item" id="dropdown-item-historico" onclick="trocarAba('historico'); closeUserDropdown();"><img src="balão.png" alt="Festas Ativas" class="menu-icon-img"> Festas Ativas</button>
+          <button class="dropdown-item" id="dropdown-item-avaliar" onclick="trocarAba('confirmar-festa'); closeUserDropdown();"><img src="check.png" alt="Confirmar / Avaliar" class="menu-icon-img"> Confirmar / Avaliar</button>
+          <button class="dropdown-item" onclick="trocarAba('historico-concluidas'); closeUserDropdown();"><img src="arquivo.png" alt="Histórico de Concluídas" class="menu-icon-img"> Histórico de Concluídas</button>
+          <button class="dropdown-item" onclick="trocarAba('melhores-praticas'); closeUserDropdown();"><img src="dicas.png" alt="Melhores Práticas" class="menu-icon-img"> Melhores Práticas</button>
+          <button class="dropdown-item" onclick="trocarAba('faq'); closeUserDropdown();"><img src="dúvida.png" alt="Dúvidas Frequentes" class="menu-icon-img"> Dúvidas Frequentes (FAQ)</button>
+          <button class="dropdown-item" onclick="trocarAba('sobre-plataforma'); closeUserDropdown();"><img src="info.png" alt="Sobre & Responsabilidade" class="menu-icon-img"> Sobre & Responsabilidade</button>
+          <button class="dropdown-item" id="dropdown-item-comprar" style="display:none;" onclick="trocarAba('comprar-creditos'); closeUserDropdown();">💳 Comprar Créditos</button>
+          <button class="dropdown-item logout" onclick="fazerLogout()"><img src="sair.png" alt="Sair" class="menu-icon-img"> Sair da Conta</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <!-- TELA 0: HOME PÚBLICA -->
+    <section id="view-home" class="view-section active">
+      <div class="container">
+        <div class="home-hero">
+          <h1>Conectamos a festa do seu filho a Quem Faz Festa em Recife e Região</h1>
+          <p>A forma mais fácil de quem está organizando uma festa encontrar Quem Faz, e de fornecedores encontrarem novos clientes em Recife e Região Metropolitana.</p>
+        </div>
+
+        <div class="como-funciona-grid">
+          <div class="card-publico">
+            <div>
+              <h2><img src="balão.png" alt="Balão" class="card-title-icon"> Para Contratantes</h2>
+              <ul>
+                <li>✅ <strong>100% Gratuito:</strong> Você não paga nada para publicar.</li>
+                <li>✅ <strong>Prático:</strong> Cadastre-se e envie seu pedido em instantes.</li>
+                <li>✅ <strong>Sem Spam:</strong> Apenas até 4 fornecedores te chamam no WhatsApp.</li>
+              </ul>
+            </div>
+            <button class="btn-card btn-pais" onclick="trocarAba('cadastro-pais')">Cadastrar para Publicar Festa</button>
+          </div>
+
+          <div class="card-publico">
+            <div>
+              <h2><img src="negócios.png" alt="Negócios" class="card-title-icon"> Para Fornecedores</h2>
+              <ul>
+                <li>✅ <strong>Ganhe 3 Créditos Grátis:</strong> Teste o Mural de Oportunidades no cadastro (1 crédito por oportunidade).</li>
+                <li>✅ <strong>Qualifique:</strong> Veja data, hora, bairro, orçamento e outras informações antes de liberar o contato.</li>
+                <li>✅ <strong>Cashback:</strong> Cashback de 50% exatos em créditos comprados se não fechar contrato.</li>
+              </ul>
+            </div>
+            <button class="btn-card btn-fornecedores" onclick="trocarAba('cadastro-fornecedor')">Cadastrar & Ganhar Créditos</button>
+          </div>
+        </div>
+
+        <h2 class="section-title">O que dizem sobre a plataforma</h2>
+        <div class="depoimentos-grid">
+          <div class="card-depoimento">
+            <p>"Achei a decoradora em poucas horas. Apenas 2 me chamaram no WhatsApp com preços ótimos."</p>
+            <div class="author-info">
+              <div class="avatar">CP</div>
+              <div><strong>Camila Peixoto</strong><br><small style="color:var(--text-muted)">Mãe • Boa Viagem</small></div>
+            </div>
+          </div>
+          <div class="card-depoimento">
+            <p>"Sou fotógrafo e libero direto o contato dos pais que têm data certa. Já fechei 4 festas em Olinda!"</p>
+            <div class="author-info">
+              <div class="avatar">MA</div>
+              <div><strong>Matheus Andrade</strong><br><small style="color:var(--text-muted)">Fotógrafo • Olinda</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA INICIAL DOS PAIS (LOGADOS) -->
+    <section id="view-home-pais" class="view-section">
+      <div class="container">
+        <div class="dashboard-header">
+          <div>
+            <h1 style="font-size: 1.8rem; color: var(--primary-dark);">Olá, <span class="nome-usuario-boasvindas">Camila</span>! 👋</h1>
+            <p style="color: var(--text-muted);">Vamos organizar a próxima festa?</p>
+          </div>
+          <button class="cta-big" onclick="trocarAba('criar-festa')"><img src="balão.png" alt="Criar Festa" class="menu-icon-img"> Publicar Nova Festa</button>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+          <h2 style="font-size: 1.3rem; color: var(--primary-dark);">Resumo das Suas Festas Ativas</h2>
+          <button class="btn-filtro" onclick="simularLembreteWpp('pai')" style="background:#DCFCE7; color:#166534; border:none;">📱 Simular Lembrete WhatsApp</button>
+        </div>
+        <div id="resumoFestasPaisContainer" class="mural-grid"></div>
+
+        <div class="card-dicas">
+          <h3 style="font-size: 1rem; margin-bottom: 6px; font-weight: 700;">💡 Dica para obter os melhores orçamentos:</h3>
+          <p style="font-size: 0.95rem;">Mantenha seu WhatsApp atento! Até 4 fornecedores entrarão em contato diretamente com você.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA INICIAL DOS FORNECEDORES (LOGADOS) -->
+    <section id="view-home-fornecedor" class="view-section">
+      <div class="container">
+        <div class="fornecedor-bar">
+          <div><span>Profissional: <strong class="nome-usuario-boasvindas">Studio Foto & Arte</strong></span></div>
+          <div style="display:flex; align-items:center; font-weight:700; color:var(--primary); font-size:1.1rem;">
+            <img src="créditos.png" alt="Créditos" class="saldo-icon-img"> Saldo: <span class="saldo-creditos-val">12</span> Créditos
+            <button class="btn-comprar-topo" onclick="trocarAba('comprar-creditos')">+ Comprar Créditos</button>
+          </div>
+        </div>
+
+        <div class="card-atalho-liberados" id="cardAtalhoPendencias" onclick="trocarAba('confirmar-festa')">
+          <span>📋 Você possui <strong id="qtdContatosLiberados">0</strong> oportunidades para confirmar fechamento e avaliar o cliente.</span>
+          <span style="font-size:0.9rem; text-decoration:underline;">Confirmar / Avaliar →</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+          <div>
+            <h1 style="font-size:1.8rem; color:var(--primary-dark);">Publicações Recentes do Dia</h1>
+            <p style="color:var(--text-muted)">Confira as últimas oportunidades de hoje (máximo de 3 por categoria).</p>
+          </div>
+          <button class="btn-filtro" onclick="simularLembreteWpp('fornecedor')" style="background:#DCFCE7; color:#166534; border:none;">📱 Simular Lembrete WhatsApp</button>
+        </div>
+
+        <div class="filtros-categoria" id="filtrosCategoriaBar">
+          <button class="btn-filtro active" onclick="filtrarMural('Todos', this)">Todas as Categorias</button>
+          <button class="btn-filtro" id="btnMinhaCategoriaFiltro" onclick="filtrarMinhaCategoria(this)">Minha Categoria</button>
+          <button class="btn-filtro" onclick="filtrarMural('Decoração Completa', this)">Decoração</button>
+          <button class="btn-filtro" onclick="filtrarMural('Buffet & Salgados', this)">Buffet</button>
+          <button class="btn-filtro" onclick="filtrarMural('Bolo', this)">Bolo</button>
+          <button class="btn-filtro" onclick="filtrarMural('Doces', this)">Doces</button>
+          <button class="btn-filtro" onclick="filtrarMural('Brinquedos', this)">Brinquedos</button>
+          <button class="btn-filtro" onclick="filtrarMural('Espaço para festa', this)">Espaço</button>
+          <button class="btn-filtro" onclick="filtrarMural('DJ/Música/Banda', this)">Música/DJ</button>
+          <button class="btn-filtro" onclick="filtrarMural('Personagem', this)">Personagem</button>
+          <button class="btn-filtro" onclick="filtrarMural('Lembrancinhas/Personalizados', this)">Lembrancinhas</button>
+          <button class="btn-filtro" onclick="filtrarMural('Convites', this)">Convites</button>
+          <button class="btn-filtro" onclick="filtrarMural('Palhaço', this)">Palhaço</button>
+          <button class="btn-filtro" onclick="filtrarMural('Fotografia & Filmagem', this)">Fotografia</button>
+          <button class="btn-filtro" onclick="filtrarMural('Recreação & Animação', this)">Recreação</button>
+        </div>
+
+        <div class="mural-grid" id="muralDestaqueContainer"></div>
+
+        <button class="btn-ver-mural-completo" onclick="trocarAba('mural')">🔍 Ver Mural Completo de Oportunidades →</button>
+      </div>
+    </section>
+
+    <!-- TELA CENTRAL DE NOTIFICAÇÕES -->
+    <section id="view-notificacoes" class="view-section">
+      <div class="container">
+        <div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h1 style="font-size:1.8rem; color:var(--primary-dark);">Central de Notificações</h1>
+            <p style="color:var(--text-muted)">Histórico de avisos do site, mensagens por E-mail e WhatsApp.</p>
+          </div>
+        </div>
+        <div id="listaNotificacoesContainer"></div>
+      </div>
+    </section>
+
+    <!-- TELA DE CONFIRMAÇÃO & AVALIAÇÃO -->
+    <section id="view-confirmar-festa" class="view-section">
+      <div class="container" style="max-width: 650px;">
+        <div class="card-form">
+          <h2 id="tituloAvaliacao" style="margin-bottom:8px;">Confirmar Fechamento e Avaliar</h2>
+          <p id="subtituloAvaliacao" style="color:var(--text-muted); margin-bottom:24px;">Confirme se a negociação foi concluída. Caso não feche, você recebe exatos 50% dos créditos comprados de volta!</p>
+
+          <form id="formConfirmacaoAvaliacao">
+            <div class="form-group" id="grupoSelecioneFestaOuFornecedor">
+              <label id="labelSelecione">Selecione o Fornecedor Contratado *</label>
+              <select id="selectFestaFornecedor" required></select>
+            </div>
+
+            <div class="form-group">
+              <label>Qual foi o resultado da negociação? *</label>
+              <select id="statusFechamento" required>
+                <option value="fechado">✅ Contrato Fechado com Sucesso</option>
+                <option value="nao_fechado">❌ Não Fechamos Negócio (Ganhe 50% de Cashback em Créditos Comprados)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Nota de Atendimento *</label>
+              <div class="stars-selector" id="starAtendimento">
+                <span onclick="setStars('starAtendimento', 1)">★</span>
+                <span onclick="setStars('starAtendimento', 2)">★</span>
+                <span onclick="setStars('starAtendimento', 3)">★</span>
+                <span onclick="setStars('starAtendimento', 4)">★</span>
+                <span onclick="setStars('starAtendimento', 5)" class="selected">★</span>
+              </div>
+            </div>
+
+            <div class="form-group" id="grupoPrestacaoServico">
+              <label>Nota da Prestação do Serviço *</label>
+              <div class="stars-selector" id="starServico">
+                <span onclick="setStars('starServico', 1)">★</span>
+                <span onclick="setStars('starServico', 2)">★</span>
+                <span onclick="setStars('starServico', 3)">★</span>
+                <span onclick="setStars('starServico', 4)">★</span>
+                <span onclick="setStars('starServico', 5)" class="selected">★</span>
+              </div>
+            </div>
+
+            <div class="form-group" id="grupoComentarioContainer">
+              <label>Comentário (Opcional)</label>
+              <textarea id="comentarioAvaliacao" rows="3" placeholder="Escreva seu comentário sobre a experiência..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Enviar Avaliação e Confirmar</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA DE HISTÓRICO DE FESTAS CONCLUÍDAS -->
+    <section id="view-historico-concluidas" class="view-section">
+      <div class="container">
+        <div class="card-form">
+          <h2 style="margin-bottom:8px;">📂 Histórico de Festas Concluídas</h2>
+          <p style="color:var(--text-muted); margin-bottom:20px;">Registro de trabalhos finalizados e avaliados no sistema.</p>
+          <div id="historicoConcluidasContainer" class="mural-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA DE MELHORES PRÁTICAS -->
+    <section id="view-melhores-praticas" class="view-section">
+      <div class="container">
+        <div style="text-align:center; margin-bottom: 32px;">
+          <h1 style="font-size:2rem; color:var(--primary-dark);">💡 Guia de Melhores Práticas & Negociação</h1>
+          <p style="color:var(--text-muted)">Recomendações exclusivas para garantir a melhor experiência na plataforma.</p>
+        </div>
+
+        <div id="praticasContainerPais" class="card-pratica" style="display:none;">
+          <h3><img src="balão.png" alt="Balão" class="menu-icon-img"> Recomendações Importantes para Pais & Mães</h3>
+          <ul>
+            <li class="alerta-contrato"><strong>Contrate apenas com contrato formalizado:</strong> Nunca realize pagamentos ou acerte serviços verbalmente. Exija sempre um contrato assinado especificando a data, horário, itens inclusos, valores e políticas de cancelamento.</li>
+            <li><strong>Responda prontamente aos fornecedores:</strong> Os profissionais investem créditos para atender você rapidamente. Responda com cortesia mesmo se decidir não fechar.</li>
+            <li><strong>Detalhe as informações da festa:</strong> Ao conversar pelo WhatsApp, informe o endereço exato, horários de início e término, e a quantidade estimada de convidados.</li>
+            <li><strong>Verifique fotos e referências:</strong> Peça para ver fotos de trabalhos anteriores, referências e avaliações antes de contratar.</li>
+            <li><strong>Confirme e avalie no site:</strong> Assim que contratar ou decidir não fechar, acesse o painel e avalie o atendimento para ajudar a manter a comunidade segura.</li>
+          </ul>
+        </div>
+
+        <div id="praticasContainerFornecedor" class="card-pratica" style="display:none;">
+          <h3><img src="negócios.png" alt="Fornecedores" class="menu-icon-img"> Recomendações Importantes para Fornecedores</h3>
+          <ul>
+            <li><strong>Primeiro contato impactante:</strong> Apresente-se cordialmente pelo WhatsApp, informe seu nome/empresa, mencione a festa em questão e envie sua proposta de forma clara.</li>
+            <li><strong>Transparência nos orçamentos:</strong> Detalhe item por item o que está incluso no pacote para evitar mal-entendidos posteriores.</li>
+            <li><strong>Trabalhe com contratos formais:</strong> Envie um contrato formalizado com todas as regras de prestação do serviço, sinal e prazos de cancelamento para assinatura do cliente.</li>
+            <li><strong>Agilidade e profissionalismo:</strong> Responda às dúvidas do cliente com presteza, demonstrando empatia e atenção às necessidades da festa.</li>
+            <li><strong>Solicite a confirmação:</strong> Lembre o cliente de acessar o site para confirmar o fechamento e deixar uma boa avaliação do seu trabalho.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA DE DÚVIDAS E PERGUNTAS FREQUENTES (FAQ) -->
+    <section id="view-faq" class="view-section">
+      <div class="container">
+        <div style="text-align:center; margin-bottom: 32px;">
+          <h1 style="font-size:2rem; color:var(--primary-dark);"><img src="dúvida.png" alt="Dúvidas" class="faq-title-icon"> Dúvidas e Perguntas Frequentes (FAQ)</h1>
+          <p style="color:var(--text-muted)">Tire suas dúvidas sobre o funcionamento do Quem Faz Festa.</p>
+        </div>
+
+        <div class="card-faq">
+          <h3 style="font-size: 1.3rem; color: var(--primary-dark); margin-bottom: 20px; border-bottom: 2px solid var(--festive); padding-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+            <img src="balão.png" alt="Contratantes" class="menu-icon-img"> Perguntas Frequentes — Contratantes (Pais / Mães)
+          </h3>
+
+          <div class="faq-item">
+            <h4>1. Pago algum valor para cadastrar e publicar minha festa?</h4>
+            <p>Não! A plataforma é <strong>100% gratuita</strong> para contratantes. Você pode criar sua conta e publicar seus pedidos de orçamento sem pagar absolutamente nada.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>2. Quantos fornecedores entrarão em contato comigo?</h4>
+            <p>Para evitar excesso de mensagens e spam no seu WhatsApp, limitamos o acesso a no máximo <strong>4 fornecedores qualificados</strong> por publicação.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>3. Não sei o tema ou o horário exato da festa. Posso publicar assim mesmo?</h4>
+            <p>Sim! Ao preencher o formulário de publicação da festa, você pode marcar a opção "Ainda não definido" nos campos de tema ou horário.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>4. Como faço para avaliar o atendimento de um fornecedor?</h4>
+            <p>No menu superior, acesse <strong>Confirmar / Avaliar</strong>, selecione a festa e informe a nota e seu comentário sobre a experiência com o profissional.</p>
+          </div>
+        </div>
+
+        <div class="card-faq">
+          <h3 style="font-size: 1.3rem; color: var(--primary-dark); margin-bottom: 20px; border-bottom: 2px solid var(--festive); padding-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+            <img src="negócios.png" alt="Fornecedores" class="menu-icon-img"> Perguntas Frequentes — Fornecedores (Profissionais)
+          </h3>
+
+          <div class="faq-item">
+            <h4>1. Como funcionam os créditos de boas-vindas no cadastro?</h4>
+            <p>Ao se cadastrar como fornecedor, você ganha gratuitamente créditos para testar a plataforma. Os primeiros 100 cadastrados ganham <strong>12 créditos grátis</strong> promocionais de lançamento.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>2. Como funciona o Cashback de 50% em créditos?</h4>
+            <p>Se você desbloquear o contato de um cliente usando créditos comprados e a negociação não for fechada, basta acessar a aba "Confirmar / Avaliar" e registrar o não fechamento. Você receberá <strong>50% dos créditos pagos de volta</strong> automaticamente em sua conta.</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>3. Por que algumas oportunidades custam mais créditos que outras?</h4>
+            <p>O custo de desbloqueio varia de acordo com a faixa do orçamento total informado pelo cliente de acordo com o potencial do negócio (ex: de 1 a 6 créditos).</p>
+          </div>
+
+          <div class="faq-item">
+            <h4>4. O que acontece quando as 4 vagas de uma festa são preenchidas?</h4>
+            <p>A oportunidade é encerrada no Mural e o botão de desbloqueio fica desativado como "Vagas Esgotadas", garantindo a exclusividade entre os 4 fornecedores que garantiram vaga.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TERMOS DE USO -->
+    <section id="view-termos-uso" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>1. TERMOS DE USO</h1>
+          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Objeto e aceitação</h2>
+          <p>Estes Termos de Uso regulam o acesso e a utilização do Quem Faz Festa, marketplace e mural de oportunidades destinado a conectar contratantes e fornecedores de serviços relacionados a festas e eventos.</p>
+          <p>Ao criar uma conta, publicar uma oportunidade, desbloquear um contato, adquirir créditos ou utilizar qualquer funcionalidade da plataforma, o usuário declara que leu, compreendeu e concorda com estes Termos e com as políticas complementares aplicáveis.</p>
+
+          <h2>Papel da plataforma</h2>
+          <p>O Quem Faz Festa atua como plataforma tecnológica de conexão e divulgação de oportunidades. A plataforma não é parte dos contratos celebrados entre contratantes e fornecedores, não presta os serviços anunciados pelos fornecedores e não participa das negociações, pagamentos, execução, entrega, qualidade ou cancelamento dos serviços contratados entre as partes.</p>
+          <p>Cada contratante e cada fornecedor é responsável pelas obrigações que assumir diretamente com a outra parte, sem prejuízo das responsabilidades que possam decorrer da legislação aplicável à própria plataforma.</p>
+
+          <h2>Cadastro e elegibilidade</h2>
+          <p>O usuário deve fornecer dados verdadeiros, atuais e completos. É vedado criar conta fictícia, duplicada ou destinada a testes sem autorização.</p>
+          <p>O uso da plataforma é destinado a maiores de 18 anos. A plataforma poderá solicitar informações ou documentos adicionais para verificar identidade, atividade profissional ou prevenir fraude.</p>
+
+          <h2>Oportunidades e contatos</h2>
+          <p>Os pedidos publicados pelos contratantes devem corresponder a necessidades reais. O número de fornecedores que poderá desbloquear uma oportunidade poderá ser limitado pela plataforma.</p>
+          <p>A liberação de dados de contato ocorrerá conforme as regras de privacidade, elegibilidade e créditos vigentes.</p>
+
+          <h2>Conduta</h2>
+          <p>É proibido utilizar a plataforma para fraude, assédio, spam, discriminação, ameaça, prática ilícita, divulgação indevida de dados pessoais, manipulação de avaliações, criação de contas múltiplas para obtenção de vantagens ou tentativa de contornar mecanismos de segurança.</p>
+
+          <h2>Contratações externas</h2>
+          <p>Contratante e fornecedor são orientados a formalizar qualquer contratação por escrito, descrevendo serviço, data, horário, valores, itens incluídos, condições de pagamento e cancelamento.</p>
+          <p>O Quem Faz Festa não garante que uma oportunidade resulte em contratação e não garante a qualidade, disponibilidade ou execução de qualquer fornecedor.</p>
+
+          <h2>Suspensão e encerramento</h2>
+          <p>A plataforma poderá suspender, restringir ou encerrar contas que violem estes Termos ou políticas complementares, especialmente em situações de fraude, risco à segurança, abuso, uso indevido de dados ou reincidência.</p>
+          <p>Medidas urgentes poderão ser aplicadas sem aviso prévio quando necessárias para proteger usuários, dados, créditos ou a integridade da plataforma. Quando cabível, o usuário poderá apresentar esclarecimentos ou recurso.</p>
+
+          <h2>Alterações e legislação</h2>
+          <p>Os Termos poderão ser atualizados para refletir mudanças legais, operacionais ou de segurança. A versão vigente ficará disponível na plataforma.</p>
+          <p>Aplicam-se as leis brasileiras, observadas as regras de competência e proteção do consumidor eventualmente incidentes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE PRIVACIDADE -->
+    <section id="view-politica-privacidade" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>2. POLÍTICA DE PRIVACIDADE</h1>
+          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Objetivo</h2>
+          <p>Esta Política explica como o Quem Faz Festa coleta, utiliza, armazena e compartilha dados pessoais no contexto de suas funcionalidades, em conformidade com a legislação brasileira aplicável, especialmente a Lei Geral de Proteção de Dados Pessoais (LGPD).</p>
+
+          <h2>Dados coletados</h2>
+          <p>Podem ser coletados nome, e-mail, telefone/WhatsApp, cidade, bairro, informações do evento, categoria de serviço, orçamento, avaliações, histórico de utilização, dados necessários à conta e registros técnicos de segurança.</p>
+          <p>Quando necessário para verificação ou prevenção de fraude, poderão ser solicitados dados adicionais, observada a finalidade e a base legal aplicável.</p>
+
+          <h2>Finalidades</h2>
+          <p>Os dados são utilizados para criar e administrar contas, publicar e encaminhar oportunidades, permitir o contato entre as partes, processar créditos, prevenir fraude e abuso, manter a segurança, prestar atendimento, melhorar a plataforma e cumprir obrigações legais.</p>
+
+          <h2>Compartilhamento de contato</h2>
+          <p>Ao publicar uma oportunidade, o contratante será informado de que seu contato poderá ser disponibilizado a fornecedores elegíveis que desbloquearem a oportunidade, dentro dos limites e condições apresentados na plataforma.</p>
+          <p>Os fornecedores deverão utilizar os dados recebidos exclusivamente para tratar da oportunidade correspondente e não poderão comercializar, repassar ou utilizar os dados para finalidades incompatíveis.</p>
+
+          <h2>Retenção e segurança</h2>
+          <p>Os dados serão mantidos pelo período necessário às finalidades informadas, ao cumprimento de obrigações legais, ao exercício regular de direitos e à prevenção de fraude. A plataforma adotará medidas técnicas e administrativas compatíveis com os riscos do tratamento.</p>
+
+          <h2>Direitos do titular</h2>
+          <p>O titular poderá solicitar, nos limites legais, informações sobre tratamento, acesso, correção, atualização, eliminação ou outras providências previstas na LGPD, utilizando o canal de privacidade informado pela plataforma.</p>
+
+          <h2>Cookies e tecnologias</h2>
+          <p>A plataforma poderá utilizar cookies, armazenamento local e tecnologias semelhantes para autenticação, preferências, segurança, funcionamento e análise. Quando houver tratamento que exija informação ou consentimento específico, serão apresentados os mecanismos correspondentes.</p>
+
+          <h2>Incidentes</h2>
+          <p>Em caso de incidente de segurança com risco ou dano relevante, a plataforma adotará as medidas cabíveis e realizará as comunicações exigidas pela legislação e pela regulamentação aplicável.</p>
+
+          <h2>Contato de privacidade</h2>
+          <p><strong>Canal responsável:</strong> privacidade@quemfazfesta.com.br<br>
+          <strong>Controlador:</strong> Quem Faz Festa Soluções Tecnológicas Ltda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓDIGO DE CONDUTA DOS FORNECEDORES -->
+    <section id="view-conduta-fornecedores" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>3. CÓDIGO DE CONDUTA DOS FORNECEDORES</h1>
+          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Compromisso profissional</h2>
+          <p>O fornecedor deve agir com honestidade, cordialidade, transparência e respeito em todas as interações realizadas em razão de oportunidades obtidas no Quem Faz Festa.</p>
+
+          <h2>Primeiro contato</h2>
+          <p>Identifique-se claramente, mencione a oportunidade correspondente, apresente proposta objetiva e respeite a preferência do cliente quanto à comunicação.</p>
+          <p>Não envie mensagens repetitivas, em massa ou insistentes. Se o cliente informar que não tem interesse, interrompa a abordagem.</p>
+
+          <h2>Orçamentos e publicidade</h2>
+          <p>Informações sobre preços, experiência, portfólio, disponibilidade, qualificações, certificados e condições do serviço devem ser verdadeiras.</p>
+          <p>É proibido ocultar custos relevantes, apresentar condições enganosas ou alterar substancialmente a proposta sem informar o cliente.</p>
+
+          <h2>Contrato e execução</h2>
+          <p>O fornecedor é responsável por formalizar a contratação e cumprir integralmente o que foi acordado. Deve possuir capacidade técnica, operacional e legal para prestar o serviço anunciado e obter licenças, autorizações, registros ou seguros exigidos para sua atividade.</p>
+
+          <h2>Dados pessoais</h2>
+          <p>O contato recebido por meio da plataforma deve ser usado exclusivamente para a oportunidade correspondente. É proibido vender, compartilhar, publicar, adicionar a grupos ou utilizar os dados para marketing não autorizado.</p>
+
+          <h2>Proibições</h2>
+          <p>Fraude, falsidade de identidade, múltiplas contas para obter vantagens, manipulação de avaliações, tentativa de burlar créditos, obtenção indevida de contatos, assédio, discriminação, ameaça, conteúdo ofensivo ou qualquer atividade ilícita.</p>
+
+          <h2>Avaliações e reputação</h2>
+          <p>É proibido combinar avaliações falsas, pressionar clientes para alterar notas, retaliar avaliações negativas ou criar avaliações por contas próprias ou de terceiros.</p>
+
+          <h2>Sanções</h2>
+          <p>Infrações poderão gerar advertência, restrição, suspensão temporária ou banimento. Fraudes, ameaças, uso indevido grave de dados e outras condutas graves poderão resultar em banimento imediato.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGRAS PARA CONTRATANTES -->
+    <section id="view-regras-contratantes" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>4. REGRAS PARA CONTRATANTES</h1>
+          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Pedidos reais</h2>
+          <p>Pedidos publicados devem representar uma necessidade real de contratação. Não são permitidos pedidos fictícios, testes, duplicados ou destinados a coletar contatos.</p>
+
+          <h2>Informações verdadeiras</h2>
+          <p>O contratante deve informar corretamente data, localidade, categoria, orçamento estimado, telefone e demais dados essenciais. Alterações relevantes devem ser atualizadas quando possível.</p>
+
+          <h2>Recebimento de contatos</h2>
+          <p>Ao publicar uma oportunidade, o contratante reconhece que fornecedores elegíveis poderão receber acesso ao contato dentro do limite informado pela plataforma.</p>
+
+          <h2>Comunicação respeitosa</h2>
+          <p>O contratante deve tratar os profissionais com respeito e não utilizar a plataforma para assédio, discriminação, ameaça, fraude ou obtenção indevida de propostas.</p>
+
+          <h2>Contratação segura</h2>
+          <p>Recomenda-se verificar portfólio e referências, confirmar disponibilidade, detalhar tudo o que será contratado e exigir contrato escrito antes de pagamentos antecipados.</p>
+
+          <h2>Uso indevido</h2>
+          <p>É proibido criar múltiplos pedidos para a mesma necessidade sem finalidade legítima, fornecer contato de terceiros sem autorização, tentar obter serviços fraudulentamente ou manipular avaliações.</p>
+
+          <h2>Suspensão</h2>
+          <p>Pedidos ou contas poderão ser removidos ou suspensos quando houver indícios de fraude, abuso, dados falsos, comportamento ofensivo, tentativa de coletar contatos indevidamente ou outras violações.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE CRÉDITOS -->
+    <section id="view-politica-creditos" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>5. POLÍTICA DE CRÉDITOS</h1>
+          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Natureza dos créditos</h2>
+          <p>Créditos são unidades de utilização da plataforma destinadas a permitir o desbloqueio de oportunidades conforme as regras vigentes. Não constituem moeda, depósito bancário ou participação societária.</p>
+
+          <h2>Condição Especial de Lançamento (Primeiros 100 Fornecedores)</h2>
+          <p>Os primeiros 100 (cem) fornecedores cadastrados na plataforma receberão, em caráter promocional e por única vez, um saldo inicial de <strong>12 (doze) créditos gratuitos</strong>.</p>
+          <p>A quantidade de créditos necessária para o desbloqueio de cada oportunidade seguirá rigorosamente a lógica padrão da plataforma, variando conforme o potencial do negócio e a faixa de orçamento declarada no pedido.</p>
+          <p>Os 12 créditos concedidos gratuitamente nesta oferta de lançamento não dão direito ao benefício de cashback/retorno de créditos em caso de não fechamento de negócio.</p>
+
+          <h2>Regra Geral de Créditos Gratuitos (A partir do 101º Fornecedor)</h2>
+          <p>A partir do 101º (centésimo primeiro) fornecedor cadastrado, o bônus de cadastro retornará automaticamente ao padrão de <strong>3 (três) créditos gratuitos</strong> creditados na criação da conta.</p>
+          <p>Os créditos concedidos gratuitamente no cadastro inicial não possuem cobertura da política de cashback.</p>
+
+          <h2>Compra de pacotes</h2>
+          <p>Os pacotes, preços, quantidade de créditos, condições de pagamento e eventuais promoções serão apresentados antes da compra. A plataforma disponibilizará as informações exigidas pela legislação aplicável ao comércio eletrônico.</p>
+
+          <h2>Uso e desbloqueio regular</h2>
+          <p>Cada oportunidade exigirá determinada quantidade de créditos de acordo com critérios e faixas de orçamento divulgados na plataforma. O desbloqueio somente ocorrerá após confirmação do usuário.</p>
+
+          <h2>Proteção de créditos / Cashback</h2>
+          <p>A política de retorno/cashback de 50% dos créditos investidos em caso de oportunidade não convertida em contrato aplica-se <strong>exclusivamente aos créditos comprados</strong> pelos fornecedores.</p>
+          <p>O retorno não constitui garantia de contratação nem indenização por oportunidade perdida, mas um benefício de proteção ao investimento pago do profissional.</p>
+
+          <h2>Exclusões do cashback</h2>
+          <p>Não haverá retorno de cashback nos créditos gratuitos promocionais de cadastro (sejam os 12 iniciais do lançamento dos 100 primeiros ou os 3 do fluxo padrão), nem quando houver fraude, ausência injustificada de contato pelo fornecedor, tentativa de burlar o sistema, uso de múltiplas contas ou banimento por infração.</p>
+
+          <h2>Reembolsos e arrependimento</h2>
+          <p>Solicitações de cancelamento, reembolso ou exercício de direitos previstos na legislação serão tratadas conforme a natureza da compra e a legislação aplicável. Nenhuma cláusula desta política pretende afastar direito legal do consumidor.</p>
+
+          <h2>Abuso e alterações</h2>
+          <p>A plataforma poderá invalidar créditos obtidos fraudulentamente. Preços e pacotes poderão ser alterados para compras futuras, mantendo-se as condições para créditos já adquiridos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE DENÚNCIAS E SEGURANÇA -->
+    <section id="view-politica-denuncias" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>6. POLÍTICA DE DENÚNCIAS E SEGURANÇA</h1>
+          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Objetivo</h2>
+          <p>Esta política estabelece mecanismos para denunciar comportamentos abusivos, fraudulentos ou incompatíveis com a segurança da comunidade.</p>
+
+          <h2>O que pode ser denunciado</h2>
+          <p>Spam, assédio, ameaça, discriminação, fraude, golpe, identidade falsa, pedido fictício, cobrança indevida, uso indevido de dados, avaliação falsa, tentativa de burlar créditos, conteúdo ilegal e qualquer violação dos Termos ou Código de Conduta.</p>
+
+          <h2>Como denunciar</h2>
+          <p>A plataforma disponibiliza o canal direto via e-mail: <strong>denuncia@quemfazfesta.com.br</strong>. A denúncia deve conter, quando possível, identificação da conta, oportunidade envolvida, descrição dos fatos, datas e evidências (como capturas de tela).</p>
+
+          <h2>Análise</h2>
+          <p>A plataforma poderá analisar registros, informações fornecidas pelas partes e sinais técnicos necessários à apuração, respeitando a legislação aplicável e a proteção de dados.</p>
+
+          <h2>Medidas preventivas</h2>
+          <p>Enquanto uma ocorrência é analisada, a plataforma poderá limitar temporariamente determinadas funcionalidades quando houver risco de fraude, segurança ou prejuízo a usuários.</p>
+
+          <h2>Sanções</h2>
+          <p>Conforme gravidade e reincidência: advertência, remoção de conteúdo, restrição, suspensão, encerramento da conta e, quando cabível, preservação ou encaminhamento de informações às autoridades competentes.</p>
+
+          <h2>Recurso</h2>
+          <p>Quando apropriado, o usuário poderá apresentar esclarecimentos ou recurso por canal informado pela plataforma. Em situações urgentes de segurança, a suspensão preventiva poderá ocorrer antes da conclusão da análise.</p>
+
+          <h2>Proteção contra retaliação</h2>
+          <p>É proibido retaliar, ameaçar ou constranger pessoa que tenha realizado denúncia de boa-fé.</p>
+
+          <div style="margin-top:24px; text-align:center;">
+            <button class="btn-submit" style="max-width:320px;" onclick="exibirModalAviso('📢 Canal de Denúncia', 'Para registrar uma denúncia, envie um e-mail com as evidências/prints para <strong>denuncia@quemfazfesta.com.br</strong>.')">Registrar uma Denúncia Agora</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE RESPONSABILIDADE & SOBRE A PLATAFORMA -->
+    <section id="view-sobre-plataforma" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>7. POLÍTICA DE RESPONSABILIDADE</h1>
+          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Natureza da atividade</h2>
+          <p>O Quem Faz Festa é uma plataforma de conexão. Sua função é disponibilizar tecnologia para publicação de oportunidades, descoberta de fornecedores e disponibilização de contatos conforme as regras do serviço.</p>
+
+          <h2>Ausência de participação na contratação</h2>
+          <p>A plataforma não integra os contratos entre contratantes e fornecedores, não recebe ou administra os pagamentos relativos aos serviços contratados entre eles e não executa os serviços anunciados.</p>
+
+          <h2>Responsabilidade das partes</h2>
+          <p>Fornecedor e contratante são responsáveis pelas informações que fornecem, pelas propostas apresentadas, pelas negociações realizadas, pelos contratos celebrados, pelos pagamentos realizados diretamente entre eles e pela execução das obrigações que assumirem.</p>
+
+          <h2>Não garantia de resultado</h2>
+          <p>A publicação de uma oportunidade não garante recebimento de propostas, contratação, disponibilidade do fornecedor, qualidade do serviço ou resultado econômico.</p>
+
+          <h2>Informações de terceiros</h2>
+          <p>As informações apresentadas pelos usuários são de responsabilidade de quem as fornece. O cadastro na plataforma não representa certificação, aprovação, recomendação ou garantia de qualidade, experiência, idoneidade ou execução dos serviços pelo Quem Faz Festa.</p>
+
+          <h2>Limites legais</h2>
+          <p>Nenhuma disposição desta política pretende excluir ou limitar direitos ou responsabilidades que não possam ser afastados pela legislação aplicável. As limitações devem ser interpretadas dentro dos limites permitidos pela lei.</p>
+
+          <h2>Indisponibilidade e terceiros</h2>
+          <p>Serviços de terceiros, como provedores de hospedagem, mensageria, pagamentos ou infraestrutura, podem sofrer indisponividades. A plataforma adotará medidas razoáveis para continuidade e segurança, sem garantir disponibilidade ininterrupta.</p>
+
+          <h2>Prevenção de riscos</h2>
+          <p>Usuários devem manter credenciais seguras, desconfiar de solicitações incomuns, confirmar identidade e condições comerciais e formalizar contratações por escrito.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE COOKIES -->
+    <section id="view-politica-cookies" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>8. POLÍTICA DE COOKIES</h1>
+          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma. Última atualização: agosto de 2026.</div>
+
+          <h2>1. Sobre esta Política</h2>
+          <p>Esta Política de Cookies explica como o Quem Faz Festa utiliza cookies e tecnologias semelhantes quando você acessa ou utiliza nossa plataforma.</p>
+          <p>Nosso objetivo é explicar, de forma clara e transparente, quais tecnologias podem ser utilizadas, para que servem, por quanto tempo podem permanecer no dispositivo e quais opções estão disponíveis para o usuário.</p>
+          <p>Esta Política deve ser lida em conjunto com os Termos de Uso e a Política de Privacidade do Quem Faz Festa.</p>
+
+          <h2>2. O que são cookies?</h2>
+          <p>Cookies são pequenos arquivos ou informações armazenados no dispositivo do usuário quando ele acessa determinados sites.</p>
+          <p>Eles podem permitir, por exemplo: manter uma sessão de usuário; lembrar determinadas preferências; garantir o funcionamento de recursos da plataforma; melhorar segurança; compreender como a plataforma é utilizada; realizar análises de desempenho; apresentar conteúdos ou publicidade personalizada, quando aplicável.</p>
+          <p>A ANPD também reconhece tecnologias semelhantes aos cookies, incluindo mecanismos utilizados para armazenamento e identificação no dispositivo.</p>
+
+          <h2>3. Quais tecnologias o Quem Faz Festa utiliza?</h2>
+          <p><strong>3.1. Cookies necessários:</strong> São aqueles necessários para que a plataforma funcione adequadamente e disponibilize funcionalidades solicitadas pelo usuário. Podem ser utilizados para autenticação, manutenção da sessão, segurança, prevenção de fraude, controle de acesso, armazenamento de preferências essenciais e funcionamento da conta.</p>
+          <p><strong>3.2. Tecnologias de armazenamento local:</strong> O Quem Faz Festa poderá utilizar mecanismos de armazenamento local do navegador, como Local Storage ou tecnologias equivalentes, para determinadas funcionalidades técnicas. Esses mecanismos não são necessariamente cookies, mas podem exercer funções semelhantes e, por isso, são abrangidos por esta Política quando utilizados.</p>
+
+          <h2>4. Cookies próprios e de terceiros</h2>
+          <p>Cookies próprios são definidos diretamente pelo Quem Faz Festa ou por serviços operados em seu nome. Cookies de terceiros são definidos por domínios ou serviços diferentes daquele que o usuário está acessando.</p>
+
+          <h2>5. Contato</h2>
+          <p><strong>E-mail:</strong> privacidade@quemfazfesta.com.br<br>
+          <strong>Controlador:</strong> Quem Faz Festa Soluções Tecnológicas Ltda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA DE LOGIN -->
+    <section id="view-login" class="view-section">
+      <div class="container" style="max-width:450px;">
+        <div class="card-form">
+          <h2 style="margin-bottom:8px;">Acessar sua Conta</h2>
+          <p style="color:var(--text-muted); margin-bottom:20px;">Entre com seu e-mail e senha cadastrados.</p>
+
+          <form id="formLogin">
+            <div class="form-group">
+              <label>E-mail *</label>
+              <input type="email" id="login-email" placeholder="seu@email.com" required>
+            </div>
+            <div class="form-group">
+              <label>Senha *</label>
+              <input type="password" id="login-senha" placeholder="******" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Entrar no Sistema</button>
+          </form>
+
+          <div class="link-alternativo">
+            Ainda não tem conta? <br>
+            <a onclick="trocarAba('cadastro-pais')">Cadastrar como Pai/Mãe</a> | 
+            <a onclick="trocarAba('cadastro-fornecedor')">Cadastrar como Fornecedor</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CADASTRO DOS PAIS -->
+    <section id="view-cadastro-pais" class="view-section">
+      <div class="container" style="max-width:500px;">
+        <div class="card-form">
+          <h2 style="margin-bottom:8px;">Cadastro dos Pais</h2>
+          <p style="color:var(--text-muted); margin-bottom:20px;">Crie sua conta gratuita para enviar seus pedidos de orçamento.</p>
+          <form id="formCadastroPais">
+            <div class="form-group"><label>Nome Completo *</label><input type="text" id="cad-pai-nome" required></div>
+            <div class="form-group"><label>E-mail *</label><input type="email" id="cad-pai-email" required></div>
+            <div class="form-group"><label>WhatsApp *</label><input type="tel" id="cad-pai-whatsapp" placeholder="(81) 99999-9999" required></div>
+            <div class="form-group"><label>Criar Senha *</label><input type="password" id="cad-pai-senha" required></div>
+            <div class="form-group"><label>Confirmar Senha *</label><input type="password" id="cad-pai-senha-confirma" required></div>
+            
+            <div class="checkbox-termos-box">
+              <input type="checkbox" id="cad-pai-aceite-termos" required>
+              <label for="cad-pai-aceite-termos">
+                Li e aceito os <a onclick="trocarAba('termos-uso')">Termos de Uso</a>, a <a onclick="trocarAba('politica-privacidade')">Política de Privacidade</a> e as <a onclick="trocarAba('regras-contratantes')">Regras para Contratantes</a> da plataforma. *
+              </label>
+            </div>
+
+            <button type="submit" class="btn-submit">Criar Conta e Continuar</button>
+          </form>
+
+          <div class="link-alternativo">
+            Já tem uma conta? <a onclick="trocarAba('login')">Fazer Login</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CADASTRO DOS FORNECEDORES -->
+    <section id="view-cadastro-fornecedor" class="view-section">
+      <div class="container" style="max-width:500px;">
+        <div class="card-form">
+          <h2 style="margin-bottom:8px;">Cadastro de Fornecedor</h2>
+          <p style="color:var(--text-muted); margin-bottom:20px;">Cadastre-se para receber <strong>créditos grátis</strong> de boas-vindas e acessar o mural.</p>
+          <form id="formCadastroFornecedor">
+            <div class="form-group"><label>Nome da Empresa *</label><input type="text" id="cad-forn-nome" required></div>
+            <div class="form-group"><label>E-mail *</label><input type="email" id="cad-forn-email" required></div>
+            <div class="form-group"><label>WhatsApp *</label><input type="tel" id="cad-forn-whatsapp" placeholder="(81) 99999-9999" required></div>
+            
+            <div class="form-group"><label>Categoria Principal *</label>
+              <select id="cad-forn-categoria" required>
+                <option value="Decoração Completa">Decoração Completa</option>
+                <option value="Buffet & Salgados">Buffet & Salgados</option>
+                <option value="Bolo">Bolo</option>
+                <option value="Doces">Doces</option>
+                <option value="Brinquedos">Brinquedos</option>
+                <option value="Espaço para festa">Espaço para festa</option>
+                <option value="DJ/Música/Banda">DJ/Música/Banda</option>
+                <option value="Personagem">Personagem</option>
+                <option value="Lembrancinhas/Personalizados">Lembrancinhas/Personalizados</option>
+                <option value="Convites">Convites</option>
+                <option value="Palhaço">Palhaço</option>
+                <option value="Fotografia & Filmagem">Fotografia & Filmagem</option>
+                <option value="Recreação & Animação">Recreação & Animação</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            
+            <div class="form-group"><label>Senha *</label><input type="password" id="cad-forn-senha" required></div>
+            <div class="form-group"><label>Confirmar Senha *</label><input type="password" id="cad-forn-senha-confirma" required></div>
+            
+            <div class="checkbox-termos-box">
+              <input type="checkbox" id="cad-forn-aceite-termos" required>
+              <label for="cad-forn-aceite-termos">
+                Li e concordo com os <a onclick="trocarAba('termos-uso')">Termos de Uso</a>, a <a onclick="trocarAba('politica-privacidade')">Política de Privacidade</a>, o <a onclick="trocarAba('conduta-fornecedores')">Código de Conduta dos Fornecedores</a> e a <a onclick="trocarAba('politica-creditos')">Política de Créditos</a>. *
+              </label>
+            </div>
+
+            <button type="submit" class="btn-submit">Cadastrar e Resgatar Créditos</button>
+          </form>
+
+          <div class="link-alternativo">
+            Já tem uma conta? <a onclick="trocarAba('login')">Fazer Login</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 2: CRIAR FESTA -->
+    <section id="view-criar-festa" class="view-section">
+      <div class="container">
+        <div class="card-form">
+          <h2>Publicar Novo Pedido de Festa</h2>
+          <form id="formFesta">
+            <div class="form-group">
+              <label>Serviço Procurado *</label>
+              <select id="servico" required onchange="verificarOpcaoOutroServico()">
+                <option value="Decoração Completa">Decoração Completa</option>
+                <option value="Buffet & Salgados">Buffet & Salgados</option>
+                <option value="Bolo">Bolo</option>
+                <option value="Doces">Doces</option>
+                <option value="Brinquedos">Brinquedos</option>
+                <option value="Espaço para festa">Espaço para festa</option>
+                <option value="DJ/Música/Banda">DJ/Música/Banda</option>
+                <option value="Personagem">Personagem</option>
+                <option value="Lembrancinhas/Personalizados">Lembrancinhas/Personalizados</option>
+                <option value="Convites">Convites</option>
+                <option value="Palhaço">Palhaço</option>
+                <option value="Fotografia & Filmagem">Fotografia & Filmagem</option>
+                <option value="Recreação & Animação">Recreação & Animação</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="grupoServicoOutro" style="display:none;">
+              <label>Especifique o Serviço Desejado *</label>
+              <input type="text" id="servicoOutroEspecifique" placeholder="Ex: Carrinho de Pipoca, Iluminação, etc.">
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Tema *</label>
+                <input type="text" id="tema" placeholder="Ex: Patrulha Canina" required>
+                <label class="checkbox-inline">
+                  <input type="checkbox" id="chk-tema-nao-definido" onchange="toggleCampoNaoDefinido('tema', 'chk-tema-nao-definido')"> Ainda não definido
+                </label>
+              </div>
+              
+              <div class="form-group"><label>Data Prevista *</label><input type="date" id="data" required></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Horário Previsto *</label>
+                <input type="time" id="horario" required>
+                <label class="checkbox-inline">
+                  <input type="checkbox" id="chk-horario-nao-definido" onchange="toggleCampoNaoDefinido('horario', 'chk-horario-nao-definido')"> Ainda não definido
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label>Quantidade Estimada de Pessoas *</label>
+                <input type="number" id="qtdPessoas" placeholder="Ex: 50" min="1" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Cidade *</label>
+                <select id="cidade">
+                  <option value="Recife">Recife</option>
+                  <option value="Olinda">Olinda</option>
+                  <option value="Jaboatão dos Guararapes">Jaboatão dos Guararapes</option>
+                  <option value="Paulista">Paulista</option>
+                  <option value="Camaragibe">Camaragibe</option>
+                  <option value="Cabo de Santo Agostinho">Cabo de Santo Agostinho</option>
+                  <option value="São Lourenço da Mata">São Lourenço da Mata</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Bairro *</label><input type="text" id="bairro" required></div>
+            </div>
+            
+            <div class="form-group">
+              <label>Orçamento Máximo *</label>
+              <select id="orcamento" required>
+                <option value="Até R$ 500">Até R$ 500</option>
+                <option value="R$ 501 a R$ 1.000">R$ 501 a R$ 1.000</option>
+                <option value="R$ 1.001 a R$ 2.000">R$ 1.001 a R$ 2.000</option>
+                <option value="R$ 2.001 a R$ 3.000">R$ 2.001 a R$ 3.000</option>
+                <option value="R$ 3.001 a R$ 5.000">R$ 3.001 a R$ 5.000</option>
+                <option value="Acima de R$ 5.000">Acima de R$ 5.000</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Comentários / Detalhes Adicionais <span style="font-weight: 400; color: var(--text-muted);">(Opcional)</span></label>
+              <textarea id="comentariosAdicionais" rows="3" placeholder="Caso deseje, especifique detalhes como estilo preferido, restrições alimentares, acessibilidade ou observações sobre o local da festa."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Publicar Oferta Gratuitamente</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA 3: MURAL COMPLETO -->
+    <section id="view-mural" class="view-section">
+      <div class="container">
+        <div class="fornecedor-bar">
+          <div><span>Profissional: <strong class="nome-usuario-boasvindas">Fornecedor</strong></span></div>
+          <div style="display:flex; align-items:center; font-weight:700; color:var(--primary);">
+            <img src="créditos.png" alt="Créditos" class="saldo-icon-img"> Saldo: <span class="saldo-creditos-val">12</span> Créditos
+          </div>
+        </div>
+        <div style="margin-bottom:16px;">
+          <h1 style="font-size:1.8rem; color:var(--primary-dark);">Mural Completo de Oportunidades</h1>
+          <p style="color:var(--text-muted)">Selecione as categorias desejadas para filtrar os pedidos.</p>
+        </div>
+
+        <div class="filter-box-multi">
+          <h3>Filtrar por Categorias:</h3>
+          <div class="checkbox-group">
+            <label class="checkbox-item"><input type="checkbox" value="Decoração Completa" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Decoração Completa</label>
+            <label class="checkbox-item"><input type="checkbox" value="Buffet & Salgados" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Buffet & Salgados</label>
+            <label class="checkbox-item"><input type="checkbox" value="Bolo" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Bolo</label>
+            <label class="checkbox-item"><input type="checkbox" value="Doces" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Doces</label>
+            <label class="checkbox-item"><input type="checkbox" value="Brinquedos" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Brinquedos</label>
+            <label class="checkbox-item"><input type="checkbox" value="Espaço para festa" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Espaço para festa</label>
+            <label class="checkbox-item"><input type="checkbox" value="DJ/Música/Banda" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> DJ/Música/Banda</label>
+            <label class="checkbox-item"><input type="checkbox" value="Personagem" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Personagem</label>
+            <label class="checkbox-item"><input type="checkbox" value="Lembrancinhas/Personalizados" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Lembrancinhas/Personalizados</label>
+            <label class="checkbox-item"><input type="checkbox" value="Convites" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Convites</label>
+            <label class="checkbox-item"><input type="checkbox" value="Palhaço" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Palhaço</label>
+            <label class="checkbox-item"><input type="checkbox" value="Fotografia & Filmagem" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Fotografia & Filmagem</label>
+            <label class="checkbox-item"><input type="checkbox" value="Recreação & Animação" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Recreação & Animação</label>
+            <label class="checkbox-item"><input type="checkbox" value="Outro" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Outros Serviços</label>
+          </div>
+        </div>
+
+        <div class="mural-grid" id="muralContainer"></div>
+      </div>
+    </section>
+
+    <!-- TELA COMPRAR CRÉDITOS -->
+    <section id="view-comprar-creditos" class="view-section">
+      <div class="container">
+        <div style="text-align:center; margin-bottom: 32px;">
+          <h1>Adquirir Pacotes de Créditos</h1>
+        </div>
+        <div class="pacotes-grid">
+          <div class="card-pacote">
+            <div class="pacote-nome">Pacote Bronze</div>
+            <div class="pacote-creditos">8 Créditos</div>
+            <div class="pacote-preco">R$ 19,90</div>
+            <button class="btn-comprar-pacote" onclick="comprarCreditos('Pacote Bronze', 8, '19,90')">Comprar Pacote</button>
+          </div>
+          
+          <div class="card-pacote">
+            <span class="badge-novo">Novo</span>
+            <div class="pacote-nome">Pacote Prata Light</div>
+            <div class="pacote-creditos">16 Créditos</div>
+            <div class="pacote-preco">R$ 34,90</div>
+            <button class="btn-comprar-pacote" onclick="comprarCreditos('Pacote Prata Light', 16, '34,90')">Comprar Pacote</button>
+          </div>
+
+          <div class="card-pacote destaque">
+            <span class="badge-destaque">Mais Popular</span>
+            <div class="pacote-nome">Pacote Prata</div>
+            <div class="pacote-creditos">25 Créditos</div>
+            <div class="pacote-preco">R$ 49,90</div>
+            <button class="btn-comprar-pacote destaque" onclick="comprarCreditos('Pacote Prata', 25, '49,90')">Comprar Pacote</button>
+          </div>
+
+          <div class="card-pacote">
+            <div class="pacote-nome">Pacote Ouro</div>
+            <div class="pacote-creditos">50 Créditos</div>
+            <div class="pacote-preco">R$ 89,90</div>
+            <button class="btn-comprar-pacote" onclick="comprarCreditos('Pacote Ouro', 50, '89,90')">Comprar Pacote</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA MINHA CONTA -->
+    <section id="view-minha-conta" class="view-section">
+      <div class="container" style="max-width:600px;">
+        <div class="card-form">
+          <h2>Gestão de Conta</h2>
+          <p style="color:var(--text-muted); margin-bottom:20px;">Gerencie suas informações cadastrais e altere seu WhatsApp ou senha.</p>
+          <form id="formAtualizarConta">
+            <div class="form-group">
+              <label>Nome / Razão Social</label>
+              <input type="text" id="account-nome">
+            </div>
+            
+            <div class="form-group">
+              <label>E-mail (Login)</label>
+              <input type="email" id="account-email" disabled style="opacity:0.7;">
+            </div>
+
+            <div class="form-group">
+              <label>WhatsApp do Contato</label>
+              <input type="tel" id="account-whatsapp" placeholder="(81) 99999-9999" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nova Senha</label>
+                <input type="password" id="account-nova-senha" placeholder="Nova senha">
+              </div>
+              <div class="form-group">
+                <label>Confirmar Nova Senha</label>
+                <input type="password" id="account-nova-senha-confirma" placeholder="Confirme a senha">
+              </div>
+            </div>
+
+            <button type="submit" class="btn-submit" style="padding:12px;">Salvar Alterações</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA HISTÓRICO / MINHAS FESTAS ATIVAS -->
+    <section id="view-historico" class="view-section">
+      <div class="container">
+        <div class="card-form">
+          <h2 id="titulo-historico-tela" style="margin-bottom:8px;">Minhas Festas Ativas</h2>
+          <p id="subtitulo-historico-tela" style="color:var(--text-muted); margin-bottom:20px;">Acompanhe o andamento dos seus pedidos de festa.</p>
+          <div id="historicoContainerTela" class="mural-grid"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- BANNER DE COOKIES FLUTUANTE -->
+  <div class="cookie-banner" id="cookieBanner">
+    <div class="cookie-banner-text">
+      🍪 Utilizamos cookies e armazenamento local para manter sua sessão ativa e garantir o funcionamento correto da plataforma. Ao continuar navegando, você concorda com os nossos termos. 
+      <a onclick="trocarAba('politica-cookies')">🔗 Ler Política de Cookies Completa</a>
+    </div>
+    <button class="cookie-banner-btn" onclick="aceitarCookies()">Aceitar e Continuar</button>
+  </div>
+
+  <!-- RODAPÉ DA PLATAFORMA -->
+  <footer>
+    <div class="footer-links">
+      <a onclick="trocarAba('termos-uso')">1. Termos de Uso</a>
+      <span>•</span>
+      <a onclick="trocarAba('politica-privacidade')">2. Política de Privacidade</a>
+      <span>•</span>
+      <a onclick="trocarAba('conduta-fornecedores')">3. Código de Conduta Fornecedores</a>
+      <span>•</span>
+      <a onclick="trocarAba('regras-contratantes')">4. Regras Contratantes</a>
+      <span>•</span>
+      <a onclick="trocarAba('politica-creditos')">5. Política de Créditos</a>
+      <span>•</span>
+      <a onclick="trocarAba('politica-denuncias')">6. Denúncias e Segurança</a>
+      <span>•</span>
+      <a onclick="trocarAba('sobre-plataforma')">7. Política de Responsabilidade</a>
+      <span>•</span>
+      <a onclick="trocarAba('politica-cookies')">8. Política de Cookies</a>
+      <span>•</span>
+      <a onclick="trocarAba('faq')">9. Dúvidas Frequentes (FAQ)</a>
+    </div>
+    <div>Quem Faz Festa © 2026 — Plataforma de Conexão de Eventos em Recife e Região Metropolitana.</div>
+  </footer>
+
+  <!-- MODAL DE NOTIFICAÇÃO ESTILO WHATSAPP -->
+  <div class="simulacao-wpp-modal" id="modalWpp">
+    <div class="simulacao-wpp-card">
+      <div class="wpp-header">
+        <span id="wppHeaderTitulo">💬 Notificação WhatsApp</span>
+        <button onclick="fecharModalWpp()" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;">✕</button>
+      </div>
+      <div class="wpp-body">
+        <div class="wpp-bubble" id="wppTextoMensagem"></div>
+        <div id="wppContainerBotoes">
+          <button id="btnWppAcao" class="btn-submit" style="font-size:0.9rem; padding:10px;"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PadraoUsuarios = [
+      { email: "pai@teste.com", senha: "123", tipo: "pai", nome: "Camila Peixoto", whatsapp: "(81) 99999-8888", notaMedia: 5.0, avaliacoesRecebidas: 1, banido: false },
+      { email: "fornecedor@teste.com", senha: "123", tipo: "fornecedor", nome: "Studio Foto & Arte", whatsapp: "(81) 98888-7777", categoria: "Fotografia & Filmagem", saldoCreditos: 12, totalCreditosGratuitosRecebidos: 12, totalDesbloqueiosRealizados: 0, notaMedia: 5.0, avaliacoesRecebidas: 1, ultimoComentario: "Excelente atendimento e pontualidade!", banido: false }
+    ];
+
+    const PadraoFestas = [
+      {
+        id: 1,
+        emailPai: "pai@teste.com",
+        servico: "Decoração Completa",
+        tema: "Patrulha Canina",
+        cidade: "Recife",
+        bairro: "Boa Viagem",
+        data: "2026-09-15",
+        horario: "15:00",
+        qtdPessoas: "50",
+        orcamento: "R$ 1.001 a R$ 2.000",
+        comentarios: "Preferência por tons em azul e vermelho.",
+        nome: "Camila Peixoto",
+        whatsapp: "(81) 99999-8888",
+        notaCliente: 5.0,
+        avaliacoesClienteCount: 1,
+        desbloqueios: 1,
+        maxDesbloqueios: 4,
+        liberado: false,
+        avaliadoPeloFornecedor: false,
+        concluida: false
+      },
+      {
+        id: 2,
+        emailPai: "pai@teste.com",
+        servico: "Fotografia & Filmagem",
+        tema: "Circo Mágico",
+        cidade: "Olinda",
+        bairro: "Casa Caiada",
+        data: "2026-10-02",
+        horario: "Ainda não definido",
+        qtdPessoas: "80",
+        orcamento: "R$ 501 a R$ 1.000",
+        comentarios: "",
+        nome: "Camila Peixoto",
+        whatsapp: "(81) 99999-8888",
+        notaCliente: 5.0,
+        avaliacoesClienteCount: 1,
+        desbloqueios: 0,
+        maxDesbloqueios: 4,
+        liberado: false,
+        avaliadoPeloFornecedor: false,
+        concluida: false
+      },
+      {
+        id: 3,
+        emailPai: "pai@teste.com",
+        servico: "Buffet & Salgados",
+        tema: "Ainda não definido",
+        cidade: "Recife",
+        bairro: "Espinheiro",
+        data: "2026-11-10",
+        horario: "18:00",
+        qtdPessoas: "100",
+        orcamento: "R$ 2.001 a R$ 3.000",
+        comentarios: "Preciso de opções vegetarianas no cardápio.",
+        nome: "Mariana Silva",
+        whatsapp: "(81) 98765-4321",
+        notaCliente: null,
+        avaliacoesClienteCount: 0,
+        desbloqueios: 0,
+        maxDesbloqueios: 4,
+        liberado: false,
+        avaliadoPeloFornecedor: false,
+        concluida: false
+      }
+    ];
+
+    let usuariosCadastrados = JSON.parse(localStorage.getItem('qff_usuarios')) || PadraoUsuarios;
+    let bancoFestas = JSON.parse(localStorage.getItem('qff_festas')) || PadraoFestas;
+    let usuarioAtual = JSON.parse(localStorage.getItem('qff_sessao')) || null;
+    let minhasOportunidadesDesbloqueadas = JSON.parse(localStorage.getItem('qff_desbloqueios')) || [];
+    let notificacoesBanco = JSON.parse(localStorage.getItem('qff_notificacoes')) || [];
+    let categoriaFiltroAtiva = 'Todos';
+    let proximaAbaAposLogin = null;
+
+    function verificarOpcaoOutroServico() {
+      const selectServico = document.getElementById('servico');
+      const grupoOutro = document.getElementById('grupoServicoOutro');
+      const inputOutro = document.getElementById('servicoOutroEspecifique');
+
+      if (selectServico.value === 'Outro') {
+        grupoOutro.style.display = 'block';
+        inputOutro.setAttribute('required', 'required');
+      } else {
+        grupoOutro.style.display = 'none';
+        inputOutro.removeAttribute('required');
+        inputOutro.value = '';
+      }
+    }
+
+    function toggleCampoNaoDefinido(idCampoInput, idChkBox) {
+      const inputEl = document.getElementById(idCampoInput);
+      const chkEl = document.getElementById(idChkBox);
+
+      if (chkEl.checked) {
+        inputEl.disabled = true;
+        inputEl.removeAttribute('required');
+        inputEl.value = '';
+      } else {
+        inputEl.disabled = false;
+        inputEl.setAttribute('required', 'required');
+      }
+    }
+
+    function verificarBannerCookies() {
+      const jaAceitou = localStorage.getItem('qff_cookies_aceito');
+      const banner = document.getElementById('cookieBanner');
+      if (!jaAceitou && banner) {
+        banner.style.display = 'flex';
+      }
+    }
+
+    function aceitarCookies() {
+      localStorage.setItem('qff_cookies_aceito', 'true');
+      const banner = document.getElementById('cookieBanner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    function formatarTextoAvaliacao(nota, totalAvaliacoes) {
+      if (!totalAvaliacoes || totalAvaliacoes === 0 || nota === null || nota === undefined) {
+        return "Novo na plataforma — ainda sem avaliações";
+      }
+      return `★ ${Number(nota).toFixed(1)}`;
+    }
+
+    function formatarDataBR(dataIso) {
+      if (!dataIso) return "";
+      const partes = dataIso.split('-');
+      if (partes.length === 3) {
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+      }
+      return dataIso;
+    }
+
+    function calcularCustoCreditos(orcamentoTexto) {
+      switch (orcamentoTexto) {
+        case "Até R$ 500":
+          return 1;
+        case "R$ 501 a R$ 1.000":
+          return 2;
+        case "R$ 1.001 a R$ 2.000":
+          return 3;
+        case "R$ 2.001 a R$ 3.000":
+          return 4;
+        case "R$ 3.001 a R$ 5.000":
+          return 5;
+        case "Acima de R$ 5.000":
+          return 6;
+        default:
+          return 1;
+      }
+    }
+
+    function enviarNotificacao(destinatarioEmail, tipoCanal, titulo, mensagem, festaIdTarget = null, categoriaTarget = null) {
+      const novaNotif = {
+        id: Date.now(),
+        destinatarioEmail: destinatarioEmail,
+        tipoCanal: tipoCanal,
+        titulo: titulo,
+        mensagem: mensagem,
+        festaIdTarget: festaIdTarget,
+        categoriaTarget: categoriaTarget,
+        dataHora: new Date().toLocaleString('pt-BR'),
+        lida: false
+      };
+      notificacoesBanco.unshift(novaNotif);
+      localStorage.setItem('qff_notificacoes', JSON.stringify(notificacoesBanco));
+      atualizarBadgeNotificacoes();
+    }
+
+    function atualizarBadgeNotificacoes() {
+      if(!usuarioAtual) return;
+      const minhasNaoLidas = notificacoesBanco.filter(n => n.destinatarioEmail === usuarioAtual.email && !n.lida);
+      const badge = document.getElementById('badgeNotifCount');
+      if (badge) badge.innerText = minhasNaoLidas.length;
+    }
+
+    function exibirModalAviso(titulo, mensagem, textoBotao = "OK", acaoCallback = null) {
+      document.getElementById('wppHeaderTitulo').innerText = titulo;
+      document.getElementById('wppTextoMensagem').innerHTML = mensagem;
+      const containerBotoes = document.getElementById('wppContainerBotoes');
+      
+      containerBotoes.innerHTML = `<button id="btnWppAcaoModal" class="btn-submit" style="font-size:0.9rem; padding:10px;">${textoBotao}</button>`;
+      
+      document.getElementById('btnWppAcaoModal').onclick = function() {
+        fecharModalWpp();
+        if (acaoCallback) acaoCallback();
+      };
+      
+      document.getElementById('modalWpp').style.display = 'flex';
+    }
+
+    function exibirModalConfirmacao(titulo, mensagem, callbackConfirmar) {
+      document.getElementById('wppHeaderTitulo').innerText = titulo;
+      document.getElementById('wppTextoMensagem').innerHTML = mensagem;
+      const containerBotoes = document.getElementById('wppContainerBotoes');
+
+      containerBotoes.innerHTML = `
+        <div class="modal-acoes-duplas">
+          <button onclick="fecharModalWpp()" class="btn-modal-cancelar">Cancelar</button>
+          <button id="btnModalConfirmarAcao" class="btn-modal-confirmar">Confirmar</button>
+        </div>`;
+
+      document.getElementById('btnModalConfirmarAcao').onclick = function() {
+        fecharModalWpp();
+        callbackConfirmar();
+      };
+
+      document.getElementById('modalWpp').style.display = 'flex';
+    }
+
+    function fecharModalWpp() { 
+      document.getElementById('modalWpp').style.display = 'none'; 
+    }
+
+    function salvarDados() {
+      localStorage.setItem('qff_usuarios', JSON.stringify(usuariosCadastrados));
+      localStorage.setItem('qff_festas', JSON.stringify(bancoFestas));
+      localStorage.setItem('qff_sessao', JSON.stringify(usuarioAtual));
+      localStorage.setItem('qff_desbloqueios', JSON.stringify(minhasOportunidadesDesbloqueadas));
+      localStorage.setItem('qff_notificacoes', JSON.stringify(notificacoesBanco));
+      
+      if (usuarioAtual) {
+        const uIdx = usuariosCadastrados.findIndex(u => u.email === usuarioAtual.email);
+        if (uIdx !== -1) usuariosCadastrados[uIdx] = usuarioAtual;
+        localStorage.setItem('qff_usuarios', JSON.stringify(usuariosCadastrados));
+      }
+    }
+
+    let notasForm = { starAtendimento: 5, starServico: 5 };
+
+    function setStars(idContainer, valor) {
+      notasForm[idContainer] = valor;
+      const spans = document.querySelectorAll(`#${idContainer} span`);
+      spans.forEach((span, idx) => {
+        if (idx < valor) span.classList.add('selected');
+        else span.classList.remove('selected');
+      });
+    }
+
+    function trocarAba(aba) {
+      if (!usuarioAtual && (aba === 'confirmar-festa' || aba === 'criar-festa' || aba === 'comprar-creditos' || aba === 'notificacoes' || aba === 'historico-concluidas' || aba === 'melhores-praticas')) {
+        proximaAbaAposLogin = aba;
+        aba = 'login';
+      }
+
+      if (aba === 'home' && usuarioAtual) {
+        aba = usuarioAtual.tipo === 'pai' ? 'home-pais' : 'home-fornecedor';
+      }
+
+      localStorage.setItem('qff_aba_atual', aba);
+
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+      if (aba === 'home' || aba === 'home-pais' || aba === 'home-fornecedor') {
+        document.getElementById('btn-nav-home').classList.add('active');
+        if (usuarioAtual) {
+          if (usuarioAtual.tipo === 'pai') {
+            document.getElementById('view-home-pais').classList.add('active');
+            carregarDashboardPais();
+          } else {
+            document.getElementById('view-home-fornecedor').classList.add('active');
+            carregarDashboardFornecedor();
+          }
+        } else {
+          document.getElementById('view-home').classList.add('active');
+        }
+      } else if (aba === 'confirmar-festa') { 
+        document.getElementById('view-confirmar-festa').classList.add('active'); 
+        prepararTelaConfirmacao(); 
+      } else if (aba === 'login') {
+        document.getElementById('view-login').classList.add('active');
+        document.getElementById('btn-nav-login').classList.add('active');
+      } else if (aba === 'cadastro-pais') {
+        document.getElementById('view-cadastro-pais').classList.add('active');
+        document.getElementById('btn-nav-pais').classList.add('active');
+      } else if (aba === 'cadastro-fornecedor') {
+        document.getElementById('view-cadastro-fornecedor').classList.add('active');
+        document.getElementById('btn-nav-fornecedores').classList.add('active');
+      } else if (aba === 'criar-festa') {
+        document.getElementById('view-criar-festa').classList.add('active');
+        document.getElementById('btn-nav-criar').classList.add('active');
+      } else if (aba === 'mural') {
+        document.getElementById('view-mural').classList.add('active');
+        document.getElementById('btn-nav-mural').classList.add('active');
+        renderizarMuralCompleto();
+      } else if (aba === 'comprar-creditos') {
+        document.getElementById('view-comprar-creditos').classList.add('active');
+      } else if (aba === 'minha-conta') {
+        document.getElementById('view-minha-conta').classList.add('active');
+        carregarDadosConta();
+      } else if (aba === 'historico') {
+        document.getElementById('view-historico').classList.add('active');
+        carregarHistoricoTela();
+      } else if (aba === 'historico-concluidas') {
+        document.getElementById('view-historico-concluidas').classList.add('active');
+        carregarHistoricoConcluidas();
+      } else if (aba === 'melhores-praticas') {
+        document.getElementById('view-melhores-praticas').classList.add('active');
+        carregarMelhoresPraticas();
+      } else if (aba === 'faq') {
+        document.getElementById('view-faq').classList.add('active');
+      } else if (aba === 'sobre-plataforma') {
+        document.getElementById('view-sobre-plataforma').classList.add('active');
+      } else if (aba === 'termos-uso') {
+        document.getElementById('view-termos-uso').classList.add('active');
+      } else if (aba === 'politica-privacidade') {
+        document.getElementById('view-politica-privacidade').classList.add('active');
+      } else if (aba === 'conduta-fornecedores') {
+        document.getElementById('view-conduta-fornecedores').classList.add('active');
+      } else if (aba === 'regras-contratantes') {
+        document.getElementById('view-regras-contratantes').classList.add('active');
+      } else if (aba === 'politica-creditos') {
+        document.getElementById('view-politica-creditos').classList.add('active');
+      } else if (aba === 'politica-denuncias') {
+        document.getElementById('view-politica-denuncias').classList.add('active');
+      } else if (aba === 'politica-cookies') {
+        document.getElementById('view-politica-cookies').classList.add('active');
+      } else if (aba === 'notificacoes') {
+        document.getElementById('view-notificacoes').classList.add('active');
+        document.getElementById('btn-nav-notificacoes').classList.add('active');
+        carregarNotificacoesTela();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function carregarMelhoresPraticas() {
+      const elPais = document.getElementById('praticasContainerPais');
+      const elForn = document.getElementById('praticasContainerFornecedor');
+
+      if (usuarioAtual && usuarioAtual.tipo === 'pai') {
+        elPais.style.display = 'block';
+        elForn.style.display = 'none';
+      } else {
+        elPais.style.display = 'none';
+        elForn.style.display = 'block';
+      }
+    }
+
+    function irParaOportunidade(festaId, categoria) {
+      trocarAba('mural');
+      
+      const chks = document.querySelectorAll('.chk-categoria-mural');
+      chks.forEach(c => {
+        c.checked = (c.value === categoria);
+      });
+      
+      renderizarMuralCompleto();
+
+      setTimeout(() => {
+        const el = document.getElementById(`festa-card-${festaId}`);
+        if(el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.style.border = "2px solid var(--accent)";
+          setTimeout(() => el.style.border = "1px solid var(--border-color)", 3000);
+        }
+      }, 200);
+    }
+
+    function toggleUserDropdown(e) { e.stopPropagation(); document.getElementById('userDropdownMenu').classList.toggle('show'); }
+    function closeUserDropdown() { document.getElementById('userDropdownMenu').classList.remove('show'); }
+    window.addEventListener('click', closeUserDropdown);
+
+    document.getElementById('formLogin').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const emailDigitado = document.getElementById('login-email').value;
+      const senhaDigitada = document.getElementById('login-senha').value;
+      const usuarioEncontrado = usuariosCadastrados.find(u => u.email === emailDigitado && u.senha === senhaDigitada);
+
+      if (!usuarioEncontrado) { 
+        exibirModalAviso("⚠️ Erro de Autenticação", "E-mail ou senha incorretos! Verifique suas credenciais.");
+        return; 
+      }
+
+      if (usuarioEncontrado.banido) {
+        exibirModalAviso("🚫 Conta Suspensa/Banida", "Sua conta foi suspensa por descumprimento das Regras de Uso da plataforma.");
+        return;
+      }
+
+      usuarioAtual = usuarioEncontrado;
+      
+      const todosDesbloqueios = JSON.parse(localStorage.getItem('qff_desbloqueios')) || [];
+      minhasOportunidadesDesbloqueadas = todosDesbloqueios.filter(d => d.desbloqueadoPor === usuarioAtual.email);
+
+      salvarDados();
+      atualizarInterfacePosLogin();
+
+      if (proximaAbaAposLogin) {
+        const destino = proximaAbaAposLogin;
+        proximaAbaAposLogin = null;
+        trocarAba(destino);
+      } else {
+        trocarAba('home');
+      }
+    });
+
+    function atualizarInterfacePosLogin() {
+      if(!usuarioAtual) return;
+      document.getElementById('btn-nav-login').style.display = 'none';
+      document.getElementById('btn-nav-pais').style.display = 'none';
+      document.getElementById('btn-nav-fornecedores').style.display = 'none';
+      document.getElementById('userDropdownWrapper').style.display = 'block';
+      document.getElementById('btn-nav-notificacoes').style.display = 'inline-block';
+
+      const textoAval = formatarTextoAvaliacao(usuarioAtual.notaMedia, usuarioAtual.avaliacoesRecebidas);
+      document.getElementById('nav-user-name').innerText = `${usuarioAtual.nome.split(' ')[0]} (${textoAval})`;
+      document.querySelectorAll('.nome-usuario-boasvindas').forEach(el => el.innerText = usuarioAtual.nome);
+
+      const itemHistorico = document.getElementById('dropdown-item-historico');
+
+      if (usuarioAtual.tipo === 'pai') {
+        document.getElementById('btn-nav-criar').style.display = 'inline-block';
+        document.getElementById('btn-nav-mural').style.display = 'none';
+        document.getElementById('dropdown-item-comprar').style.display = 'none';
+        itemHistorico.innerHTML = `<img src="balão.png" alt="Festas Ativas" class="menu-icon-img"> Festas Ativas`;
+      } else {
+        document.getElementById('btn-nav-criar').style.display = 'none';
+        document.getElementById('btn-nav-mural').style.display = 'inline-block';
+        document.getElementById('dropdown-item-comprar').style.display = 'flex';
+        itemHistorico.innerHTML = `<img src="balão.png" alt="Contatos Liberados" class="menu-icon-img"> Contatos Liberados`;
+        
+        if (usuarioAtual.categoria) {
+          document.getElementById('btnMinhaCategoriaFiltro').innerText = `Minha Categoria (${usuarioAtual.categoria.split(' ')[0]})`;
+        }
+        atualizarExibicaoSaldo();
+      }
+      
+      atualizarPendenciasAtalho();
+      atualizarBadgeNotificacoes();
+    }
+
+    function atualizarExibicaoSaldo() {
+      if (usuarioAtual && usuarioAtual.saldoCreditos !== undefined) {
+        const valExibicao = Number.isInteger(usuarioAtual.saldoCreditos) 
+          ? usuarioAtual.saldoCreditos 
+          : usuarioAtual.saldoCreditos.toString().replace('.', ',');
+        document.querySelectorAll('.saldo-creditos-val').forEach(el => el.innerText = valExibicao);
+      }
+    }
+
+    function fazerLogout() {
+      closeUserDropdown();
+      usuarioAtual = null;
+      minhasOportunidadesDesbloqueadas = [];
+      localStorage.removeItem('qff_aba_atual');
+      salvarDados();
+
+      document.getElementById('formLogin').reset();
+
+      document.getElementById('btn-nav-login').style.display = 'inline-block';
+      document.getElementById('btn-nav-pais').style.display = 'inline-block';
+      document.getElementById('btn-nav-fornecedores').style.display = 'inline-block';
+      document.getElementById('btn-nav-notificacoes').style.display = 'none';
+      document.getElementById('btn-nav-criar').style.display = 'none';
+      document.getElementById('btn-nav-mural').style.display = 'none';
+      document.getElementById('userDropdownWrapper').style.display = 'none';
+      trocarAba('home');
+    }
+
+    function atualizarPendenciasAtalho() {
+      if(!usuarioAtual || usuarioAtual.tipo !== 'fornecedor') return;
+      
+      const pendentes = minhasOportunidadesDesbloqueadas.filter(f => f.desbloqueadoPor === usuarioAtual.email && !f.avaliadoPeloFornecedor);
+      const qtdEl = document.getElementById('qtdContatosLiberados');
+      const cardEl = document.getElementById('cardAtalhoPendencias');
+
+      if (qtdEl) qtdEl.innerText = pendentes.length;
+      if (cardEl) {
+        if(pendentes.length === 0) {
+          cardEl.style.display = 'none';
+        } else {
+          cardEl.style.display = 'flex';
+        }
+      }
+    }
+
+    function prepararTelaConfirmacao() {
+      const select = document.getElementById('selectFestaFornecedor');
+      const label = document.getElementById('labelSelecione');
+      const grupoServico = document.getElementById('grupoPrestacaoServico');
+      const grupoComentario = document.getElementById('grupoComentarioContainer');
+      select.innerHTML = '';
+
+      if (usuarioAtual.tipo === 'pai') {
+        label.innerText = 'Selecione a Festa Concluída *';
+        grupoServico.style.display = 'block';
+        grupoComentario.style.display = 'block';
+
+        const minhasFestasAtivas = bancoFestas.filter(f => (f.emailPai === usuarioAtual.email || f.nome === usuarioAtual.nome) && !f.concluida);
+        if (minhasFestasAtivas.length === 0) {
+          select.innerHTML = '<option value="">Nenhuma festa ativa para confirmar</option>';
+        } else {
+          minhasFestasAtivas.forEach(f => {
+            select.innerHTML += `<option value="${f.id}">Festa ${f.tema} (${f.servico})</option>`;
+          });
+        }
+      } else {
+        label.innerText = 'Selecione a Festa / Cliente *';
+        grupoServico.style.display = 'none';
+        grupoComentario.style.display = 'none';
+
+        const pendentes = minhasOportunidadesDesbloqueadas.filter(f => f.desbloqueadoPor === usuarioAtual.email && !f.avaliadoPeloFornecedor);
+        if (pendentes.length === 0) {
+          select.innerHTML = '<option value="">Nenhuma pendência de avaliação no momento</option>';
+        } else {
+          pendentes.forEach(f => {
+            select.innerHTML += `<option value="${f.id}">${f.nome} - Festa ${f.tema}</option>`;
+          });
+        }
+      }
+    }
+
+    document.getElementById('formConfirmacaoAvaliacao').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const targetVal = document.getElementById('selectFestaFornecedor').value;
+      const statusFechado = document.getElementById('statusFechamento').value;
+
+      if (!targetVal) {
+        exibirModalAviso("⚠️ Atenção", "Nenhuma opção selecionada para avaliação.");
+        return;
+      }
+
+      let mensagemResultado = "Avaliação enviada e registrada no sistema com sucesso!";
+
+      if (usuarioAtual.tipo === 'pai') {
+        const festaAlvo = bancoFestas.find(f => f.id == targetVal);
+        if (festaAlvo) {
+          festaAlvo.concluida = true;
+        }
+
+        salvarDados();
+        atualizarInterfacePosLogin();
+        exibirModalAviso("✅ Sucesso!", "Sua festa foi marcada como concluída e movida para o histórico!", "OK", function() {
+          trocarAba('home');
+        });
+
+      } else {
+        const festaAlvo = bancoFestas.find(f => f.id == targetVal);
+        const itemMinhas = minhasOportunidadesDesbloqueadas.find(m => m.id == targetVal && m.desbloqueadoPor === usuarioAtual.email);
+
+        if (festaAlvo) {
+          festaAlvo.avaliadoPeloFornecedor = true;
+          festaAlvo.concluida = true;
+          festaAlvo.notaCliente = notasForm.starAtendimento;
+
+          if(itemMinhas) itemMinhas.avaliadoPeloFornecedor = true;
+
+          const clienteUser = usuariosCadastrados.find(u => u.email === festaAlvo.emailPai);
+          if(clienteUser) {
+            const qtd = clienteUser.avaliacoesRecebidas || 0;
+            if (qtd === 0) {
+              clienteUser.notaMedia = notasForm.starAtendimento;
+            } else {
+              clienteUser.notaMedia = ((clienteUser.notaMedia * qtd) + notasForm.starAtendimento) / (qtd + 1);
+            }
+            clienteUser.avaliacoesRecebidas = qtd + 1;
+            
+            festaAlvo.notaCliente = clienteUser.notaMedia;
+            festaAlvo.avaliacoesClienteCount = clienteUser.avaliacoesRecebidas;
+
+            enviarNotificacao(clienteUser.email, 'site', 'Avaliação do Fornecedor', `O fornecedor ${usuarioAtual.nome} confirmou a negociação e avaliou o seu atendimento.`);
+          }
+
+          if (statusFechado === 'nao_fechado') {
+            const creditosInvestidos = itemMinhas ? (itemMinhas.creditosGastos || 1) : 1;
+            
+            const totalGratuitosConcedidos = usuarioAtual.totalCreditosGratuitosRecebidos || 3;
+            const saldoAtual = usuarioAtual.saldoCreditos || 0;
+
+            const saldoGratuitoRestante = Math.min(saldoAtual, totalGratuitosConcedidos);
+            const saldoCreditosComprados = Math.max(0, saldoAtual - saldoGratuitoRestante);
+
+            if (saldoCreditosComprados > 0) {
+              const cashbackDevolvido = creditosInvestidos * 0.5;
+              usuarioAtual.saldoCreditos += cashbackDevolvido;
+              const cashbackTexto = cashbackDevolvido.toString().replace('.', ',');
+              
+              mensagemResultado = `Avaliação concluída! Como o negócio não foi fechado, você recebeu **${cashbackTexto} crédito(s) de cashback (50% do investimento)** referentes aos seus créditos adquiridos.`;
+              enviarNotificacao(usuarioAtual.email, 'site', 'Cashback de Créditos Recebido', `Você recebeu ${cashbackTexto} crédito(s) de volta referentes à negociação não fechada da festa ${festaAlvo.tema}.`);
+            } else {
+              mensagemResultado = `Avaliação concluída! Conforme a Política de Créditos, o benefício de cashback de 50% é exclusivo para créditos adquiridos por compra na plataforma (créditos gratuitos promocionais do cadastro não possuem cashback).`;
+            }
+          }
+        }
+
+        salvarDados();
+        atualizarInterfacePosLogin();
+
+        const pendentesRestantes = minhasOportunidadesDesbloqueadas.filter(f => f.desbloqueadoPor === usuarioAtual.email && !f.avaliadoPeloFornecedor);
+
+        if (pendentesRestantes.length > 0) {
+          exibirModalAviso("✅ Avaliação Registrada", mensagemResultado, "Avaliar Próxima Oportunidade", function() {
+            prepararTelaConfirmacao();
+          });
+        } else {
+          exibirModalAviso("✅ Sucesso!", mensagemResultado + "<br><br>Você concluiu todas as suas avaliações pendentes!", "Ir para Página Inicial", function() {
+            trocarAba('home');
+          });
+        }
+      }
+    });
+
+    function simularLembreteWpp(tipo) {
+      if (tipo === 'pai') {
+        const msg = `👋 Olá! Lembramos de você. Não se esqueça de confirmar se fechou contrato para a sua festa e avaliar o fornecedor no Quem Faz Festa.`;
+        enviarNotificacao(usuarioAtual.email, 'whatsapp', 'Lembrete WhatsApp', msg);
+        exibirModalAviso("💬 Notificação WhatsApp", msg, "Acessar Plataforma para Avaliar", function() {
+          trocarAba('confirmar-festa');
+        });
+      } else {
+        const msg = `👋 Olá, parceiro! Você já fechou negócio com as oportunidades recentes? Acesse para confirmar o fechamento e avaliar o cliente para receber 50% de cashback caso não tenha fechado.`;
+        enviarNotificacao(usuarioAtual.email, 'whatsapp', 'Lembrete WhatsApp', msg);
+        exibirModalAviso("💬 Notificação WhatsApp", msg, "Acessar Plataforma para Confirmar", function() {
+          trocarAba('confirmar-festa');
+        });
+      }
+    }
+
+    function desbloquearContato(festaId) {
+      const festa = bancoFestas.find(f => f.id === festaId);
+      if (!festa) return;
+
+      const jaDesbloqueado = minhasOportunidadesDesbloqueadas.some(f => f.id === festaId && f.desbloqueadoPor === usuarioAtual.email);
+
+      if (jaDesbloqueado) {
+        window.open(`https://wa.me/55${festa.whatsapp.replace(/\D/g,'')}`, '_blank');
+        return;
+      }
+
+      const custoNecessario = calcularCustoCreditos(festa.orcamento);
+
+      if (!usuarioAtual || usuarioAtual.saldoCreditos < custoNecessario) {
+        exibirModalAviso("🪙 Saldo Insuficiente", `Esta oportunidade exige <strong>${custoNecessario} crédito(s)</strong> para abertura (Faixa: ${festa.orcamento}). Adquira um pacote de créditos para continuar.`, "Comprar Créditos", function() {
+          trocarAba('comprar-creditos');
+        });
+        return;
+      }
+
+      exibirModalConfirmacao("🔓 Confirmar Desbloqueio", `Deseja realmente abrir esta oportunidade ao preço de <strong>${custoNecessario} crédito(s)</strong>?`, function() {
+        if (festa.desbloqueios < festa.maxDesbloqueios) {
+          usuarioAtual.saldoCreditos -= custoNecessario;
+          usuarioAtual.totalDesbloqueiosRealizados = (usuarioAtual.totalDesbloqueiosRealizados || 0) + 1;
+          
+          festa.desbloqueios += 1;
+          festa.liberado = true;
+          
+          minhasOportunidadesDesbloqueadas.push({
+            ...festa, 
+            desbloqueadoPor: usuarioAtual.email,
+            liberado: true,
+            creditosGastos: custoNecessario
+          });
+
+          const comentExibido = usuarioAtual.ultimoComentario || "Sem comentários recentes.";
+          const textoNotaForn = formatarTextoAvaliacao(usuarioAtual.notaMedia, usuarioAtual.avaliacoesRecebidas);
+
+          const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico}. Ele possui nota ${textoNotaForn} e entrará em contato em breve.`;
+          
+          enviarNotificacao(festa.emailPai, 'whatsapp', 'Fornecedor Interessado', msgCliente);
+          enviarNotificacao(festa.emailPai, 'email', 'Orçamento a Caminho!', msgCliente);
+          enviarNotificacao(festa.emailPai, 'site', 'Contato Visualizado', msgCliente);
+
+          salvarDados();
+          atualizarInterfacePosLogin();
+          
+          const abaAtual = localStorage.getItem('qff_aba_atual');
+          if(abaAtual === 'mural') renderizarMuralCompleto();
+          else renderizarMuralDestaque();
+
+          const msgNotificacaoModal = `📲 <strong>Notificação Enviada ao Cliente (${festa.nome}):</strong><br><br>` +
+            `"O fornecedor <strong>${usuarioAtual.nome}</strong> visualizou seu pedido.<br>` +
+            `⭐ <strong>Nota do fornecedor:</strong> ${textoNotaForn}<br>` +
+            `💬 <strong>Último comentário recebido:</strong> <em>'${comentExibido}'</em><br><br>` +
+            `Ele entrará em contato com você via WhatsApp em breve!"`;
+
+          exibirModalAviso("💬 WhatsApp Notificação", msgNotificacaoModal, "Entendido (Abrir WhatsApp)", function() {
+            window.open(`https://wa.me/55${festa.whatsapp.replace(/\D/g,'')}`, '_blank');
+          });
+        } else {
+          exibirModalAviso("🔒 Vagas Esgotadas", "Esta oportunidade já atingiu o limite de 4 fornecedores.");
+        }
+      });
+    }
+
+    function carregarDashboardPais() {
+      const container = document.getElementById('resumoFestasPaisContainer');
+      container.innerHTML = '';
+      
+      const minhasFestas = bancoFestas.filter(f => (f.emailPai === usuarioAtual.email || f.nome === usuarioAtual.nome) && !f.concluida);
+
+      if (minhasFestas.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma festa ativa cadastrada.</p>';
+        return;
+      }
+
+      minhasFestas.forEach(p => {
+        const temaTxt = p.tema || "Ainda não definido";
+        const horarioTxt = p.horario || "Ainda não definido";
+        const pessoasTxt = p.qtdPessoas ? `${p.qtdPessoas} pessoas` : "Não informado";
+        const comentTxt = p.comentarios ? `<div class="detalhe-item full-width"><strong>OBSERVAÇÕES / COMENTÁRIOS</strong><span>${p.comentarios}</span></div>` : '';
+
+        container.innerHTML += `<div class="festa-card">
+          <div class="festa-header"><span class="tag-servico">${p.servico}</span><span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;"><img src="balão.png" alt="Balão" class="menu-icon-img"> ${p.cidade} (${p.bairro})</span></div>
+          <div class="festa-detalhes">
+            <div class="detalhe-item"><strong>TEMA</strong><span>${temaTxt}</span></div>
+            <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${p.orcamento}</span></div>
+            <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(p.data)} às ${horarioTxt}</span></div>
+            <div class="detalhe-item"><strong>CONVIDADOS</strong><span>${pessoasTxt}</span></div>
+            ${comentTxt}
+            <div class="detalhe-item full-width"><strong>STATUS</strong><span style="color:var(--primary); font-weight:700;">${p.desbloqueios} de ${p.maxDesbloqueios} fornecedores te chamaram</span></div>
+          </div>
+        </div>`;
+      });
+    }
+
+    function carregarDashboardFornecedor() {
+      atualizarPendenciasAtalho();
+      renderizarMuralDestaque();
+    }
+
+    function filtrarMural(cat, btn) {
+      categoriaFiltroAtiva = cat;
+      document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('active'));
+      if(btn) btn.classList.add('active');
+      renderizarMuralDestaque();
+    }
+
+    function filtrarMinhaCategoria(btn) {
+      if (usuarioAtual && usuarioAtual.categoria) {
+        filtrarMural(usuarioAtual.categoria, btn);
+      } else {
+        exibirModalAviso("⚠️ Categoria Indefinida", "Defina sua categoria principal na área 'Minha Conta' para utilizar esse filtro.");
+      }
+    }
+
+    function renderizarMuralDestaque() {
+      const container = document.getElementById('muralDestaqueContainer');
+      container.innerHTML = '';
+
+      let festasExibicao = categoriaFiltroAtiva === 'Todos' 
+        ? bancoFestas.filter(f => !f.concluida)
+        : bancoFestas.filter(f => (f.servico === categoriaFiltroAtiva || (categoriaFiltroAtiva === 'Outro' && f.servico.startsWith('Outro'))) && !f.concluida);
+
+      if (festasExibicao.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma oportunidade recente encontrada para esta categoria.</p>';
+        return;
+      }
+
+      const categoriasAgrupadas = {};
+      festasExibicao.forEach(festa => {
+        if (!categoriasAgrupadas[festa.servico]) {
+          categoriasAgrupadas[festa.servico] = [];
+        }
+        if (categoriasAgrupadas[festa.servico].length < 3) {
+          categoriasAgrupadas[festa.servico].push(festa);
+        }
+      });
+
+      for (let cat in categoriasAgrupadas) {
+        if (categoriaFiltroAtiva === 'Todos') {
+          const tituloCat = document.createElement('div');
+          tituloCat.className = 'categoria-grupo-titulo';
+          tituloCat.innerText = cat;
+          container.appendChild(tituloCat);
+        }
+
+        categoriasAgrupadas[cat].forEach(festa => {
+          container.appendChild(criarCardFesta(festa));
+        });
+      }
+    }
+
+    function renderizarMuralCompleto() {
+      const container = document.getElementById('muralContainer');
+      container.innerHTML = '';
+
+      const checkboxes = document.querySelectorAll('.chk-categoria-mural:checked');
+      const categoriasSelecionadas = Array.from(checkboxes).map(cb => cb.value);
+
+      let festasFiltradas = bancoFestas.filter(f => !f.concluida);
+      if (categoriasSelecionadas.length > 0) {
+        festasFiltradas = festasFiltradas.filter(f => {
+          if (categoriasSelecionadas.includes('Outro') && f.servico.startsWith('Outro')) {
+            return true;
+          }
+          return categoriasSelecionadas.includes(f.servico);
+        });
+      }
+
+      if (festasFiltradas.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma oportunidade encontrada para a seleção de categorias atual.</p>';
+        return;
+      }
+
+      const categoriasAgrupadas = {};
+      festasFiltradas.forEach(festa => {
+        if (!categoriasAgrupadas[festa.servico]) {
+          categoriasAgrupadas[festa.servico] = [];
+        }
+        categoriasAgrupadas[festa.servico].push(festa);
+      });
+
+      for (let cat in categoriasAgrupadas) {
+        const tituloCat = document.createElement('div');
+        tituloCat.className = 'categoria-grupo-titulo';
+        tituloCat.innerText = cat;
+        container.appendChild(tituloCat);
+
+        categoriasAgrupadas[cat].forEach(festa => {
+          container.appendChild(criarCardFesta(festa));
+        });
+      }
+    }
+
+    function criarCardFesta(festa) {
+      const card = document.createElement('div');
+      card.className = 'festa-card';
+      card.id = `festa-card-${festa.id}`;
+      const esgotado = festa.desbloqueios >= festa.maxDesbloqueios;
+      
+      const textoNota = formatarTextoAvaliacao(festa.notaCliente, festa.avaliacoesClienteCount);
+      
+      const jaDesbloqueado = usuarioAtual 
+        ? minhasOportunidadesDesbloqueadas.some(m => m.id === festa.id && m.desbloqueadoPor === usuarioAtual.email)
+        : false;
+      
+      const custoNecessario = calcularCustoCreditos(festa.orcamento);
+
+      let botaoAcao = '';
+      if (jaDesbloqueado) {
+        botaoAcao = `<button class="btn-ja-liberado" onclick="desbloquearContato(${festa.id})">✅ Abrir WhatsApp (${festa.whatsapp})</button>`;
+      } else {
+        botaoAcao = `<button class="btn-desbloquear" onclick="desbloquearContato(${festa.id})" ${esgotado ? 'disabled' : ''}>
+          ${esgotado ? 'Vagas Esgotadas' : `🔓 Desbloquear WhatsApp (${custoNecessario} Cred.)`}
+        </button>`;
+      }
+
+      const temaTxt = festa.tema || "Ainda não definido";
+      const horarioTxt = festa.horario || "Ainda não definido";
+      const pessoasTxt = festa.qtdPessoas ? `${festa.qtdPessoas} pessoas` : "Não informado";
+      const comentTxt = festa.comentarios ? `<div class="detalhe-item full-width"><strong>OBSERVAÇÕES / DETALHES</strong><span>${festa.comentarios}</span></div>` : '';
+
+      card.innerHTML = `
+        <div class="festa-header"><span class="tag-servico">${festa.servico}</span></div>
+        <div class="festa-detalhes">
+          <div class="detalhe-item">
+            <strong>CLIENTE / AVALIAÇÃO</strong>
+            <span>${festa.nome} <br><span style="color:${(festa.avaliacoesClienteCount > 0) ? '#059669' : 'var(--text-muted)'}; font-weight:700;">${textoNota}</span></span>
+          </div>
+          <div class="detalhe-item"><strong>TEMA</strong><span>${temaTxt}</span></div>
+          <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${festa.orcamento}</span></div>
+          <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(festa.data)} às ${horarioTxt}</span></div>
+          <div class="detalhe-item"><strong>CONVIDADOS</strong><span>${pessoasTxt}</span></div>
+          ${comentTxt}
+        </div>
+        <div class="festa-footer">
+          <span>🔒 ${festa.desbloqueios}/${festa.maxDesbloqueios} liberados</span>
+          ${botaoAcao}
+        </div>`;
+      return card;
+    }
+
+    function carregarNotificacoesTela() {
+      const container = document.getElementById('listaNotificacoesContainer');
+      container.innerHTML = '';
+
+      if (!usuarioAtual) return;
+
+      const minhasNotifs = notificacoesBanco.filter(n => n.destinatarioEmail === usuarioAtual.email);
+
+      if (minhasNotifs.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted);">Sua caixa de notificações está vazia.</p>';
+        return;
+      }
+
+      minhasNotifs.forEach(n => {
+        n.lida = true;
+        let tagClass = 'tag-site';
+        let tagNome = 'Site';
+
+        if(n.tipoCanal === 'whatsapp') { tagClass = 'tag-wpp'; tagNome = 'WhatsApp'; }
+        else if(n.tipoCanal === 'email') { tagClass = 'tag-email'; tagNome = 'E-mail'; }
+
+        let botaoLink = '';
+        if (n.festaIdTarget) {
+          botaoLink = `<button class="btn-link-notif" onclick="irParaOportunidade(${n.festaIdTarget}, '${n.categoriaTarget}')">🔗 Ver Oportunidade no Mural →</button>`;
+        }
+
+        container.innerHTML += `
+          <div class="notif-card-item">
+            <div class="notif-header-line">
+              <span class="notif-tag ${tagClass}">${tagNome}</span>
+              <span style="color:var(--text-muted);">${n.dataHora}</span>
+            </div>
+            <strong style="color:var(--primary-dark); font-size:1rem;">${n.titulo}</strong>
+            <p style="font-size:0.9rem; color:var(--text-main);">${n.mensagem}</p>
+            ${botaoLink}
+          </div>`;
+      });
+
+      salvarDados();
+      atualizarBadgeNotificacoes();
+    }
+
+    document.getElementById('formCadastroPais').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const senha = document.getElementById('cad-pai-senha').value;
+      if (senha !== document.getElementById('cad-pai-senha-confirma').value) { 
+        exibirModalAviso("⚠️ Senhas Incompatíveis", "As senhas digitadas não coincidem. Digite novamente.");
+        return; 
+      }
+
+      const aceitouTermos = document.getElementById('cad-pai-aceite-termos').checked;
+      if (!aceitouTermos) {
+        exibirModalAviso("⚠️ Aceite Obrigatório", "Você precisa aceitar os Termos de Uso e Políticas da plataforma para continuar.");
+        return;
+      }
+
+      minhasOportunidadesDesbloqueadas = [];
+
+      usuarioAtual = {
+        tipo: 'pai',
+        nome: document.getElementById('cad-pai-nome').value,
+        email: document.getElementById('cad-pai-email').value,
+        whatsapp: document.getElementById('cad-pai-whatsapp').value,
+        senha: senha,
+        notaMedia: null,
+        avaliacoesRecebidas: 0,
+        banido: false
+      };
+      usuariosCadastrados.push(usuarioAtual);
+      salvarDados();
+      atualizarInterfacePosLogin();
+      trocarAba('home');
+    });
+
+    /* CADASTRO DO FORNECEDOR COM O MODAL DE 12 CRÉDITOS E FORMATAÇÃO LIMPA */
+    document.getElementById('formCadastroFornecedor').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const senha = document.getElementById('cad-forn-senha').value;
+      if (senha !== document.getElementById('cad-forn-senha-confirma').value) { 
+        exibirModalAviso("⚠️ Senhas Incompatíveis", "As senhas digitadas não coincidem. Digite novamente.");
+        return; 
+      }
+
+      const aceitouTermos = document.getElementById('cad-forn-aceite-termos').checked;
+      if (!aceitouTermos) {
+        exibirModalAviso("⚠️ Aceite Obrigatório", "Você precisa aceitar os Termos de Uso e Políticas da plataforma para continuar.");
+        return;
+      }
+
+      minhasOportunidadesDesbloqueadas = [];
+
+      const totalFornecedoresAtuais = usuariosCadastrados.filter(u => u.tipo === 'fornecedor').length;
+      const ehPrimeiros100 = totalFornecedoresAtuais < 100;
+      const creditosIniciaisConcedidos = ehPrimeiros100 ? 12 : 3;
+
+      usuarioAtual = {
+        tipo: 'fornecedor',
+        nome: document.getElementById('cad-forn-nome').value,
+        email: document.getElementById('cad-forn-email').value,
+        whatsapp: document.getElementById('cad-forn-whatsapp').value,
+        categoria: document.getElementById('cad-forn-categoria').value,
+        senha: senha,
+        saldoCreditos: creditosIniciaisConcedidos,
+        totalCreditosGratuitosRecebidos: creditosIniciaisConcedidos,
+        totalDesbloqueiosRealizados: 0,
+        notaMedia: null,
+        avaliacoesRecebidas: 0,
+        ultimoComentario: "Novo na plataforma — ainda sem avaliações",
+        banido: false
+      };
+      usuariosCadastrados.push(usuarioAtual);
+      salvarDados();
+      atualizarInterfacePosLogin();
+
+      const mensagemBoasVindas = ehPrimeiros100
+        ? `Parabéns! Você é um dos primeiros 100 fornecedores cadastrados e ganhou <strong>12 créditos gratuitos</strong> de boas-vindas!`
+        : `Cadastro realizado com sucesso! Você recebeu <strong>3 créditos gratuitos</strong> para experimentar o Mural de Oportunidades.`;
+
+      exibirModalAviso("🎉 Bônus de Cadastro", mensagemBoasVindas, "Acessar Plataforma", function() {
+        trocarAba('home');
+      });
+    });
+
+    document.getElementById('formFesta').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let servicoSel = document.getElementById('servico').value;
+      if (servicoSel === 'Outro') {
+        const especificado = document.getElementById('servicoOutroEspecifique').value.trim();
+        servicoSel = especificado ? `Outro: ${especificado}` : 'Outro';
+      }
+
+      const bairroSel = document.getElementById('bairro').value;
+      const cidadeSel = document.getElementById('cidade').value;
+      const orcamentoSel = document.getElementById('orcamento').value;
+      
+      const chkTemaNaoDef = document.getElementById('chk-tema-nao-definido').checked;
+      const temaValor = chkTemaNaoDef ? "Ainda não definido" : document.getElementById('tema').value;
+
+      const chkHorarioNaoDef = document.getElementById('chk-horario-nao-definido').checked;
+      const horarioValor = chkHorarioNaoDef ? "Ainda não definido" : document.getElementById('horario').value;
+
+      const qtdPessoasValor = document.getElementById('qtdPessoas').value;
+      const comentariosValor = document.getElementById('comentariosAdicionais').value.trim();
+
+      const idFestaCriada = Date.now();
+
+      const novaFesta = {
+        id: idFestaCriada,
+        emailPai: usuarioAtual.email,
+        servico: servicoSel,
+        tema: temaValor,
+        data: document.getElementById('data').value,
+        horario: horarioValor,
+        qtdPessoas: qtdPessoasValor,
+        cidade: cidadeSel,
+        bairro: bairroSel,
+        orcamento: orcamentoSel,
+        comentarios: comentariosValor,
+        nome: usuarioAtual.nome,
+        whatsapp: usuarioAtual.whatsapp,
+        notaCliente: usuarioAtual.notaMedia,
+        avaliacoesClienteCount: usuarioAtual.avaliacoesRecebidas || 0,
+        desbloqueios: 0,
+        maxDesbloqueios: 4,
+        liberado: false,
+        avaliadoPeloFornecedor: false,
+        concluida: false
+      };
+      bancoFestas.unshift(novaFesta);
+
+      const fornecedoresElegiveis = usuariosCadastrados.filter(u => u.tipo === 'fornecedor' && (u.categoria === servicoSel || servicoSel.startsWith('Outro')));
+      const msgNotificacao = `Nova oportunidade publicada! Cliente procura ${servicoSel} em ${bairroSel} (${cidadeSel}) com orçamento de ${orcamentoSel}. Clique para visualizar e desbloquear o contato.`;
+
+      fornecedoresElegiveis.forEach(forn => {
+        enviarNotificacao(forn.email, 'whatsapp', 'Nova Oportunidade no Mural', msgNotificacao, idFestaCriada, servicoSel);
+        enviarNotificacao(forn.email, 'email', 'Nova Oportunidade Cadastrada!', msgNotificacao, idFestaCriada, servicoSel);
+        enviarNotificacao(forn.email, 'site', 'Alerta de Mural', msgNotificacao, idFestaCriada, servicoSel);
+      });
+
+      salvarDados();
+      exibirModalAviso("🎈 Oferta Publicada", "Seu pedido foi publicado no mural com sucesso! Todos os fornecedores da categoria receberam a notificação com link direto.", "OK", function() {
+        trocarAba('home');
+      });
+    });
+
+    function renderizarMural() { renderizarMuralCompleto(); }
+
+    function comprarCreditos(pacote, qtd, preco) {
+      exibirModalConfirmacao("💳 Pacote de Créditos", `Confirmar compra do <strong>${pacote}</strong> por <strong>R$ ${preco}</strong>?`, function() {
+        usuarioAtual.saldoCreditos += qtd;
+        salvarDados();
+        atualizarExibicaoSaldo();
+        exibirModalAviso("🪙 Créditos Adicionados", `${qtd} créditos foram adicionados à sua conta com sucesso!`, "OK", function() {
+          trocarAba('home');
+        });
+      });
+    }
+
+    function carregarDadosConta() {
+      if (usuarioAtual) {
+        document.getElementById('account-nome').value = usuarioAtual.nome;
+        document.getElementById('account-email').value = usuarioAtual.email;
+        document.getElementById('account-whatsapp').value = usuarioAtual.whatsapp || "";
+      }
+    }
+
+    document.getElementById('formAtualizarConta').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const novaSenha = document.getElementById('account-nova-senha').value;
+      const confirmaNovaSenha = document.getElementById('account-nova-senha-confirma').value;
+
+      if (novaSenha !== "" || confirmaNovaSenha !== "") {
+        if (novaSenha !== confirmaNovaSenha) {
+          exibirModalAviso("⚠️ Erro nas Senhas", "As novas senhas informadas não coincidem!");
+          return;
+        }
+        usuarioAtual.senha = novaSenha;
+      }
+
+      usuarioAtual.nome = document.getElementById('account-nome').value;
+      usuarioAtual.whatsapp = document.getElementById('account-whatsapp').value;
+      
+      const idx = usuariosCadastrados.findIndex(u => u.email === usuarioAtual.email);
+      if (idx !== -1) usuariosCadastrados[idx] = usuarioAtual;
+
+      salvarDados();
+      atualizarInterfacePosLogin();
+      exibirModalAviso("✅ Dados Atualizados", "Seus dados cadastrais e WhatsApp foram salvos com sucesso!");
+    });
+
+    function carregarHistoricoTela() {
+      if(!usuarioAtual) return;
+
+      const histContainer = document.getElementById('historicoContainerTela');
+      const titulo = document.getElementById('titulo-historico-tela');
+      const subtitulo = document.getElementById('subtitulo-historico-tela');
+      histContainer.innerHTML = '';
+
+      if (usuarioAtual.tipo === 'pai') {
+        titulo.innerText = "Minhas Festas Ativas";
+        subtitulo.innerText = "Acompanhe todos os seus pedidos publicados e o número de fornecedores interessados.";
+
+        const minhasFestas = bancoFestas.filter(f => (f.emailPai === usuarioAtual.email || f.nome === usuarioAtual.nome) && !f.concluida);
+
+        if (minhasFestas.length === 0) {
+          histContainer.innerHTML = '<p style="color:var(--text-muted);">Você não possui festas ativas no momento.</p>';
+          return;
+        }
+
+        minhasFestas.forEach(p => {
+          const temaTxt = p.tema || "Ainda não definido";
+          const horarioTxt = p.horario || "Ainda não definido";
+          const pessoasTxt = p.qtdPessoas ? `${p.qtdPessoas} pessoas` : "Não informado";
+          const comentTxt = p.comentarios ? `<div class="detalhe-item full-width"><strong>OBSERVAÇÕES / DETALHES</strong><span>${p.comentarios}</span></div>` : '';
+
+          histContainer.innerHTML += `
+            <div class="festa-card">
+              <div class="festa-header"><span class="tag-servico">${p.servico}</span><span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;"><img src="balão.png" alt="Balão" class="menu-icon-img"> ${p.cidade} (${p.bairro})</span></div>
+              <div class="festa-detalhes">
+                <div class="detalhe-item"><strong>TEMA</strong><span>${temaTxt}</span></div>
+                <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${p.orcamento}</span></div>
+                <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(p.data)} às ${horarioTxt}</span></div>
+                <div class="detalhe-item"><strong>CONVIDADOS</strong><span>${pessoasTxt}</span></div>
+                ${comentTxt}
+                <div class="detalhe-item full-width"><strong>FORNECEDORES INTERESSADOS</strong><span style="color:var(--primary); font-weight:700;">${p.desbloqueios} de ${p.maxDesbloqueios} te chamaram</span></div>
+              </div>
+            </div>`;
+        });
+      } else {
+        titulo.innerText = "Contatos Liberados";
+        subtitulo.innerText = "Acesse diretamente o WhatsApp dos contratantes cujas vagas você desbloqueou.";
+
+        const pendentes = minhasOportunidadesDesbloqueadas.filter(o => o.desbloqueadoPor === usuarioAtual.email && !o.avaliadoPeloFornecedor);
+
+        if (pendentes.length === 0) {
+          histContainer.innerHTML = '<p style="color:var(--text-muted);">Você não possui contatos pendentes de avaliação.</p>';
+          return;
+        }
+
+        pendentes.forEach(o => {
+          const temaTxt = o.tema || "Ainda não definido";
+          const horarioTxt = o.horario || "Ainda não definido";
+          const pessoasTxt = o.qtdPessoas ? `${o.qtdPessoas} pessoas` : "Não informado";
+          const comentTxt = o.comentarios ? `<div class="detalhe-item full-width"><strong>OBSERVAÇÕES / DETALHES</strong><span>${o.comentarios}</span></div>` : '';
+
+          histContainer.innerHTML += `
+            <div class="festa-card">
+              <div class="festa-header"><span class="tag-servico">${o.servico}</span><span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;"><img src="balão.png" alt="Balão" class="menu-icon-img"> ${o.cidade} (${o.bairro})</span></div>
+              <div class="festa-detalhes">
+                <div class="detalhe-item"><strong>CLIENTE</strong><span>${o.nome}</span></div>
+                <div class="detalhe-item"><strong>TEMA</strong><span>${o.tema || "Ainda não definido"}</span></div>
+                <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${o.orcamento}</span></div>
+                <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(o.data)} às ${horarioTxt}</span></div>
+                <div class="detalhe-item"><strong>CONVIDADOS</strong><span>${pessoasTxt}</span></div>
+                ${comentTxt}
+              </div>
+              <a href="https://wa.me/55${o.whatsapp.replace(/\D/g,'')}" target="_blank" class="whatsapp-revelado">📱 Abrir Conversa no WhatsApp (${o.whatsapp})</a>
+            </div>`;
+        });
+      }
+    }
+
+    function carregarHistoricoConcluidas() {
+      if(!usuarioAtual) return;
+      const container = document.getElementById('historicoConcluidasContainer');
+      container.innerHTML = '';
+
+      if (usuarioAtual.tipo === 'pai') {
+        const concluidas = bancoFestas.filter(f => (f.emailPai === usuarioAtual.email || f.nome === usuarioAtual.nome) && f.concluida);
+
+        if (concluidas.length === 0) {
+          container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma festa concluída encontrada no histórico.</p>';
+          return;
+        }
+
+        concluidas.forEach(p => {
+          container.innerHTML += `
+            <div class="festa-card" style="opacity: 0.85;">
+              <div class="festa-header"><span class="tag-servico">${p.servico}</span><span style="color:#059669; font-weight:700; font-size:0.85rem;">✅ Festa Concluída</span></div>
+              <div class="festa-detalhes">
+                <div class="detalhe-item"><strong>TEMA</strong><span>${p.tema || "Ainda não definido"}</span></div>
+                <div class="detalhe-item"><strong>LOCAL</strong><span>${p.cidade} (${p.bairro})</span></div>
+                <div class="detalhe-item"><strong>DATA</strong><span>${formatarDataBR(p.data)}</span></div>
+              </div>
+            </div>`;
+        });
+      } else {
+        const concluidasForn = minhasOportunidadesDesbloqueadas.filter(o => o.desbloqueadoPor === usuarioAtual.email && o.avaliadoPeloFornecedor);
+
+        if (concluidasForn.length === 0) {
+          container.innerHTML = '<p style="color:var(--text-muted);">Nenhum trabalho concluído/avaliado no histórico.</p>';
+          return;
+        }
+
+        concluidasForn.forEach(o => {
+          container.innerHTML += `
+            <div class="festa-card" style="opacity: 0.85;">
+              <div class="festa-header"><span class="tag-servico">${o.servico}</span><span style="color:#059669; font-weight:700; font-size:0.85rem;">✅ Avaliação Concluída</span></div>
+              <div class="festa-detalhes">
+                <div class="detalhe-item"><strong>CLIENTE</strong><span>${o.nome}</span></div>
+                <div class="detalhe-item"><strong>TEMA</strong><span>${o.tema || "Ainda não definido"}</span></div>
+                <div class="detalhe-item"><strong>DATA</strong><span>${formatarDataBR(o.data)}</span></div>
+              </div>
+            </div>`;
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+      verificarBannerCookies();
+      if (usuarioAtual) {
+        const todosDesbloqueios = JSON.parse(localStorage.getItem('qff_desbloqueios')) || [];
+        minhasOportunidadesDesbloqueadas = todosDesbloqueios.filter(d => d.desbloqueadoPor === usuarioAtual.email);
+        atualizarInterfacePosLogin();
+        const abaSalva = localStorage.getItem('qff_aba_atual') || 'home';
+        trocarAba(abaSalva);
+      }
+    });
+  </script>
+</body>
+</html>
