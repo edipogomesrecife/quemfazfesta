@@ -81,41 +81,10 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    .menu-icon-img {
-      width: 18px;
-      height: 18px;
-      object-fit: contain;
-      vertical-align: middle;
-      display: inline-block;
-    }
-
-    .saldo-icon-img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-      vertical-align: middle;
-      display: inline-block;
-      margin-right: 4px;
-    }
-
-    .card-title-icon {
-      width: 35px;
-      height: 35px;
-      object-fit: contain;
-      vertical-align: sub;
-      display: inline-block;
-      margin-right: 6px;
-    }
-
-    .faq-title-icon {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      vertical-align: text-bottom;
-      display: inline-block;
-      margin-right: 0px;
-      transform: translateY(22px); 
-    }
+    .menu-icon-img { width: 18px; height: 18px; object-fit: contain; vertical-align: middle; display: inline-block; }
+    .saldo-icon-img { width: 40px; height: 40px; object-fit: contain; vertical-align: middle; display: inline-block; margin-right: 4px; }
+    .card-title-icon { width: 35px; height: 35px; object-fit: contain; vertical-align: sub; display: inline-block; margin-right: 6px; }
+    .faq-title-icon { width: 80px; height: 80px; object-fit: contain; vertical-align: text-bottom; display: inline-block; margin-right: 0px; transform: translateY(22px); }
 
     .badge-notif {
       background-color: var(--accent); color: white; border-radius: 10px;
@@ -153,7 +122,6 @@
     .dropdown-item.logout:hover { background-color: #FEE2E2; }
 
     .main-content { flex: 1; }
-
     .container { max-width: 950px; margin: 30px auto 40px; padding: 0 20px; }
 
     .home-hero { text-align: center; margin-bottom: 40px; }
@@ -222,33 +190,18 @@
     .checkbox-item input { width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary); }
 
     .checkbox-termos-box {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.88rem;
-      color: var(--text-main);
-      background-color: var(--input-bg);
-      padding: 12px 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
+      display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem;
+      color: var(--text-main); background-color: var(--input-bg);
+      padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-color);
       margin-bottom: 20px;
     }
 
     .checkbox-termos-box input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      margin-top: 2px;
-      cursor: pointer;
-      accent-color: var(--primary);
-      flex-shrink: 0;
+      width: 18px; height: 18px; margin-top: 2px; cursor: pointer;
+      accent-color: var(--primary); flex-shrink: 0;
     }
 
-    .checkbox-termos-box a {
-      color: var(--primary-dark);
-      font-weight: 700;
-      text-decoration: underline;
-      cursor: pointer;
-    }
+    .checkbox-termos-box a { color: var(--primary-dark); font-weight: 700; text-decoration: underline; cursor: pointer; }
 
     .card-atalho-liberados {
       background-color: #ECFDF5; border: 1px solid #A7F3D0;
@@ -276,9 +229,7 @@
       border-radius: 10px; font-size: 1rem; background-color: var(--input-bg); color: var(--text-main);
     }
 
-    .checkbox-inline {
-      display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; margin-top: 6px;
-    }
+    .checkbox-inline { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; margin-top: 6px; }
     .checkbox-inline input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
 
     .btn-submit {
@@ -470,25 +421,14 @@
     }
 
     .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
+      display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 14px;
     }
 
     .footer-links a {
-      color: var(--primary-dark);
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: color 0.2s;
+      color: var(--primary-dark); font-weight: 600; text-decoration: none; cursor: pointer; transition: color 0.2s;
     }
 
-    .footer-links a:hover {
-      color: var(--accent);
-      text-decoration: underline;
-    }
+    .footer-links a:hover { color: var(--accent); text-decoration: underline; }
 
     .simulacao-wpp-modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -618,7 +558,7 @@
       <div class="container">
         <div class="dashboard-header">
           <div>
-            <h1 style="font-size: 1.8rem; color: var(--primary-dark);">Olá, <span class="nome-usuario-boasvindas">Camila</span>! 👋</h1>
+            <h1 style="font-size: 1.8rem; color: var(--primary-dark);">Olá, <span class="nome-usuario-boasvindas">Usuário</span>! 👋</h1>
             <p style="color: var(--text-muted);">Vamos organizar a próxima festa?</p>
           </div>
           <button class="cta-big" onclick="trocarAba('criar-festa')"><img src="balão.png" alt="Criar Festa" class="menu-icon-img"> Publicar Nova Festa</button>
@@ -643,7 +583,7 @@
         <div class="fornecedor-bar">
           <div><span>Profissional: <strong class="nome-usuario-boasvindas">Studio Foto & Arte</strong></span></div>
           <div style="display:flex; align-items:center; font-weight:700; color:var(--primary); font-size:1.1rem;">
-            <img src="créditos.png" alt="Créditos" class="saldo-icon-img"> Saldo: <span class="saldo-creditos-val">12</span> Créditos
+            <img src="créditos.png" alt="Créditos" class="saldo-icon-img"> Saldo: <span class="saldo-creditos-val">0</span> Créditos
             <button class="btn-comprar-topo" onclick="trocarAba('comprar-creditos')">+ Comprar Créditos</button>
           </div>
         </div>
@@ -910,26 +850,12 @@
 
           <h2>Dados coletados</h2>
           <p>Podem ser coletados nome, e-mail, telefone/WhatsApp, cidade, bairro, informações do evento, categoria de serviço, orçamento, avaliações, histórico de utilização, dados necessários à conta e registros técnicos de segurança.</p>
-          <p>Quando necessário para verificação ou prevenção de fraude, poderão ser solicitados dados adicionais, observada a finalidade e a base legal aplicável.</p>
 
           <h2>Finalidades</h2>
           <p>Os dados são utilizados para criar e administrar contas, publicar e encaminhar oportunidades, permitir o contato entre as partes, processar créditos, prevenir fraude e abuso, manter a segurança, prestar atendimento, melhorar a plataforma e cumprir obrigações legais.</p>
 
           <h2>Compartilhamento de contato</h2>
           <p>Ao publicar uma oportunidade, o contratante será informado de que seu contato poderá ser disponibilizado a fornecedores elegíveis que desbloquearem a oportunidade, dentro dos limites e condições apresentados na plataforma.</p>
-          <p>Os fornecedores deverão utilizar os dados recebidos exclusivamente para tratar da oportunidade correspondente e não poderão comercializar, repassar ou utilizar os dados para finalidades incompatíveis.</p>
-
-          <h2>Retenção e segurança</h2>
-          <p>Os dados serão mantidos pelo período necessário às finalidades informadas, ao cumprimento de obrigações legais, ao exercício regular de direitos e à prevenção de fraude. A plataforma adotará medidas técnicas e administrativas compatíveis com os riscos do tratamento.</p>
-
-          <h2>Direitos do titular</h2>
-          <p>O titular poderá solicitar, nos limites legais, informações sobre tratamento, acesso, correção, atualização, eliminação ou outras providências previstas na LGPD, utilizando o canal de privacidade informado pela plataforma.</p>
-
-          <h2>Cookies e tecnologias</h2>
-          <p>A plataforma poderá utilizar cookies, armazenamento local e tecnologias semelhantes para autenticação, preferências, segurança, funcionamento e análise. Quando houver tratamento que exija informação ou consentimento específico, serão apresentados os mecanismos correspondentes.</p>
-
-          <h2>Incidentes</h2>
-          <p>Em caso de incidente de segurança com risco ou dano relevante, a plataforma adotará as medidas cabíveis e realizará as comunicações exigidas pela legislação e pela regulamentação aplicável.</p>
 
           <h2>Contato de privacidade</h2>
           <p><strong>Canal responsável:</strong> privacidade@quemfazfesta.com.br<br>
@@ -944,32 +870,8 @@
         <div class="card-politica-conteudo">
           <h1>3. CÓDIGO DE CONDUTA DOS FORNECEDORES</h1>
           <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-
           <h2>Compromisso profissional</h2>
           <p>O fornecedor deve agir com honestidade, cordialidade, transparência e respeito em todas as interações realizadas em razão de oportunidades obtidas no Quem Faz Festa.</p>
-
-          <h2>Primeiro contato</h2>
-          <p>Identifique-se claramente, mencione a oportunidade correspondente, apresente proposta objetiva e respeite a preferência do cliente quanto à comunicação.</p>
-          <p>Não envie mensagens repetitivas, em massa ou insistentes. Se o cliente informar que não tem interesse, interrompa a abordagem.</p>
-
-          <h2>Orçamentos e publicidade</h2>
-          <p>Informações sobre preços, experiência, portfólio, disponibilidade, qualificações, certificados e condições do serviço devem ser verdadeiras.</p>
-          <p>É proibido ocultar custos relevantes, apresentar condições enganosas ou alterar substancialmente a proposta sem informar o cliente.</p>
-
-          <h2>Contrato e execução</h2>
-          <p>O fornecedor é responsável por formalizar a contratação e cumprir integralmente o que foi acordado. Deve possuir capacidade técnica, operacional e legal para prestar o serviço anunciado e obter licenças, autorizações, registros ou seguros exigidos para sua atividade.</p>
-
-          <h2>Dados pessoais</h2>
-          <p>O contato recebido por meio da plataforma deve ser usado exclusivamente para a oportunidade correspondente. É proibido vender, compartilhar, publicar, adicionar a grupos ou utilizar os dados para marketing não autorizado.</p>
-
-          <h2>Proibições</h2>
-          <p>Fraude, falsidade de identidade, múltiplas contas para obter vantagens, manipulação de avaliações, tentativa de burlar créditos, obtenção indevida de contatos, assédio, discriminação, ameaça, conteúdo ofensivo ou qualquer atividade ilícita.</p>
-
-          <h2>Avaliações e reputação</h2>
-          <p>É proibido combinar avaliações falsas, pressionar clientes para alterar notas, retaliar avaliações negativas ou criar avaliações por contas próprias ou de terceiros.</p>
-
-          <h2>Sanções</h2>
-          <p>Infrações poderão gerar advertência, restrição, suspensão temporária ou banimento. Fraudes, ameaças, uso indevido grave de dados e outras condutas graves poderão resultar em banimento imediato.</p>
         </div>
       </div>
     </section>
@@ -980,27 +882,8 @@
         <div class="card-politica-conteudo">
           <h1>4. REGRAS PARA CONTRATANTES</h1>
           <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-
           <h2>Pedidos reais</h2>
           <p>Pedidos publicados devem representar uma necessidade real de contratação. Não são permitidos pedidos fictícios, testes, duplicados ou destinados a coletar contatos.</p>
-
-          <h2>Informações verdadeiras</h2>
-          <p>O contratante deve informar corretamente data, localidade, categoria, orçamento estimado, telefone e demais dados essenciais. Alterações relevantes devem ser atualizadas quando possível.</p>
-
-          <h2>Recebimento de contatos</h2>
-          <p>Ao publicar uma oportunidade, o contratante reconhece que fornecedores elegíveis poderão receber acesso ao contato dentro do limite informado pela plataforma.</p>
-
-          <h2>Comunicação respeitosa</h2>
-          <p>O contratante deve tratar os profissionais com respeito e não utilizar a plataforma para assédio, discriminação, ameaça, fraude ou obtenção indevida de propostas.</p>
-
-          <h2>Contratação segura</h2>
-          <p>Recomenda-se verificar portfólio e referências, confirmar disponibilidade, detalhar tudo o que será contratado e exigir contrato escrito antes de pagamentos antecipados.</p>
-
-          <h2>Uso indevido</h2>
-          <p>É proibido criar múltiplos pedidos para a mesma necessidade sem finalidade legítima, fornecer contato de terceiros sem autorização, tentar obter serviços fraudulentamente ou manipular avaliações.</p>
-
-          <h2>Suspensão</h2>
-          <p>Pedidos ou contas poderão ser removidos ou suspensos quando houver indícios de fraude, abuso, dados falsos, comportamento ofensivo, tentativa de coletar contatos indevidamente ou outras violações.</p>
         </div>
       </div>
     </section>
@@ -1011,37 +894,8 @@
         <div class="card-politica-conteudo">
           <h1>5. POLÍTICA DE CRÉDITOS</h1>
           <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-
           <h2>Natureza dos créditos</h2>
-          <p>Créditos são unidades de utilização da plataforma destinadas a permitir o desbloqueio de oportunidades conforme as regras vigentes. Não constituem moeda, depósito bancário ou participação societária.</p>
-
-          <h2>Condição Especial de Lançamento (Primeiros 100 Fornecedores)</h2>
-          <p>Os primeiros 100 (cem) fornecedores cadastrados na plataforma receberão, em caráter promocional e por única vez, um saldo inicial de <strong>12 (doze) créditos gratuitos</strong>.</p>
-          <p>A quantidade de créditos necessária para o desbloqueio de cada oportunidade seguirá rigorosamente a lógica padrão da plataforma, variando conforme o potencial do negócio e a faixa de orçamento declarada no pedido.</p>
-          <p>Os 12 créditos concedidos gratuitamente nesta oferta de lançamento não dão direito ao benefício de cashback/retorno de créditos em caso de não fechamento de negócio.</p>
-
-          <h2>Regra Geral de Créditos Gratuitos (A partir do 101º Fornecedor)</h2>
-          <p>A partir do 101º (centésimo primeiro) fornecedor cadastrado, o bônus de cadastro retornará automaticamente ao padrão de <strong>3 (três) créditos gratuitos</strong> creditados na criação da conta.</p>
-          <p>Os créditos concedidos gratuitamente no cadastro inicial não possuem cobertura da política de cashback.</p>
-
-          <h2>Compra de pacotes</h2>
-          <p>Os pacotes, preços, quantidade de créditos, condições de pagamento e eventuais promoções serão apresentados antes da compra. A plataforma disponibilizará as informações exigidas pela legislação aplicável ao comércio eletrônico.</p>
-
-          <h2>Uso e desbloqueio regular</h2>
-          <p>Cada oportunidade exigirá determinada quantidade de créditos de acordo com critérios e faixas de orçamento divulgados na plataforma. O desbloqueio somente ocorrerá após confirmação do usuário.</p>
-
-          <h2>Proteção de créditos / Cashback</h2>
-          <p>A política de retorno/cashback de 50% dos créditos investidos em caso de oportunidade não convertida em contrato aplica-se <strong>exclusivamente aos créditos comprados</strong> pelos fornecedores.</p>
-          <p>O retorno não constitui garantia de contratação nem indenização por oportunidade perdida, mas um benefício de proteção ao investimento pago do profissional.</p>
-
-          <h2>Exclusões do cashback</h2>
-          <p>Não haverá retorno de cashback nos créditos gratuitos promocionais de cadastro (sejam os 12 iniciais do lançamento dos 100 primeiros ou os 3 do fluxo padrão), nem quando houver fraude, ausência injustificada de contato pelo fornecedor, tentativa de burlar o sistema, uso de múltiplas contas ou banimento por infração.</p>
-
-          <h2>Reembolsos e arrependimento</h2>
-          <p>Solicitações de cancelamento, reembolso ou exercício de direitos previstos na legislação serão tratadas conforme a natureza da compra e a legislação aplicável. Nenhuma cláusula desta política pretende afastar direito legal do consumidor.</p>
-
-          <h2>Abuso e alterações</h2>
-          <p>A plataforma poderá invalidar créditos obtidos fraudulentamente. Preços e pacotes poderão ser alterados para compras futuras, mantendo-se as condições para créditos já adquiridos.</p>
+          <p>Créditos são unidades de utilização da plataforma destinadas a permitir o desbloqueio de oportunidades conforme as regras vigentes.</p>
         </div>
       </div>
     </section>
@@ -1052,31 +906,8 @@
         <div class="card-politica-conteudo">
           <h1>6. POLÍTICA DE DENÚNCIAS E SEGURANÇA</h1>
           <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-
           <h2>Objetivo</h2>
           <p>Esta política estabelece mecanismos para denunciar comportamentos abusivos, fraudulentos ou incompatíveis com a segurança da comunidade.</p>
-
-          <h2>O que pode ser denunciado</h2>
-          <p>Spam, assédio, ameaça, discriminação, fraude, golpe, identidade falsa, pedido fictício, cobrança indevida, uso indevido de dados, avaliação falsa, tentativa de burlar créditos, conteúdo ilegal e qualquer violação dos Termos ou Código de Conduta.</p>
-
-          <h2>Como denunciar</h2>
-          <p>A plataforma disponibiliza o canal direto via e-mail: <strong>denuncia@quemfazfesta.com.br</strong>. A denúncia deve conter, quando possível, identificação da conta, oportunidade envolvida, descrição dos fatos, datas e evidências (como capturas de tela).</p>
-
-          <h2>Análise</h2>
-          <p>A plataforma poderá analisar registros, informações fornecidas pelas partes e sinais técnicos necessários à apuração, respeitando a legislação aplicável e a proteção de dados.</p>
-
-          <h2>Medidas preventivas</h2>
-          <p>Enquanto uma ocorrência é analisada, a plataforma poderá limitar temporariamente determinadas funcionalidades quando houver risco de fraude, segurança ou prejuízo a usuários.</p>
-
-          <h2>Sanções</h2>
-          <p>Conforme gravidade e reincidência: advertência, remoção de conteúdo, restrição, suspensão, encerramento da conta e, quando cabível, preservação ou encaminhamento de informações às autoridades competentes.</p>
-
-          <h2>Recurso</h2>
-          <p>Quando apropriado, o usuário poderá apresentar esclarecimentos ou recurso por canal informado pela plataforma. Em situações urgentes de segurança, a suspensão preventiva poderá ocorrer antes da conclusão da análise.</p>
-
-          <h2>Proteção contra retaliação</h2>
-          <p>É proibido retaliar, ameaçar ou constranger pessoa que tenha realizado denúncia de boa-fé.</p>
-
           <div style="margin-top:24px; text-align:center;">
             <button class="btn-submit" style="max-width:320px;" onclick="exibirModalAviso('📢 Canal de Denúncia', 'Para registrar uma denúncia, envie um e-mail com as evidências/prints para <strong>denuncia@quemfazfesta.com.br</strong>.')">Registrar uma Denúncia Agora</button>
           </div>
@@ -1090,30 +921,8 @@
         <div class="card-politica-conteudo">
           <h1>7. POLÍTICA DE RESPONSABILIDADE</h1>
           <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-
           <h2>Natureza da atividade</h2>
-          <p>O Quem Faz Festa é uma plataforma de conexão. Sua função é disponibilizar tecnologia para publicação de oportunidades, descoberta de fornecedores e disponibilização de contatos conforme as regras do serviço.</p>
-
-          <h2>Ausência de participação na contratação</h2>
-          <p>A plataforma não integra os contratos entre contratantes e fornecedores, não recebe ou administra os pagamentos relativos aos serviços contratados entre eles e não executa os serviços anunciados.</p>
-
-          <h2>Responsabilidade das partes</h2>
-          <p>Fornecedor e contratante são responsáveis pelas informações que fornecem, pelas propostas apresentadas, pelas negociações realizadas, pelos contratos celebrados, pelos pagamentos realizados diretamente entre eles e pela execução das obrigações que assumirem.</p>
-
-          <h2>Não garantia de resultado</h2>
-          <p>A publicação de uma oportunidade não garante recebimento de propostas, contratação, disponibilidade do fornecedor, qualidade do serviço ou resultado econômico.</p>
-
-          <h2>Informações de terceiros</h2>
-          <p>As informações apresentadas pelos usuários são de responsabilidade de quem as fornece. O cadastro na plataforma não representa certificação, aprovação, recomendação ou garantia de qualidade, experiência, idoneidade ou execução dos serviços pelo Quem Faz Festa.</p>
-
-          <h2>Limites legais</h2>
-          <p>Nenhuma disposição desta política pretende excluir ou limitar direitos ou responsabilidades que não possam ser afastados pela legislação aplicável. As limitações devem ser interpretadas dentro dos limites permitidos pela lei.</p>
-
-          <h2>Indisponibilidade e terceiros</h2>
-          <p>Serviços de terceiros, como provedores de hospedagem, mensageria, pagamentos ou infraestrutura, podem sofrer indisponividades. A plataforma adotará medidas razoáveis para continuidade e segurança, sem garantir disponibilidade ininterrupta.</p>
-
-          <h2>Prevenção de riscos</h2>
-          <p>Usuários devem manter credenciais seguras, desconfiar de solicitações incomuns, confirmar identidade e condições comerciais e formalizar contratações por escrito.</p>
+          <p>O Quem Faz Festa é uma plataforma de conexão. Sua função é disponibilizar tecnologia para publicação de oportunidades.</p>
         </div>
       </div>
     </section>
@@ -1124,27 +933,8 @@
         <div class="card-politica-conteudo">
           <h1>8. POLÍTICA DE COOKIES</h1>
           <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma. Última atualização: agosto de 2026.</div>
-
           <h2>1. Sobre esta Política</h2>
           <p>Esta Política de Cookies explica como o Quem Faz Festa utiliza cookies e tecnologias semelhantes quando você acessa ou utiliza nossa plataforma.</p>
-          <p>Nosso objetivo é explicar, de forma clara e transparente, quais tecnologias podem ser utilizadas, para que servem, por quanto tempo podem permanecer no dispositivo e quais opções estão disponíveis para o usuário.</p>
-          <p>Esta Política deve ser lida em conjunto com os Termos de Uso e a Política de Privacidade do Quem Faz Festa.</p>
-
-          <h2>2. O que são cookies?</h2>
-          <p>Cookies são pequenos arquivos ou informações armazenados no dispositivo do usuário quando ele acessa determinados sites.</p>
-          <p>Eles podem permitir, por exemplo: manter uma sessão de usuário; lembrar determinadas preferências; garantir o funcionamento de recursos da plataforma; melhorar segurança; compreender como a plataforma é utilizada; realizar análises de desempenho; apresentar conteúdos ou publicidade personalizada, quando aplicável.</p>
-          <p>A ANPD também reconhece tecnologias semelhantes aos cookies, incluindo mecanismos utilizados para armazenamento e identificação no dispositivo.</p>
-
-          <h2>3. Quais tecnologias o Quem Faz Festa utiliza?</h2>
-          <p><strong>3.1. Cookies necessários:</strong> São aqueles necessários para que a plataforma funcione adequadamente e disponibilize funcionalidades solicitadas pelo usuário. Podem ser utilizados para autenticação, manutenção da sessão, segurança, prevenção de fraude, controle de acesso, armazenamento de preferências essenciais e funcionamento da conta.</p>
-          <p><strong>3.2. Tecnologias de armazenamento local:</strong> O Quem Faz Festa poderá utilizar mecanismos de armazenamento local do navegador, como Local Storage ou tecnologias equivalentes, para determinadas funcionalidades técnicas. Esses mecanismos não são necessariamente cookies, mas podem exercer funções semelhantes e, por isso, são abrangidos por esta Política quando utilizados.</p>
-
-          <h2>4. Cookies próprios e de terceiros</h2>
-          <p>Cookies próprios são definidos diretamente pelo Quem Faz Festa ou por serviços operados em seu nome. Cookies de terceiros são definidos por domínios ou serviços diferentes daquele que o usuário está acessando.</p>
-
-          <h2>5. Contato</h2>
-          <p><strong>E-mail:</strong> privacidade@quemfazfesta.com.br<br>
-          <strong>Controlador:</strong> Quem Faz Festa Soluções Tecnológicas Ltda.</p>
         </div>
       </div>
     </section>
@@ -1361,7 +1151,7 @@
         <div class="fornecedor-bar">
           <div><span>Profissional: <strong class="nome-usuario-boasvindas">Fornecedor</strong></span></div>
           <div style="display:flex; align-items:center; font-weight:700; color:var(--primary);">
-            <img src="créditos.png" alt="Créditos" class="saldo-icon-img"> Saldo: <span class="saldo-creditos-val">12</span> Créditos
+            <img src="créditos.png" alt="Créditos" class="saldo-icon-img"> Saldo: <span class="saldo-creditos-val">0</span> Créditos
           </div>
         </div>
         <div style="margin-bottom:16px;">
@@ -1487,7 +1277,7 @@
   <!-- BANNER DE COOKIES FLUTUANTE -->
   <div class="cookie-banner" id="cookieBanner">
     <div class="cookie-banner-text">
-      🍪 Utilizamos cookies e armazenamento local para manter sua sessão ativa e garantir o funcionamento correto da plataforma. Ao continuar navegando, você concorda com os nossos termos. 
+      🍪 Utilizamos cookies e armazenamento de sessão para manter sua conta ativa. Ao continuar navegando, você concorda com os nossos termos. 
       <a onclick="trocarAba('politica-cookies')">🔗 Ler Política de Cookies Completa</a>
     </div>
     <button class="cookie-banner-btn" onclick="aceitarCookies()">Aceitar e Continuar</button>
@@ -1496,22 +1286,14 @@
   <!-- RODAPÉ DA PLATAFORMA -->
   <footer>
     <div class="footer-links">
-      <a onclick="trocarAba('termos-uso')">1. Termos de Uso</a>
-      <span>•</span>
-      <a onclick="trocarAba('politica-privacidade')">2. Política de Privacidade</a>
-      <span>•</span>
-      <a onclick="trocarAba('conduta-fornecedores')">3. Código de Conduta Fornecedores</a>
-      <span>•</span>
-      <a onclick="trocarAba('regras-contratantes')">4. Regras Contratantes</a>
-      <span>•</span>
-      <a onclick="trocarAba('politica-creditos')">5. Política de Créditos</a>
-      <span>•</span>
-      <a onclick="trocarAba('politica-denuncias')">6. Denúncias e Segurança</a>
-      <span>•</span>
-      <a onclick="trocarAba('sobre-plataforma')">7. Política de Responsabilidade</a>
-      <span>•</span>
-      <a onclick="trocarAba('politica-cookies')">8. Política de Cookies</a>
-      <span>•</span>
+      <a onclick="trocarAba('termos-uso')">1. Termos de Uso</a> <span>•</span>
+      <a onclick="trocarAba('politica-privacidade')">2. Política de Privacidade</a> <span>•</span>
+      <a onclick="trocarAba('conduta-fornecedores')">3. Código de Conduta Fornecedores</a> <span>•</span>
+      <a onclick="trocarAba('regras-contratantes')">4. Regras Contratantes</a> <span>•</span>
+      <a onclick="trocarAba('politica-creditos')">5. Política de Créditos</a> <span>•</span>
+      <a onclick="trocarAba('politica-denuncias')">6. Denúncias e Segurança</a> <span>•</span>
+      <a onclick="trocarAba('sobre-plataforma')">7. Política de Responsabilidade</a> <span>•</span>
+      <a onclick="trocarAba('politica-cookies')">8. Política de Cookies</a> <span>•</span>
       <a onclick="trocarAba('faq')">9. Dúvidas Frequentes (FAQ)</a>
     </div>
     <div>Quem Faz Festa © 2026 — Plataforma de Conexão de Eventos em Recife e Região Metropolitana.</div>
@@ -1539,94 +1321,20 @@
        ========================================================= */
     const SUPABASE_URL = 'https://mipvzmxrmljoxbtjrnlz.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_fjURoHCtHSmy-HthR3bcAA_zIJ-hSqJ';
-
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     /* =========================================================
-       2. DADOS E VARIÁVEIS GERAIS DO SISTEMA
+       2. DADOS E VARIÁVEIS DE SESSÃO
        ========================================================= */
-    const PadraoUsuarios = [
-      { email: "pai@teste.com", senha: "123", tipo: "pai", nome: "Camila Peixoto", whatsapp: "(81) 99999-8888", notaMedia: 5.0, avaliacoesRecebidas: 1, banido: false },
-      { email: "fornecedor@teste.com", senha: "123", tipo: "fornecedor", nome: "Studio Foto & Arte", whatsapp: "(81) 98888-7777", categoria: "Fotografia & Filmagem", saldoCreditos: 12, totalCreditosGratuitosRecebidos: 12, totalDesbloqueiosRealizados: 0, notaMedia: 5.0, avaliacoesRecebidas: 1, ultimoComentario: "Excelente atendimento e pontualidade!", banido: false }
-    ];
-
-    const PadraoFestas = [
-      {
-        id: 1,
-        emailPai: "pai@teste.com",
-        servico: "Decoração Completa",
-        tema: "Patrulha Canina",
-        cidade: "Recife",
-        bairro: "Boa Viagem",
-        data: "2026-09-15",
-        horario: "15:00",
-        qtdPessoas: "50",
-        orcamento: "R$ 1.001 a R$ 2.000",
-        comentarios: "Preferência por tons em azul e vermelho.",
-        nome: "Camila Peixoto",
-        whatsapp: "(81) 99999-8888",
-        notaCliente: 5.0,
-        avaliacoesClienteCount: 1,
-        desbloqueios: 1,
-        maxDesbloqueios: 4,
-        liberado: false,
-        avaliadoPeloFornecedor: false,
-        concluida: false
-      },
-      {
-        id: 2,
-        emailPai: "pai@teste.com",
-        servico: "Fotografia & Filmagem",
-        tema: "Circo Mágico",
-        cidade: "Olinda",
-        bairro: "Casa Caiada",
-        data: "2026-10-02",
-        horario: "Ainda não definido",
-        qtdPessoas: "80",
-        orcamento: "R$ 501 a R$ 1.000",
-        comentarios: "",
-        nome: "Camila Peixoto",
-        whatsapp: "(81) 99999-8888",
-        notaCliente: 5.0,
-        avaliacoesClienteCount: 1,
-        desbloqueios: 0,
-        maxDesbloqueios: 4,
-        liberado: false,
-        avaliadoPeloFornecedor: false,
-        concluida: false
-      },
-      {
-        id: 3,
-        emailPai: "pai@teste.com",
-        servico: "Buffet & Salgados",
-        tema: "Ainda não definido",
-        cidade: "Recife",
-        bairro: "Espinheiro",
-        data: "2026-11-10",
-        horario: "18:00",
-        qtdPessoas: "100",
-        orcamento: "R$ 2.001 a R$ 3.000",
-        comentarios: "Preciso de opções vegetarianas no cardápio.",
-        nome: "Mariana Silva",
-        whatsapp: "(81) 98765-4321",
-        notaCliente: null,
-        avaliacoesClienteCount: 0,
-        desbloqueios: 0,
-        maxDesbloqueios: 4,
-        liberado: false,
-        avaliadoPeloFornecedor: false,
-        concluida: false
-      }
-    ];
-
-    let usuariosCadastrados = JSON.parse(localStorage.getItem('qff_usuarios')) || PadraoUsuarios;
-    let bancoFestas = JSON.parse(localStorage.getItem('qff_festas')) || PadraoFestas;
-    let usuarioAtual = JSON.parse(localStorage.getItem('qff_sessao')) || null;
-    let minhasOportunidadesDesbloqueadas = JSON.parse(localStorage.getItem('qff_desbloqueios')) || [];
-    let notificacoesBanco = JSON.parse(localStorage.getItem('qff_notificacoes')) || [];
+    let usuarioAtual = null; // Armazena dados da tabela 'profiles'
+    let authUser = null;    // Armazena objeto Auth do Supabase
     let categoriaFiltroAtiva = 'Todos';
     let proximaAbaAposLogin = null;
+    let notasForm = { starAtendimento: 5, starServico: 5 };
 
+    /* =========================================================
+       3. FUNÇÕES AUXILIARES DE INTERFACE E UTILITÁRIOS
+       ========================================================= */
     function verificarOpcaoOutroServico() {
       const selectServico = document.getElementById('servico');
       const grupoOutro = document.getElementById('grupoServicoOutro');
@@ -1645,7 +1353,6 @@
     function toggleCampoNaoDefinido(idCampoInput, idChkBox) {
       const inputEl = document.getElementById(idCampoInput);
       const chkEl = document.getElementById(idChkBox);
-
       if (chkEl.checked) {
         inputEl.disabled = true;
         inputEl.removeAttribute('required');
@@ -1659,9 +1366,7 @@
     function verificarBannerCookies() {
       const jaAceitou = localStorage.getItem('qff_cookies_aceito');
       const banner = document.getElementById('cookieBanner');
-      if (!jaAceitou && banner) {
-        banner.style.display = 'flex';
-      }
+      if (!jaAceitou && banner) banner.style.display = 'flex';
     }
 
     function aceitarCookies() {
@@ -1680,53 +1385,28 @@
     function formatarDataBR(dataIso) {
       if (!dataIso) return "";
       const partes = dataIso.split('-');
-      if (partes.length === 3) {
-        return `${partes[2]}/${partes[1]}/${partes[0]}`;
-      }
-      return dataIso;
+      return partes.length === 3 ? `${partes[2]}/${partes[1]}/${partes[0]}` : dataIso;
     }
 
     function calcularCustoCreditos(orcamentoTexto) {
       switch (orcamentoTexto) {
-        case "Até R$ 500":
-          return 1;
-        case "R$ 501 a R$ 1.000":
-          return 2;
-        case "R$ 1.001 a R$ 2.000":
-          return 3;
-        case "R$ 2.001 a R$ 3.000":
-          return 4;
-        case "R$ 3.001 a R$ 5.000":
-          return 5;
-        case "Acima de R$ 5.000":
-          return 6;
-        default:
-          return 1;
+        case "Até R$ 500": return 1;
+        case "R$ 501 a R$ 1.000": return 2;
+        case "R$ 1.001 a R$ 2.000": return 3;
+        case "R$ 2.001 a R$ 3.000": return 4;
+        case "R$ 3.001 a R$ 5.000": return 5;
+        case "Acima de R$ 5.000": return 6;
+        default: return 1;
       }
     }
 
-    function enviarNotificacao(destinatarioEmail, tipoCanal, titulo, mensagem, festaIdTarget = null, categoriaTarget = null) {
-      const novaNotif = {
-        id: Date.now(),
-        destinatarioEmail: destinatarioEmail,
-        tipoCanal: tipoCanal,
-        titulo: titulo,
-        mensagem: mensagem,
-        festaIdTarget: festaIdTarget,
-        categoriaTarget: categoriaTarget,
-        dataHora: new Date().toLocaleString('pt-BR'),
-        lida: false
-      };
-      notificacoesBanco.unshift(novaNotif);
-      localStorage.setItem('qff_notificacoes', JSON.stringify(notificacoesBanco));
-      atualizarBadgeNotificacoes();
-    }
-
-    function atualizarBadgeNotificacoes() {
-      if(!usuarioAtual) return;
-      const minhasNaoLidas = notificacoesBanco.filter(n => n.destinatarioEmail === usuarioAtual.email && !n.lida);
-      const badge = document.getElementById('badgeNotifCount');
-      if (badge) badge.innerText = minhasNaoLidas.length;
+    function setStars(idContainer, valor) {
+      notasForm[idContainer] = valor;
+      const spans = document.querySelectorAll(`#${idContainer} span`);
+      spans.forEach((span, idx) => {
+        if (idx < valor) span.classList.add('selected');
+        else span.classList.remove('selected');
+      });
     }
 
     function exibirModalAviso(titulo, mensagem, textoBotao = "OK", acaoCallback = null) {
@@ -1735,12 +1415,10 @@
       const containerBotoes = document.getElementById('wppContainerBotoes');
       
       containerBotoes.innerHTML = `<button id="btnWppAcaoModal" class="btn-submit" style="font-size:0.9rem; padding:10px;">${textoBotao}</button>`;
-      
       document.getElementById('btnWppAcaoModal').onclick = function() {
         fecharModalWpp();
         if (acaoCallback) acaoCallback();
       };
-      
       document.getElementById('modalWpp').style.display = 'flex';
     }
 
@@ -1759,186 +1437,80 @@
         fecharModalWpp();
         callbackConfirmar();
       };
-
       document.getElementById('modalWpp').style.display = 'flex';
     }
 
-    function fecharModalWpp() { 
-      document.getElementById('modalWpp').style.display = 'none'; 
-    }
-
-    function salvarDados() {
-      localStorage.setItem('qff_usuarios', JSON.stringify(usuariosCadastrados));
-      localStorage.setItem('qff_festas', JSON.stringify(bancoFestas));
-      localStorage.setItem('qff_sessao', JSON.stringify(usuarioAtual));
-      localStorage.setItem('qff_desbloqueios', JSON.stringify(minhasOportunidadesDesbloqueadas));
-      localStorage.setItem('qff_notificacoes', JSON.stringify(notificacoesBanco));
-      
-      if (usuarioAtual) {
-        const uIdx = usuariosCadastrados.findIndex(u => u.email === usuarioAtual.email);
-        if (uIdx !== -1) usuariosCadastrados[uIdx] = usuarioAtual;
-        localStorage.setItem('qff_usuarios', JSON.stringify(usuariosCadastrados));
-      }
-    }
-
-    let notasForm = { starAtendimento: 5, starServico: 5 };
-
-    function setStars(idContainer, valor) {
-      notasForm[idContainer] = valor;
-      const spans = document.querySelectorAll(`#${idContainer} span`);
-      spans.forEach((span, idx) => {
-        if (idx < valor) span.classList.add('selected');
-        else span.classList.remove('selected');
-      });
-    }
-
-    function trocarAba(aba) {
-      if (!usuarioAtual && (aba === 'confirmar-festa' || aba === 'criar-festa' || aba === 'comprar-creditos' || aba === 'notificacoes' || aba === 'historico-concluidas' || aba === 'melhores-praticas')) {
-        proximaAbaAposLogin = aba;
-        aba = 'login';
-      }
-
-      if (aba === 'home' && usuarioAtual) {
-        aba = usuarioAtual.tipo === 'pai' ? 'home-pais' : 'home-fornecedor';
-      }
-
-      localStorage.setItem('qff_aba_atual', aba);
-
-      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-
-      if (aba === 'home' || aba === 'home-pais' || aba === 'home-fornecedor') {
-        document.getElementById('btn-nav-home').classList.add('active');
-        if (usuarioAtual) {
-          if (usuarioAtual.tipo === 'pai') {
-            document.getElementById('view-home-pais').classList.add('active');
-            carregarDashboardPais();
-          } else {
-            document.getElementById('view-home-fornecedor').classList.add('active');
-            carregarDashboardFornecedor();
-          }
-        } else {
-          document.getElementById('view-home').classList.add('active');
-        }
-      } else if (aba === 'confirmar-festa') { 
-        document.getElementById('view-confirmar-festa').classList.add('active'); 
-        prepararTelaConfirmacao(); 
-      } else if (aba === 'login') {
-        document.getElementById('view-login').classList.add('active');
-        document.getElementById('btn-nav-login').classList.add('active');
-      } else if (aba === 'cadastro-pais') {
-        document.getElementById('view-cadastro-pais').classList.add('active');
-        document.getElementById('btn-nav-pais').classList.add('active');
-      } else if (aba === 'cadastro-fornecedor') {
-        document.getElementById('view-cadastro-fornecedor').classList.add('active');
-        document.getElementById('btn-nav-fornecedores').classList.add('active');
-      } else if (aba === 'criar-festa') {
-        document.getElementById('view-criar-festa').classList.add('active');
-        document.getElementById('btn-nav-criar').classList.add('active');
-      } else if (aba === 'mural') {
-        document.getElementById('view-mural').classList.add('active');
-        document.getElementById('btn-nav-mural').classList.add('active');
-        renderizarMuralCompleto();
-      } else if (aba === 'comprar-creditos') {
-        document.getElementById('view-comprar-creditos').classList.add('active');
-      } else if (aba === 'minha-conta') {
-        document.getElementById('view-minha-conta').classList.add('active');
-        carregarDadosConta();
-      } else if (aba === 'historico') {
-        document.getElementById('view-historico').classList.add('active');
-        carregarHistoricoTela();
-      } else if (aba === 'historico-concluidas') {
-        document.getElementById('view-historico-concluidas').classList.add('active');
-        carregarHistoricoConcluidas();
-      } else if (aba === 'melhores-praticas') {
-        document.getElementById('view-melhores-praticas').classList.add('active');
-        carregarMelhoresPraticas();
-      } else if (aba === 'faq') {
-        document.getElementById('view-faq').classList.add('active');
-      } else if (aba === 'sobre-plataforma') {
-        document.getElementById('view-sobre-plataforma').classList.add('active');
-      } else if (aba === 'termos-uso') {
-        document.getElementById('view-termos-uso').classList.add('active');
-      } else if (aba === 'politica-privacidade') {
-        document.getElementById('view-politica-privacidade').classList.add('active');
-      } else if (aba === 'conduta-fornecedores') {
-        document.getElementById('view-conduta-fornecedores').classList.add('active');
-      } else if (aba === 'regras-contratantes') {
-        document.getElementById('view-regras-contratantes').classList.add('active');
-      } else if (aba === 'politica-creditos') {
-        document.getElementById('view-politica-creditos').classList.add('active');
-      } else if (aba === 'politica-denuncias') {
-        document.getElementById('view-politica-denuncias').classList.add('active');
-      } else if (aba === 'politica-cookies') {
-        document.getElementById('view-politica-cookies').classList.add('active');
-      } else if (aba === 'notificacoes') {
-        document.getElementById('view-notificacoes').classList.add('active');
-        document.getElementById('btn-nav-notificacoes').classList.add('active');
-        carregarNotificacoesTela();
-      }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function carregarMelhoresPraticas() {
-      const elPais = document.getElementById('praticasContainerPais');
-      const elForn = document.getElementById('praticasContainerFornecedor');
-
-      if (usuarioAtual && usuarioAtual.tipo === 'pai') {
-        elPais.style.display = 'block';
-        elForn.style.display = 'none';
-      } else {
-        elPais.style.display = 'none';
-        elForn.style.display = 'block';
-      }
-    }
-
-    function irParaOportunidade(festaId, categoria) {
-      trocarAba('mural');
-      
-      const chks = document.querySelectorAll('.chk-categoria-mural');
-      chks.forEach(c => {
-        c.checked = (c.value === categoria);
-      });
-      
-      renderizarMuralCompleto();
-
-      setTimeout(() => {
-        const el = document.getElementById(`festa-card-${festaId}`);
-        if(el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          el.style.border = "2px solid var(--accent)";
-          setTimeout(() => el.style.border = "1px solid var(--border-color)", 3000);
-        }
-      }, 200);
-    }
-
+    function fecharModalWpp() { document.getElementById('modalWpp').style.display = 'none'; }
     function toggleUserDropdown(e) { e.stopPropagation(); document.getElementById('userDropdownMenu').classList.toggle('show'); }
     function closeUserDropdown() { document.getElementById('userDropdownMenu').classList.remove('show'); }
     window.addEventListener('click', closeUserDropdown);
 
-    document.getElementById('formLogin').addEventListener('submit', function(e) {
+    /* =========================================================
+       4. OPERAÇÕES NO SUPABASE (AUTENTICAÇÃO & DB)
+       ========================================================= */
+
+    // Notificações via Supabase DB
+    async function enviarNotificacao(destinatarioEmail, tipoCanal, titulo, mensagem, festaIdTarget = null, categoriaTarget = null) {
+      const { error } = await _supabase.from('notificacoes').insert([{
+        destinatario_email: destinatarioEmail,
+        tipo_canal: tipoCanal,
+        titulo: titulo,
+        mensagem: mensagem,
+        festa_id_target: festaIdTarget,
+        categoria_target: categoriaTarget
+      }]);
+      if (!error) atualizarBadgeNotificacoes();
+    }
+
+    async function atualizarBadgeNotificacoes() {
+      if(!usuarioAtual) return;
+      const { data } = await _supabase
+        .from('notificacoes')
+        .select('id')
+        .eq('destinatario_email', usuarioAtual.email)
+        .eq('lida', false);
+      
+      const badge = document.getElementById('badgeNotifCount');
+      if (badge && data) badge.innerText = data.length;
+    }
+
+    // Login
+    document.getElementById('formLogin').addEventListener('submit', async function(e) {
       e.preventDefault();
       const emailDigitado = document.getElementById('login-email').value;
       const senhaDigitada = document.getElementById('login-senha').value;
-      const usuarioEncontrado = usuariosCadastrados.find(u => u.email === emailDigitado && u.senha === senhaDigitada);
 
-      if (!usuarioEncontrado) { 
-        exibirModalAviso("⚠️ Erro de Autenticação", "E-mail ou senha incorretos! Verifique suas credenciais.");
-        return; 
-      }
+      const { data: authData, error: authError } = await _supabase.auth.signInWithPassword({
+        email: emailDigitado,
+        password: senhaDigitada
+      });
 
-      if (usuarioEncontrado.banido) {
-        exibirModalAviso("🚫 Conta Suspensa/Banida", "Sua conta foi suspensa por descumprimento das Regras de Uso da plataforma.");
+      if (authError) {
+        exibirModalAviso("⚠️ Erro de Autenticação", "E-mail ou senha incorretos!");
         return;
       }
 
-      usuarioAtual = usuarioEncontrado;
-      
-      const todosDesbloqueios = JSON.parse(localStorage.getItem('qff_desbloqueios')) || [];
-      minhasOportunidadesDesbloqueadas = todosDesbloqueios.filter(d => d.desbloqueadoPor === usuarioAtual.email);
+      // Buscar perfil
+      const { data: profile, error: profileError } = await _supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', authData.user.id)
+        .single();
 
-      salvarDados();
+      if (profileError || !profile) {
+        exibirModalAviso("⚠️ Erro", "Perfil do usuário não encontrado.");
+        return;
+      }
+
+      if (profile.banido) {
+        await _supabase.auth.signOut();
+        exibirModalAviso("🚫 Conta Suspensa", "Sua conta foi suspensa.");
+        return;
+      }
+
+      authUser = authData.user;
+      usuarioAtual = profile;
+
       atualizarInterfacePosLogin();
 
       if (proximaAbaAposLogin) {
@@ -1950,59 +1522,289 @@
       }
     });
 
-    function atualizarInterfacePosLogin() {
-      if(!usuarioAtual) return;
-      document.getElementById('btn-nav-login').style.display = 'none';
-      document.getElementById('btn-nav-pais').style.display = 'none';
-      document.getElementById('btn-nav-fornecedores').style.display = 'none';
-      document.getElementById('userDropdownWrapper').style.display = 'block';
-      document.getElementById('btn-nav-notificacoes').style.display = 'inline-block';
+    // Cadastro Contratante (Pais)
+    document.getElementById('formCadastroPais').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const nome = document.getElementById('cad-pai-nome').value;
+      const email = document.getElementById('cad-pai-email').value;
+      const whatsapp = document.getElementById('cad-pai-whatsapp').value;
+      const senha = document.getElementById('cad-pai-senha').value;
+      const confirma = document.getElementById('cad-pai-senha-confirma').value;
 
-      const textoAval = formatarTextoAvaliacao(usuarioAtual.notaMedia, usuarioAtual.avaliacoesRecebidas);
-      document.getElementById('nav-user-name').innerText = `${usuarioAtual.nome.split(' ')[0]} (${textoAval})`;
-      document.querySelectorAll('.nome-usuario-boasvindas').forEach(el => el.innerText = usuarioAtual.nome);
+      if (senha !== confirma) {
+        exibirModalAviso("⚠️ Senhas Incompatíveis", "As senhas não coincidem!");
+        return;
+      }
 
-      const itemHistorico = document.getElementById('dropdown-item-historico');
+      // Criar usuário auth
+      const { data: authData, error: authError } = await _supabase.auth.signUp({
+        email: email,
+        password: senha
+      });
 
-      if (usuarioAtual.tipo === 'pai') {
-        document.getElementById('btn-nav-criar').style.display = 'inline-block';
-        document.getElementById('btn-nav-mural').style.display = 'none';
-        document.getElementById('dropdown-item-comprar').style.display = 'none';
-        itemHistorico.innerHTML = `<img src="balão.png" alt="Festas Ativas" class="menu-icon-img"> Festas Ativas`;
-      } else {
-        document.getElementById('btn-nav-criar').style.display = 'none';
-        document.getElementById('btn-nav-mural').style.display = 'inline-block';
-        document.getElementById('dropdown-item-comprar').style.display = 'flex';
-        itemHistorico.innerHTML = `<img src="balão.png" alt="Contatos Liberados" class="menu-icon-img"> Contatos Liberados`;
-        
-        if (usuarioAtual.categoria) {
-          document.getElementById('btnMinhaCategoriaFiltro').innerText = `Minha Categoria (${usuarioAtual.categoria.split(' ')[0]})`;
+      if (authError) {
+        exibirModalAviso("⚠️ Erro no Cadastro", authError.message);
+        return;
+      }
+
+      // Criar Perfil
+      const { data: profile, error: profileError } = await _supabase.from('profiles').insert([{
+        id: authData.user.id,
+        email: email,
+        nome: nome,
+        whatsapp: whatsapp,
+        tipo: 'pai'
+      }]).select().single();
+
+      if (profileError) {
+        exibirModalAviso("⚠️ Erro", "Não foi possível criar o perfil do usuário.");
+        return;
+      }
+
+      authUser = authData.user;
+      usuarioAtual = profile;
+
+      atualizarInterfacePosLogin();
+      trocarAba('home');
+    });
+
+    // Cadastro Fornecedor
+    document.getElementById('formCadastroFornecedor').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const nome = document.getElementById('cad-forn-nome').value;
+      const email = document.getElementById('cad-forn-email').value;
+      const whatsapp = document.getElementById('cad-forn-whatsapp').value;
+      const categoria = document.getElementById('cad-forn-categoria').value;
+      const senha = document.getElementById('cad-forn-senha').value;
+      const confirma = document.getElementById('cad-forn-senha-confirma').value;
+
+      if (senha !== confirma) {
+        exibirModalAviso("⚠️ Senhas Incompatíveis", "As senhas não coincidem!");
+        return;
+      }
+
+      // Contar total de fornecedores cadastrados
+      const { count } = await _supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .eq('tipo', 'fornecedor');
+
+      const ehPrimeiros100 = (count || 0) < 100;
+      const creditosIniciais = ehPrimeiros100 ? 12 : 3;
+
+      const { data: authData, error: authError } = await _supabase.auth.signUp({
+        email: email,
+        password: senha
+      });
+
+      if (authError) {
+        exibirModalAviso("⚠️ Erro no Cadastro", authError.message);
+        return;
+      }
+
+      const { data: profile, error: profileError } = await _supabase.from('profiles').insert([{
+        id: authData.user.id,
+        email: email,
+        nome: nome,
+        whatsapp: whatsapp,
+        categoria: categoria,
+        tipo: 'fornecedor',
+        saldo_creditos: creditosIniciais,
+        total_creditos_gratuitos: creditosIniciais
+      }]).select().single();
+
+      if (profileError) {
+        exibirModalAviso("⚠️ Erro", "Falha ao registrar perfil de fornecedor.");
+        return;
+      }
+
+      authUser = authData.user;
+      usuarioAtual = profile;
+
+      atualizarInterfacePosLogin();
+
+      const mensagemBoasVindas = ehPrimeiros100
+        ? `Parabéns! Você é um dos primeiros 100 fornecedores e ganhou <strong>12 créditos gratuitos</strong>!`
+        : `Cadastro realizado! Você recebeu <strong>3 créditos gratuitos</strong> de boas-vindas.`;
+
+      exibirModalAviso("🎉 Bônus de Cadastro", mensagemBoasVindas, "Acessar Plataforma", function() {
+        trocarAba('home');
+      });
+    });
+
+    // Publicar Festa
+    document.getElementById('formFesta').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      let servicoSel = document.getElementById('servico').value;
+      if (servicoSel === 'Outro') {
+        const especificado = document.getElementById('servicoOutroEspecifique').value.trim();
+        servicoSel = especificado ? `Outro: ${especificado}` : 'Outro';
+      }
+
+      const novaFesta = {
+        user_id: usuarioAtual.id,
+        email_pai: usuarioAtual.email,
+        nome_pai: usuarioAtual.nome,
+        whatsapp_pai: usuarioAtual.whatsapp,
+        servico: servicoSel,
+        tema: document.getElementById('chk-tema-nao-definido').checked ? "Ainda não definido" : document.getElementById('tema').value,
+        data: document.getElementById('data').value,
+        horario: document.getElementById('chk-horario-nao-definido').checked ? "Ainda não definido" : document.getElementById('horario').value,
+        qtd_pessoas: document.getElementById('qtdPessoas').value,
+        cidade: document.getElementById('cidade').value,
+        bairro: document.getElementById('bairro').value,
+        orcamento: document.getElementById('orcamento').value,
+        comentarios: document.getElementById('comentariosAdicionais').value.trim()
+      };
+
+      const { data, error } = await _supabase.from('festas').insert([novaFesta]).select().single();
+
+      if (error) {
+        exibirModalAviso("⚠️ Erro", "Não foi possível publicar a festa.");
+        return;
+      }
+
+      // Notificar Fornecedores da Categoria
+      const { data: fornecedores } = await _supabase
+        .from('profiles')
+        .select('email')
+        .eq('tipo', 'fornecedor')
+        .eq('categoria', servicoSel);
+
+      if (fornecedores) {
+        const msgNotificacao = `Nova oportunidade publicada! Cliente procura ${servicoSel} em ${novaFesta.bairro} (${novaFesta.cidade}).`;
+        for (let forn of fornecedores) {
+          await enviarNotificacao(forn.email, 'whatsapp', 'Nova Oportunidade no Mural', msgNotificacao, data.id, servicoSel);
         }
-        atualizarExibicaoSaldo();
       }
-      
-      atualizarPendenciasAtalho();
-      atualizarBadgeNotificacoes();
+
+      exibirModalAviso("🎈 Oferta Publicada", "Seu pedido foi publicado no mural com sucesso!", "OK", function() {
+        trocarAba('home');
+      });
+    });
+
+    // Desbloquear Contato (Fornecedor compra/usa créditos)
+    async function desbloquearContato(festaId) {
+      const { data: festa } = await _supabase.from('festas').select('*').eq('id', festaId).single();
+      if (!festa) return;
+
+      const { data: jaDesbloqueado } = await _supabase
+        .from('desbloqueios')
+        .select('*')
+        .eq('festa_id', festaId)
+        .eq('fornecedor_id', usuarioAtual.id)
+        .maybeSingle();
+
+      if (jaDesbloqueado) {
+        window.open(`https://wa.me/55${festa.whatsapp_pai.replace(/\D/g,'')}`, '_blank');
+        return;
+      }
+
+      const custoNecessario = calcularCustoCreditos(festa.orcamento);
+
+      if (Number(usuarioAtual.saldo_creditos) < custoNecessario) {
+        exibirModalAviso("🪙 Saldo Insuficiente", `Esta oportunidade exige <strong>${custoNecessario} crédito(s)</strong>.`, "Comprar Créditos", function() {
+          trocarAba('comprar-creditos');
+        });
+        return;
+      }
+
+      exibirModalConfirmacao("🔓 Confirmar Desbloqueio", `Deseja abrir esta oportunidade por <strong>${custoNecessario} crédito(s)</strong>?`, async function() {
+        if (festa.desbloqueios < festa.max_desbloqueios) {
+          const novoSaldo = Number(usuarioAtual.saldo_creditos) - custoNecessario;
+
+          // Atualizar créditos do fornecedor
+          await _supabase.from('profiles').update({
+            saldo_creditos: novoSaldo,
+            total_desbloqueios: (usuarioAtual.total_desbloqueios || 0) + 1
+          }).eq('id', usuarioAtual.id);
+
+          usuarioAtual.saldo_creditos = novoSaldo;
+
+          // Atualizar contador na festa
+          await _supabase.from('festas').update({
+            desbloqueios: festa.desbloqueios + 1
+          }).eq('id', festaId);
+
+          // Inserir registro de Desbloqueio
+          await _supabase.from('desbloqueios').insert([{
+            festa_id: festaId,
+            fornecedor_id: usuarioAtual.id,
+            fornecedor_email: usuarioAtual.email,
+            creditos_gastos: custoNecessario
+          }]);
+
+          atualizarExibicaoSaldo();
+
+          const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico} e entrará em contato em breve.`;
+          await enviarNotificacao(festa.email_pai, 'whatsapp', 'Fornecedor Interessado', msgCliente);
+
+          exibirModalAviso("💬 Contato Liberado", `O contato do cliente é: <strong>${festa.whatsapp_pai}</strong>`, "Abrir WhatsApp", function() {
+            window.open(`https://wa.me/55${festa.whatsapp_pai.replace(/\D/g,'')}`, '_blank');
+            trocarAba('home');
+          });
+        } else {
+          exibirModalAviso("🔒 Vagas Esgotadas", "Oportunidade com limite atingido.");
+        }
+      });
     }
 
-    function atualizarExibicaoSaldo() {
-      if (usuarioAtual && usuarioAtual.saldoCreditos !== undefined) {
-        const valExibicao = Number.isInteger(usuarioAtual.saldoCreditos) 
-          ? usuarioAtual.saldoCreditos 
-          : usuarioAtual.saldoCreditos.toString().replace('.', ',');
-        document.querySelectorAll('.saldo-creditos-val').forEach(el => el.innerText = valExibicao);
-      }
+    // Comprar Créditos
+    async function comprarCreditos(pacote, qtd, preco) {
+      exibirModalConfirmacao("💳 Pacote de Créditos", `Confirmar compra do <strong>${pacote}</strong> por <strong>R$ ${preco}</strong>?`, async function() {
+        const novoSaldo = Number(usuarioAtual.saldo_creditos) + qtd;
+        
+        const { error } = await _supabase
+          .from('profiles')
+          .update({ saldo_creditos: novoSaldo })
+          .eq('id', usuarioAtual.id);
+
+        if (!error) {
+          usuarioAtual.saldo_creditos = novoSaldo;
+          atualizarExibicaoSaldo();
+          exibirModalAviso("🪙 Créditos Adicionados", `${qtd} créditos adicionados com sucesso!`, "OK", function() {
+            trocarAba('home');
+          });
+        }
+      });
     }
 
-    function fazerLogout() {
+    // Atualizar Dados da Conta
+    document.getElementById('formAtualizarConta').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const novoNome = document.getElementById('account-nome').value;
+      const novoWhatsapp = document.getElementById('account-whatsapp').value;
+      const novaSenha = document.getElementById('account-nova-senha').value;
+      const confirmaNovaSenha = document.getElementById('account-nova-senha-confirma').value;
+
+      if (novaSenha !== "" || confirmaNovaSenha !== "") {
+        if (novaSenha !== confirmaNovaSenha) {
+          exibirModalAviso("⚠️ Erro", "As senhas não coincidem!");
+          return;
+        }
+        await _supabase.auth.updateUser({ password: novaSenha });
+      }
+
+      const { data, error } = await _supabase.from('profiles').update({
+        nome: novoNome,
+        whatsapp: novoWhatsapp
+      }).eq('id', usuarioAtual.id).select().single();
+
+      if (!error) {
+        usuarioAtual = data;
+        atualizarInterfacePosLogin();
+        exibirModalAviso("✅ Dados Atualizados", "Alterações salvas com sucesso!");
+      }
+    } );
+
+    // Logout
+    async function fazerLogout() {
       closeUserDropdown();
+      await _supabase.auth.signOut();
       usuarioAtual = null;
-      minhasOportunidadesDesbloqueadas = [];
-      localStorage.removeItem('qff_aba_atual');
-      salvarDados();
+      authUser = null;
 
       document.getElementById('formLogin').reset();
-
       document.getElementById('btn-nav-login').style.display = 'inline-block';
       document.getElementById('btn-nav-pais').style.display = 'inline-block';
       document.getElementById('btn-nav-fornecedores').style.display = 'inline-block';
@@ -2013,266 +1815,250 @@
       trocarAba('home');
     }
 
-    function atualizarPendenciasAtalho() {
-      if(!usuarioAtual || usuarioAtual.tipo !== 'fornecedor') return;
-      
-      const pendentes = minhasOportunidadesDesbloqueadas.filter(f => f.desbloqueadoPor === usuarioAtual.email && !f.avaliadoPeloFornecedor);
-      const qtdEl = document.getElementById('qtdContatosLiberados');
-      const cardEl = document.getElementById('cardAtalhoPendencias');
+    /* =========================================================
+       5. RENDERIZAÇÃO DE TELAS & MURAL
+       ========================================================= */
 
-      if (qtdEl) qtdEl.innerText = pendentes.length;
-      if (cardEl) {
-        if(pendentes.length === 0) {
-          cardEl.style.display = 'none';
-        } else {
-          cardEl.style.display = 'flex';
-        }
+    async function renderizarMuralDestaque() {
+      const container = document.getElementById('muralDestaqueContainer');
+      container.innerHTML = '<p>Carregando oportunidades...</p>';
+
+      let query = _supabase.from('festas').select('*').eq('concluida', false);
+      if (categoriaFiltroAtiva !== 'Todos') {
+        query = query.eq('servico', categoriaFiltroAtiva);
       }
-    }
 
-    function prepararTelaConfirmacao() {
-      const select = document.getElementById('selectFestaFornecedor');
-      const label = document.getElementById('labelSelecione');
-      const grupoServico = document.getElementById('grupoPrestacaoServico');
-      const grupoComentario = document.getElementById('grupoComentarioContainer');
-      select.innerHTML = '';
+      const { data: festas, error } = await query;
+      container.innerHTML = '';
 
-      if (usuarioAtual.tipo === 'pai') {
-        label.innerText = 'Selecione a Festa Concluída *';
-        grupoServico.style.display = 'block';
-        grupoComentario.style.display = 'block';
-
-        const minhasFestasAtivas = bancoFestas.filter(f => (f.emailPai === usuarioAtual.email || f.nome === usuarioAtual.nome) && !f.concluida);
-        if (minhasFestasAtivas.length === 0) {
-          select.innerHTML = '<option value="">Nenhuma festa ativa para confirmar</option>';
-        } else {
-          minhasFestasAtivas.forEach(f => {
-            select.innerHTML += `<option value="${f.id}">Festa ${f.tema} (${f.servico})</option>`;
-          });
-        }
-      } else {
-        label.innerText = 'Selecione a Festa / Cliente *';
-        grupoServico.style.display = 'none';
-        grupoComentario.style.display = 'none';
-
-        const pendentes = minhasOportunidadesDesbloqueadas.filter(f => f.desbloqueadoPor === usuarioAtual.email && !f.avaliadoPeloFornecedor);
-        if (pendentes.length === 0) {
-          select.innerHTML = '<option value="">Nenhuma pendência de avaliação no momento</option>';
-        } else {
-          pendentes.forEach(f => {
-            select.innerHTML += `<option value="${f.id}">${f.nome} - Festa ${f.tema}</option>`;
-          });
-        }
-      }
-    }
-
-    document.getElementById('formConfirmacaoAvaliacao').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const targetVal = document.getElementById('selectFestaFornecedor').value;
-      const statusFechado = document.getElementById('statusFechamento').value;
-
-      if (!targetVal) {
-        exibirModalAviso("⚠️ Atenção", "Nenhuma opção selecionada para avaliação.");
+      if (error || !festas || festas.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma oportunidade recente encontrada.</p>';
         return;
       }
 
-      let mensagemResultado = "Avaliação enviada e registrada no sistema com sucesso!";
-
-      if (usuarioAtual.tipo === 'pai') {
-        const festaAlvo = bancoFestas.find(f => f.id == targetVal);
-        if (festaAlvo) {
-          festaAlvo.concluida = true;
-        }
-
-        salvarDados();
-        atualizarInterfacePosLogin();
-        exibirModalAviso("✅ Sucesso!", "Sua festa foi marcada como concluída e movida para o histórico!", "OK", function() {
-          trocarAba('home');
-        });
-
-      } else {
-        const festaAlvo = bancoFestas.find(f => f.id == targetVal);
-        const itemMinhas = minhasOportunidadesDesbloqueadas.find(m => m.id == targetVal && m.desbloqueadoPor === usuarioAtual.email);
-
-        if (festaAlvo) {
-          festaAlvo.avaliadoPeloFornecedor = true;
-          festaAlvo.concluida = true;
-          festaAlvo.notaCliente = notasForm.starAtendimento;
-
-          if(itemMinhas) itemMinhas.avaliadoPeloFornecedor = true;
-
-          const clienteUser = usuariosCadastrados.find(u => u.email === festaAlvo.emailPai);
-          if(clienteUser) {
-            const qtd = clienteUser.avaliacoesRecebidas || 0;
-            if (qtd === 0) {
-              clienteUser.notaMedia = notasForm.starAtendimento;
-            } else {
-              clienteUser.notaMedia = ((clienteUser.notaMedia * qtd) + notasForm.starAtendimento) / (qtd + 1);
-            }
-            clienteUser.avaliacoesRecebidas = qtd + 1;
-            
-            festaAlvo.notaCliente = clienteUser.notaMedia;
-            festaAlvo.avaliacoesClienteCount = clienteUser.avaliacoesRecebidas;
-
-            enviarNotificacao(clienteUser.email, 'site', 'Avaliação do Fornecedor', `O fornecedor ${usuarioAtual.nome} confirmou a negociação e avaliou o seu atendimento.`);
-          }
-
-          if (statusFechado === 'nao_fechado') {
-            const creditosInvestidos = itemMinhas ? (itemMinhas.creditosGastos || 1) : 1;
-            
-            const totalGratuitosConcedidos = usuarioAtual.totalCreditosGratuitosRecebidos || 3;
-            const saldoAtual = usuarioAtual.saldoCreditos || 0;
-
-            const saldoGratuitoRestante = Math.min(saldoAtual, totalGratuitosConcedidos);
-            const saldoCreditosComprados = Math.max(0, saldoAtual - saldoGratuitoRestante);
-
-            if (saldoCreditosComprados > 0) {
-              const cashbackDevolvido = creditosInvestidos * 0.5;
-              usuarioAtual.saldoCreditos += cashbackDevolvido;
-              const cashbackTexto = cashbackDevolvido.toString().replace('.', ',');
-              
-              mensagemResultado = `Avaliação concluída! Como o negócio não foi fechado, você recebeu **${cashbackTexto} crédito(s) de cashback (50% do investimento)** referentes aos seus créditos adquiridos.`;
-              enviarNotificacao(usuarioAtual.email, 'site', 'Cashback de Créditos Recebido', `Você recebeu ${cashbackTexto} crédito(s) de volta referentes à negociação não fechada da festa ${festaAlvo.tema}.`);
-            } else {
-              mensagemResultado = `Avaliação concluída! Conforme a Política de Créditos, o benefício de cashback de 50% é exclusivo para créditos adquiridos por compra na plataforma (créditos gratuitos promocionais do cadastro não possuem cashback).`;
-            }
-          }
-        }
-
-        salvarDados();
-        atualizarInterfacePosLogin();
-
-        const pendentesRestantes = minhasOportunidadesDesbloqueadas.filter(f => f.desbloqueadoPor === usuarioAtual.email && !f.avaliadoPeloFornecedor);
-
-        if (pendentesRestantes.length > 0) {
-          exibirModalAviso("✅ Avaliação Registrada", mensagemResultado, "Avaliar Próxima Oportunidade", function() {
-            prepararTelaConfirmacao();
-          });
-        } else {
-          exibirModalAviso("✅ Sucesso!", mensagemResultado + "<br><br>Você concluiu todas as suas avaliações pendentes!", "Ir para Página Inicial", function() {
-            trocarAba('home');
-          });
-        }
-      }
-    });
-
-    function simularLembreteWpp(tipo) {
-      if (tipo === 'pai') {
-        const msg = `👋 Olá! Lembramos de você. Não se esqueça de confirmar se fechou contrato para a sua festa e avaliar o fornecedor no Quem Faz Festa.`;
-        enviarNotificacao(usuarioAtual.email, 'whatsapp', 'Lembrete WhatsApp', msg);
-        exibirModalAviso("💬 Notificação WhatsApp", msg, "Acessar Plataforma para Avaliar", function() {
-          trocarAba('confirmar-festa');
-        });
-      } else {
-        const msg = `👋 Olá, parceiro! Você já fechou negócio com as oportunidades recentes? Acesse para confirmar o fechamento e avaliar o cliente para receber 50% de cashback caso não tenha fechado.`;
-        enviarNotificacao(usuarioAtual.email, 'whatsapp', 'Lembrete WhatsApp', msg);
-        exibirModalAviso("💬 Notificação WhatsApp", msg, "Acessar Plataforma para Confirmar", function() {
-          trocarAba('confirmar-festa');
-        });
-      }
-    }
-
-    function desbloquearContato(festaId) {
-      const festa = bancoFestas.find(f => f.id === festaId);
-      if (!festa) return;
-
-      const jaDesbloqueado = minhasOportunidadesDesbloqueadas.some(f => f.id === festaId && f.desbloqueadoPor === usuarioAtual.email);
-
-      if (jaDesbloqueado) {
-        window.open(`https://wa.me/55${festa.whatsapp.replace(/\D/g,'')}`, '_blank');
-        return;
-      }
-
-      const custoNecessario = calcularCustoCreditos(festa.orcamento);
-
-      if (!usuarioAtual || usuarioAtual.saldoCreditos < custoNecessario) {
-        exibirModalAviso("🪙 Saldo Insuficiente", `Esta oportunidade exige <strong>${custoNecessario} crédito(s)</strong> para abertura (Faixa: ${festa.orcamento}). Adquira um pacote de créditos para continuar.`, "Comprar Créditos", function() {
-          trocarAba('comprar-creditos');
-        });
-        return;
-      }
-
-      exibirModalConfirmacao("🔓 Confirmar Desbloqueio", `Deseja realmente abrir esta oportunidade ao preço de <strong>${custoNecessario} crédito(s)</strong>?`, function() {
-        if (festa.desbloqueios < festa.maxDesbloqueios) {
-          usuarioAtual.saldoCreditos -= custoNecessario;
-          usuarioAtual.totalDesbloqueiosRealizados = (usuarioAtual.totalDesbloqueiosRealizados || 0) + 1;
-          
-          festa.desbloqueios += 1;
-          festa.liberado = true;
-          
-          minhasOportunidadesDesbloqueadas.push({
-            ...festa, 
-            desbloqueadoPor: usuarioAtual.email,
-            liberado: true,
-            creditosGastos: custoNecessario
-          });
-
-          const comentExibido = usuarioAtual.ultimoComentario || "Sem comentários recentes.";
-          const textoNotaForn = formatarTextoAvaliacao(usuarioAtual.notaMedia, usuarioAtual.avaliacoesRecebidas);
-
-          const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico}. Ele possui nota ${textoNotaForn} e entrará em contato em breve.`;
-          
-          enviarNotificacao(festa.emailPai, 'whatsapp', 'Fornecedor Interessado', msgCliente);
-          enviarNotificacao(festa.emailPai, 'email', 'Orçamento a Caminho!', msgCliente);
-          enviarNotificacao(festa.emailPai, 'site', 'Contato Visualizado', msgCliente);
-
-          salvarDados();
-          atualizarInterfacePosLogin();
-          
-          const abaAtual = localStorage.getItem('qff_aba_atual');
-          if(abaAtual === 'mural') renderizarMuralCompleto();
-          else renderizarMuralDestaque();
-
-          const msgNotificacaoModal = `📲 <strong>Notificação Enviada ao Cliente (${festa.nome}):</strong><br><br>` +
-            `"O fornecedor <strong>${usuarioAtual.nome}</strong> visualizou seu pedido.<br>` +
-            `⭐ <strong>Nota do fornecedor:</strong> ${textoNotaForn}<br>` +
-            `💬 <strong>Último comentário recebido:</strong> <em>'${comentExibido}'</em><br><br>` +
-            `Ele entrará em contato com você via WhatsApp em breve!"`;
-
-          exibirModalAviso("💬 WhatsApp Notificação", msgNotificacaoModal, "Entendido (Abrir WhatsApp)", function() {
-            window.open(`https://wa.me/55${festa.whatsapp.replace(/\D/g,'')}`, '_blank');
-          });
-        } else {
-          exibirModalAviso("🔒 Vagas Esgotadas", "Esta oportunidade já atingiu o limite de 4 fornecedores.");
-        }
+      festas.forEach(festa => {
+        container.appendChild(criarCardFesta(festa));
       });
     }
 
-    function carregarDashboardPais() {
-      const container = document.getElementById('resumoFestasPaisContainer');
-      container.innerHTML = '';
-      
-      const minhasFestas = bancoFestas.filter(f => (f.emailPai === usuarioAtual.email || f.nome === usuarioAtual.nome) && !f.concluida);
+    async function renderizarMuralCompleto() {
+      const container = document.getElementById('muralContainer');
+      container.innerHTML = '<p>Carregando mural...</p>';
 
-      if (minhasFestas.length === 0) {
+      const checkboxes = document.querySelectorAll('.chk-categoria-mural:checked');
+      const categoriasSelecionadas = Array.from(checkboxes).map(cb => cb.value);
+
+      let query = _supabase.from('festas').select('*').eq('concluida', false);
+
+      if (categoriasSelecionadas.length > 0) {
+        query = query.in('servico', categoriasSelecionadas);
+      }
+
+      const { data: festas, error } = await query;
+      container.innerHTML = '';
+
+      if (error || !festas || festas.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma oportunidade encontrada.</p>';
+        return;
+      }
+
+      festas.forEach(festa => {
+        container.appendChild(criarCardFesta(festa));
+      });
+    }
+
+    function criarCardFesta(festa) {
+      const card = document.createElement('div');
+      card.className = 'festa-card';
+      card.id = `festa-card-${festa.id}`;
+      const esgotado = festa.desbloqueios >= festa.max_desbloqueios;
+      const custoNecessario = calcularCustoCreditos(festa.orcamento);
+
+      const botaoAcao = `<button class="btn-desbloquear" onclick="desbloquearContato(${festa.id})" ${esgotado ? 'disabled' : ''}>
+        ${esgotado ? 'Vagas Esgotadas' : `🔓 Desbloquear WhatsApp (${custoNecessario} Cred.)`}
+      </button>`;
+
+      card.innerHTML = `
+        <div class="festa-header"><span class="tag-servico">${festa.servico}</span></div>
+        <div class="festa-detalhes">
+          <div class="detalhe-item"><strong>CLIENTE</strong><span>${festa.nome_pai}</span></div>
+          <div class="detalhe-item"><strong>TEMA</strong><span>${festa.tema || "Ainda não definido"}</span></div>
+          <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${festa.orcamento}</span></div>
+          <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(festa.data)} às ${festa.horario || "Não informado"}</span></div>
+          <div class="detalhe-item"><strong>LOCAL</strong><span>${festa.cidade} (${festa.bairro})</span></div>
+        </div>
+        <div class="festa-footer">
+          <span>🔒 ${festa.desbloqueios}/${festa.max_desbloqueios} liberados</span>
+          ${botaoAcao}
+        </div>`;
+      return card;
+    }
+
+    async function carregarDashboardPais() {
+      const container = document.getElementById('resumoFestasPaisContainer');
+      container.innerHTML = '<p>Carregando festas...</p>';
+
+      const { data: minhasFestas } = await _supabase
+        .from('festas')
+        .select('*')
+        .eq('user_id', usuarioAtual.id)
+        .eq('concluida', false);
+
+      container.innerHTML = '';
+
+      if (!minhasFestas || minhasFestas.length === 0) {
         container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma festa ativa cadastrada.</p>';
         return;
       }
 
       minhasFestas.forEach(p => {
-        const temaTxt = p.tema || "Ainda não definido";
-        const horarioTxt = p.horario || "Ainda não definido";
-        const pessoasTxt = p.qtdPessoas ? `${p.qtdPessoas} pessoas` : "Não informado";
-        const comentTxt = p.comentarios ? `<div class="detalhe-item full-width"><strong>OBSERVAÇÕES / COMENTÁRIOS</strong><span>${p.comentarios}</span></div>` : '';
-
-        container.innerHTML += `<div class="festa-card">
-          <div class="festa-header"><span class="tag-servico">${p.servico}</span><span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;"><img src="balão.png" alt="Balão" class="menu-icon-img"> ${p.cidade} (${p.bairro})</span></div>
-          <div class="festa-detalhes">
-            <div class="detalhe-item"><strong>TEMA</strong><span>${temaTxt}</span></div>
-            <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${p.orcamento}</span></div>
-            <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(p.data)} às ${horarioTxt}</span></div>
-            <div class="detalhe-item"><strong>CONVIDADOS</strong><span>${pessoasTxt}</span></div>
-            ${comentTxt}
-            <div class="detalhe-item full-width"><strong>STATUS</strong><span style="color:var(--primary); font-weight:700;">${p.desbloqueios} de ${p.maxDesbloqueios} fornecedores te chamaram</span></div>
-          </div>
-        </div>`;
+        container.innerHTML += `
+          <div class="festa-card">
+            <div class="festa-header"><span class="tag-servico">${p.servico}</span></div>
+            <div class="festa-detalhes">
+              <div class="detalhe-item"><strong>TEMA</strong><span>${p.tema}</span></div>
+              <div class="detalhe-item"><strong>DATA</strong><span>${formatarDataBR(p.data)}</span></div>
+              <div class="detalhe-item full-width"><strong>STATUS</strong><span style="color:var(--primary); font-weight:700;">${p.desbloqueios} de ${p.max_desbloqueios} fornecedores te chamaram</span></div>
+            </div>
+          </div>`;
       });
     }
 
-    function carregarDashboardFornecedor() {
+    async function carregarDashboardFornecedor() {
       atualizarPendenciasAtalho();
       renderizarMuralDestaque();
+    }
+
+    async function atualizarPendenciasAtalho() {
+      if(!usuarioAtual || usuarioAtual.tipo !== 'fornecedor') return;
+
+      const { data: pendentes } = await _supabase
+        .from('desbloqueios')
+        .select('id')
+        .eq('fornecedor_id', usuarioAtual.id)
+        .eq('avaliado_pelo_fornecedor', false);
+
+      const qtd = pendentes ? pendentes.length : 0;
+      const qtdEl = document.getElementById('qtdContatosLiberados');
+      const cardEl = document.getElementById('cardAtalhoPendencias');
+
+      if (qtdEl) qtdEl.innerText = qtd;
+      if (cardEl) cardEl.style.display = qtd === 0 ? 'none' : 'flex';
+    }
+
+    function atualizarExibicaoSaldo() {
+      if (usuarioAtual && usuarioAtual.saldo_creditos !== undefined) {
+        const valExibicao = Number(usuarioAtual.saldo_creditos).toString().replace('.', ',');
+        document.querySelectorAll('.saldo-creditos-val').forEach(el => el.innerText = valExibicao);
+      }
+    }
+
+    function atualizarInterfacePosLogin() {
+      if(!usuarioAtual) return;
+
+      document.getElementById('btn-nav-login').style.display = 'none';
+      document.getElementById('btn-nav-pais').style.display = 'none';
+      document.getElementById('btn-nav-fornecedores').style.display = 'none';
+      document.getElementById('userDropdownWrapper').style.display = 'block';
+      document.getElementById('btn-nav-notificacoes').style.display = 'inline-block';
+
+      document.getElementById('nav-user-name').innerText = usuarioAtual.nome.split(' ')[0];
+      document.querySelectorAll('.nome-usuario-boasvindas').forEach(el => el.innerText = usuarioAtual.nome);
+
+      if (usuarioAtual.tipo === 'pai') {
+        document.getElementById('btn-nav-criar').style.display = 'inline-block';
+        document.getElementById('btn-nav-mural').style.display = 'none';
+        document.getElementById('dropdown-item-comprar').style.display = 'none';
+      } else {
+        document.getElementById('btn-nav-criar').style.display = 'none';
+        document.getElementById('btn-nav-mural').style.display = 'inline-block';
+        document.getElementById('dropdown-item-comprar').style.display = 'flex';
+        atualizarExibicaoSaldo();
+      }
+
+      atualizarBadgeNotificacoes();
+      atualizarPendenciasAtalho();
+    }
+
+    async function trocarAba(aba) {
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+      if (aba === 'home') {
+        document.getElementById('btn-nav-home').classList.add('active');
+        if (usuarioAtual) {
+          if (usuarioAtual.tipo === 'pai') {
+            document.getElementById('view-home-pais').classList.add('active');
+            await carregarDashboardPais();
+          } else {
+            document.getElementById('view-home-fornecedor').classList.add('active');
+            await carregarDashboardFornecedor();
+          }
+        } else {
+          document.getElementById('view-home').classList.add('active');
+        }
+      } else if (aba === 'login') {
+        document.getElementById('view-login').classList.add('active');
+      } else if (aba === 'cadastro-pais') {
+        document.getElementById('view-cadastro-pais').classList.add('active');
+      } else if (aba === 'cadastro-fornecedor') {
+        document.getElementById('view-cadastro-fornecedor').classList.add('active');
+      } else if (aba === 'criar-festa') {
+        document.getElementById('view-criar-festa').classList.add('active');
+      } else if (aba === 'mural') {
+        document.getElementById('view-mural').classList.add('active');
+        await renderizarMuralCompleto();
+      } else if (aba === 'comprar-creditos') {
+        document.getElementById('view-comprar-creditos').classList.add('active');
+      } else if (aba === 'minha-conta') {
+        document.getElementById('view-minha-conta').classList.add('active');
+        carregarDadosConta();
+      } else if (aba === 'notificacoes') {
+        document.getElementById('view-notificacoes').classList.add('active');
+        await carregarNotificacoesTela();
+      } else {
+        const targetView = document.getElementById(`view-${aba}`);
+        if(targetView) targetView.classList.add('active');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function carregarDadosConta() {
+      if (usuarioAtual) {
+        document.getElementById('account-nome').value = usuarioAtual.nome || "";
+        document.getElementById('account-email').value = usuarioAtual.email || "";
+        document.getElementById('account-whatsapp').value = usuarioAtual.whatsapp || "";
+      }
+    }
+
+    async function carregarNotificacoesTela() {
+      const container = document.getElementById('listaNotificacoesContainer');
+      container.innerHTML = '<p>Carregando notificações...</p>';
+
+      const { data: notificacoes } = await _supabase
+        .from('notificacoes')
+        .select('*')
+        .eq('destinatario_email', usuarioAtual.email)
+        .order('created_at', { ascending: false });
+
+      container.innerHTML = '';
+
+      if (!notificacoes || notificacoes.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-muted);">Caixa de notificações vazia.</p>';
+        return;
+      }
+
+      for (let n of notificacoes) {
+        container.innerHTML += `
+          <div class="notif-card-item">
+            <strong style="color:var(--primary-dark); font-size:1rem;">${n.titulo}</strong>
+            <p style="font-size:0.9rem; color:var(--text-main);">${n.mensagem}</p>
+          </div>`;
+      }
+
+      await _supabase.from('notificacoes').update({ lida: true }).eq('destinatario_email', usuarioAtual.email);
+      atualizarBadgeNotificacoes();
     }
 
     function filtrarMural(cat, btn) {
@@ -2286,494 +2072,34 @@
       if (usuarioAtual && usuarioAtual.categoria) {
         filtrarMural(usuarioAtual.categoria, btn);
       } else {
-        exibirModalAviso("⚠️ Categoria Indefinida", "Defina sua categoria principal na área 'Minha Conta' para utilizar esse filtro.");
+        exibirModalAviso("⚠️ Categoria Indefinida", "Defina sua categoria principal em 'Minha Conta'.");
       }
     }
 
-    function renderizarMuralDestaque() {
-      const container = document.getElementById('muralDestaqueContainer');
-      container.innerHTML = '';
-
-      let festasExibicao = categoriaFiltroAtiva === 'Todos' 
-        ? bancoFestas.filter(f => !f.concluida)
-        : bancoFestas.filter(f => (f.servico === categoriaFiltroAtiva || (categoriaFiltroAtiva === 'Outro' && f.servico.startsWith('Outro'))) && !f.concluida);
-
-      if (festasExibicao.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma oportunidade recente encontrada para esta categoria.</p>';
-        return;
-      }
-
-      const categoriasAgrupadas = {};
-      festasExibicao.forEach(festa => {
-        if (!categoriasAgrupadas[festa.servico]) {
-          categoriasAgrupadas[festa.servico] = [];
-        }
-        if (categoriasAgrupadas[festa.servico].length < 3) {
-          categoriasAgrupadas[festa.servico].push(festa);
-        }
-      });
-
-      for (let cat in categoriasAgrupadas) {
-        if (categoriaFiltroAtiva === 'Todos') {
-          const tituloCat = document.createElement('div');
-          tituloCat.className = 'categoria-grupo-titulo';
-          tituloCat.innerText = cat;
-          container.appendChild(tituloCat);
-        }
-
-        categoriasAgrupadas[cat].forEach(festa => {
-          container.appendChild(criarCardFesta(festa));
-        });
-      }
-    }
-
-    function renderizarMuralCompleto() {
-      const container = document.getElementById('muralContainer');
-      container.innerHTML = '';
-
-      const checkboxes = document.querySelectorAll('.chk-categoria-mural:checked');
-      const categoriasSelecionadas = Array.from(checkboxes).map(cb => cb.value);
-
-      let festasFiltradas = bancoFestas.filter(f => !f.concluida);
-      if (categoriasSelecionadas.length > 0) {
-        festasFiltradas = festasFiltradas.filter(f => {
-          if (categoriasSelecionadas.includes('Outro') && f.servico.startsWith('Outro')) {
-            return true;
-          }
-          return categoriasSelecionadas.includes(f.servico);
-        });
-      }
-
-      if (festasFiltradas.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma oportunidade encontrada para a seleção de categorias atual.</p>';
-        return;
-      }
-
-      const categoriasAgrupadas = {};
-      festasFiltradas.forEach(festa => {
-        if (!categoriasAgrupadas[festa.servico]) {
-          categoriasAgrupadas[festa.servico] = [];
-        }
-        categoriasAgrupadas[festa.servico].push(festa);
-      });
-
-      for (let cat in categoriasAgrupadas) {
-        const tituloCat = document.createElement('div');
-        tituloCat.className = 'categoria-grupo-titulo';
-        tituloCat.innerText = cat;
-        container.appendChild(tituloCat);
-
-        categoriasAgrupadas[cat].forEach(festa => {
-          container.appendChild(criarCardFesta(festa));
-        });
-      }
-    }
-
-    function criarCardFesta(festa) {
-      const card = document.createElement('div');
-      card.className = 'festa-card';
-      card.id = `festa-card-${festa.id}`;
-      const esgotado = festa.desbloqueios >= festa.maxDesbloqueios;
-      
-      const textoNota = formatarTextoAvaliacao(festa.notaCliente, festa.avaliacoesClienteCount);
-      
-      const jaDesbloqueado = usuarioAtual 
-        ? minhasOportunidadesDesbloqueadas.some(m => m.id === festa.id && m.desbloqueadoPor === usuarioAtual.email)
-        : false;
-      
-      const custoNecessario = calcularCustoCreditos(festa.orcamento);
-
-      let botaoAcao = '';
-      if (jaDesbloqueado) {
-        botaoAcao = `<button class="btn-ja-liberado" onclick="desbloquearContato(${festa.id})">✅ Abrir WhatsApp (${festa.whatsapp})</button>`;
-      } else {
-        botaoAcao = `<button class="btn-desbloquear" onclick="desbloquearContato(${festa.id})" ${esgotado ? 'disabled' : ''}>
-          ${esgotado ? 'Vagas Esgotadas' : `🔓 Desbloquear WhatsApp (${custoNecessario} Cred.)`}
-        </button>`;
-      }
-
-      const temaTxt = festa.tema || "Ainda não definido";
-      const horarioTxt = festa.horario || "Ainda não definido";
-      const pessoasTxt = festa.qtdPessoas ? `${festa.qtdPessoas} pessoas` : "Não informado";
-      const comentTxt = festa.comentarios ? `<div class="detalhe-item full-width"><strong>OBSERVAÇÕES / DETALHES</strong><span>${festa.comentarios}</span></div>` : '';
-
-      card.innerHTML = `
-        <div class="festa-header"><span class="tag-servico">${festa.servico}</span></div>
-        <div class="festa-detalhes">
-          <div class="detalhe-item">
-            <strong>CLIENTE / AVALIAÇÃO</strong>
-            <span>${festa.nome} <br><span style="color:${(festa.avaliacoesClienteCount > 0) ? '#059669' : 'var(--text-muted)'}; font-weight:700;">${textoNota}</span></span>
-          </div>
-          <div class="detalhe-item"><strong>TEMA</strong><span>${temaTxt}</span></div>
-          <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${festa.orcamento}</span></div>
-          <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(festa.data)} às ${horarioTxt}</span></div>
-          <div class="detalhe-item"><strong>CONVIDADOS</strong><span>${pessoasTxt}</span></div>
-          ${comentTxt}
-        </div>
-        <div class="festa-footer">
-          <span>🔒 ${festa.desbloqueios}/${festa.maxDesbloqueios} liberados</span>
-          ${botaoAcao}
-        </div>`;
-      return card;
-    }
-
-    function carregarNotificacoesTela() {
-      const container = document.getElementById('listaNotificacoesContainer');
-      container.innerHTML = '';
-
-      if (!usuarioAtual) return;
-
-      const minhasNotifs = notificacoesBanco.filter(n => n.destinatarioEmail === usuarioAtual.email);
-
-      if (minhasNotifs.length === 0) {
-        container.innerHTML = '<p style="color:var(--text-muted);">Sua caixa de notificações está vazia.</p>';
-        return;
-      }
-
-      minhasNotifs.forEach(n => {
-        n.lida = true;
-        let tagClass = 'tag-site';
-        let tagNome = 'Site';
-
-        if(n.tipoCanal === 'whatsapp') { tagClass = 'tag-wpp'; tagNome = 'WhatsApp'; }
-        else if(n.tipoCanal === 'email') { tagClass = 'tag-email'; tagNome = 'E-mail'; }
-
-        let botaoLink = '';
-        if (n.festaIdTarget) {
-          botaoLink = `<button class="btn-link-notif" onclick="irParaOportunidade(${n.festaIdTarget}, '${n.categoriaTarget}')">🔗 Ver Oportunidade no Mural →</button>`;
-        }
-
-        container.innerHTML += `
-          <div class="notif-card-item">
-            <div class="notif-header-line">
-              <span class="notif-tag ${tagClass}">${tagNome}</span>
-              <span style="color:var(--text-muted);">${n.dataHora}</span>
-            </div>
-            <strong style="color:var(--primary-dark); font-size:1rem;">${n.titulo}</strong>
-            <p style="font-size:0.9rem; color:var(--text-main);">${n.mensagem}</p>
-            ${botaoLink}
-          </div>`;
-      });
-
-      salvarDados();
-      atualizarBadgeNotificacoes();
-    }
-
-    document.getElementById('formCadastroPais').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const senha = document.getElementById('cad-pai-senha').value;
-      if (senha !== document.getElementById('cad-pai-senha-confirma').value) { 
-        exibirModalAviso("⚠️ Senhas Incompatíveis", "As senhas digitadas não coincidem. Digite novamente.");
-        return; 
-      }
-
-      const aceitouTermos = document.getElementById('cad-pai-aceite-termos').checked;
-      if (!aceitouTermos) {
-        exibirModalAviso("⚠️ Aceite Obrigatório", "Você precisa aceitar os Termos de Uso e Políticas da plataforma para continuar.");
-        return;
-      }
-
-      minhasOportunidadesDesbloqueadas = [];
-
-      usuarioAtual = {
-        tipo: 'pai',
-        nome: document.getElementById('cad-pai-nome').value,
-        email: document.getElementById('cad-pai-email').value,
-        whatsapp: document.getElementById('cad-pai-whatsapp').value,
-        senha: senha,
-        notaMedia: null,
-        avaliacoesRecebidas: 0,
-        banido: false
-      };
-      usuariosCadastrados.push(usuarioAtual);
-      salvarDados();
-      atualizarInterfacePosLogin();
-      trocarAba('home');
-    });
-
-    /* CADASTRO DO FORNECEDOR COM O MODAL DE 12 CRÉDITOS E FORMATAÇÃO LIMPA */
-    document.getElementById('formCadastroFornecedor').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const senha = document.getElementById('cad-forn-senha').value;
-      if (senha !== document.getElementById('cad-forn-senha-confirma').value) { 
-        exibirModalAviso("⚠️ Senhas Incompatíveis", "As senhas digitadas não coincidem. Digite novamente.");
-        return; 
-      }
-
-      const aceitouTermos = document.getElementById('cad-forn-aceite-termos').checked;
-      if (!aceitouTermos) {
-        exibirModalAviso("⚠️ Aceite Obrigatório", "Você precisa aceitar os Termos de Uso e Políticas da plataforma para continuar.");
-        return;
-      }
-
-      minhasOportunidadesDesbloqueadas = [];
-
-      const totalFornecedoresAtuais = usuariosCadastrados.filter(u => u.tipo === 'fornecedor').length;
-      const ehPrimeiros100 = totalFornecedoresAtuais < 100;
-      const creditosIniciaisConcedidos = ehPrimeiros100 ? 12 : 3;
-
-      usuarioAtual = {
-        tipo: 'fornecedor',
-        nome: document.getElementById('cad-forn-nome').value,
-        email: document.getElementById('cad-forn-email').value,
-        whatsapp: document.getElementById('cad-forn-whatsapp').value,
-        categoria: document.getElementById('cad-forn-categoria').value,
-        senha: senha,
-        saldoCreditos: creditosIniciaisConcedidos,
-        totalCreditosGratuitosRecebidos: creditosIniciaisConcedidos,
-        totalDesbloqueiosRealizados: 0,
-        notaMedia: null,
-        avaliacoesRecebidas: 0,
-        ultimoComentario: "Novo na plataforma — ainda sem avaliações",
-        banido: false
-      };
-      usuariosCadastrados.push(usuarioAtual);
-      salvarDados();
-      atualizarInterfacePosLogin();
-
-      const mensagemBoasVindas = ehPrimeiros100
-        ? `Parabéns! Você é um dos primeiros 100 fornecedores cadastrados e ganhou <strong>12 créditos gratuitos</strong> de boas-vindas!`
-        : `Cadastro realizado com sucesso! Você recebeu <strong>3 créditos gratuitos</strong> para experimentar o Mural de Oportunidades.`;
-
-      exibirModalAviso("🎉 Bônus de Cadastro", mensagemBoasVindas, "Acessar Plataforma", function() {
-        trocarAba('home');
-      });
-    });
-
-    document.getElementById('formFesta').addEventListener('submit', function(e) {
-      e.preventDefault();
-      let servicoSel = document.getElementById('servico').value;
-      if (servicoSel === 'Outro') {
-        const especificado = document.getElementById('servicoOutroEspecifique').value.trim();
-        servicoSel = especificado ? `Outro: ${especificado}` : 'Outro';
-      }
-
-      const bairroSel = document.getElementById('bairro').value;
-      const cidadeSel = document.getElementById('cidade').value;
-      const orcamentoSel = document.getElementById('orcamento').value;
-      
-      const chkTemaNaoDef = document.getElementById('chk-tema-nao-definido').checked;
-      const temaValor = chkTemaNaoDef ? "Ainda não definido" : document.getElementById('tema').value;
-
-      const chkHorarioNaoDef = document.getElementById('chk-horario-nao-definido').checked;
-      const horarioValor = chkHorarioNaoDef ? "Ainda não definido" : document.getElementById('horario').value;
-
-      const qtdPessoasValor = document.getElementById('qtdPessoas').value;
-      const comentariosValor = document.getElementById('comentariosAdicionais').value.trim();
-
-      const idFestaCriada = Date.now();
-
-      const novaFesta = {
-        id: idFestaCriada,
-        emailPai: usuarioAtual.email,
-        servico: servicoSel,
-        tema: temaValor,
-        data: document.getElementById('data').value,
-        horario: horarioValor,
-        qtdPessoas: qtdPessoasValor,
-        cidade: cidadeSel,
-        bairro: bairroSel,
-        orcamento: orcamentoSel,
-        comentarios: comentariosValor,
-        nome: usuarioAtual.nome,
-        whatsapp: usuarioAtual.whatsapp,
-        notaCliente: usuarioAtual.notaMedia,
-        avaliacoesClienteCount: usuarioAtual.avaliacoesRecebidas || 0,
-        desbloqueios: 0,
-        maxDesbloqueios: 4,
-        liberado: false,
-        avaliadoPeloFornecedor: false,
-        concluida: false
-      };
-      bancoFestas.unshift(novaFesta);
-
-      const fornecedoresElegiveis = usuariosCadastrados.filter(u => u.tipo === 'fornecedor' && (u.categoria === servicoSel || servicoSel.startsWith('Outro')));
-      const msgNotificacao = `Nova oportunidade publicada! Cliente procura ${servicoSel} em ${bairroSel} (${cidadeSel}) com orçamento de ${orcamentoSel}. Clique para visualizar e desbloquear o contato.`;
-
-      fornecedoresElegiveis.forEach(forn => {
-        enviarNotificacao(forn.email, 'whatsapp', 'Nova Oportunidade no Mural', msgNotificacao, idFestaCriada, servicoSel);
-        enviarNotificacao(forn.email, 'email', 'Nova Oportunidade Cadastrada!', msgNotificacao, idFestaCriada, servicoSel);
-        enviarNotificacao(forn.email, 'site', 'Alerta de Mural', msgNotificacao, idFestaCriada, servicoSel);
-      });
-
-      salvarDados();
-      exibirModalAviso("🎈 Oferta Publicada", "Seu pedido foi publicado no mural com sucesso! Todos os fornecedores da categoria receberam a notificação com link direto.", "OK", function() {
-        trocarAba('home');
-      });
-    });
-
-    function renderizarMural() { renderizarMuralCompleto(); }
-
-    function comprarCreditos(pacote, qtd, preco) {
-      exibirModalConfirmacao("💳 Pacote de Créditos", `Confirmar compra do <strong>${pacote}</strong> por <strong>R$ ${preco}</strong>?`, function() {
-        usuarioAtual.saldoCreditos += qtd;
-        salvarDados();
-        atualizarExibicaoSaldo();
-        exibirModalAviso("🪙 Créditos Adicionados", `${qtd} créditos foram adicionados à sua conta com sucesso!`, "OK", function() {
-          trocarAba('home');
-        });
-      });
-    }
-
-    function carregarDadosConta() {
-      if (usuarioAtual) {
-        document.getElementById('account-nome').value = usuarioAtual.nome;
-        document.getElementById('account-email').value = usuarioAtual.email;
-        document.getElementById('account-whatsapp').value = usuarioAtual.whatsapp || "";
-      }
-    }
-
-    document.getElementById('formAtualizarConta').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const novaSenha = document.getElementById('account-nova-senha').value;
-      const confirmaNovaSenha = document.getElementById('account-nova-senha-confirma').value;
-
-      if (novaSenha !== "" || confirmaNovaSenha !== "") {
-        if (novaSenha !== confirmaNovaSenha) {
-          exibirModalAviso("⚠️ Erro nas Senhas", "As novas senhas informadas não coincidem!");
-          return;
-        }
-        usuarioAtual.senha = novaSenha;
-      }
-
-      usuarioAtual.nome = document.getElementById('account-nome').value;
-      usuarioAtual.whatsapp = document.getElementById('account-whatsapp').value;
-      
-      const idx = usuariosCadastrados.findIndex(u => u.email === usuarioAtual.email);
-      if (idx !== -1) usuariosCadastrados[idx] = usuarioAtual;
-
-      salvarDados();
-      atualizarInterfacePosLogin();
-      exibirModalAviso("✅ Dados Atualizados", "Seus dados cadastrais e WhatsApp foram salvos com sucesso!");
-    });
-
-    function carregarHistoricoTela() {
-      if(!usuarioAtual) return;
-
-      const histContainer = document.getElementById('historicoContainerTela');
-      const titulo = document.getElementById('titulo-historico-tela');
-      const subtitulo = document.getElementById('subtitulo-historico-tela');
-      histContainer.innerHTML = '';
-
-      if (usuarioAtual.tipo === 'pai') {
-        titulo.innerText = "Minhas Festas Ativas";
-        subtitulo.innerText = "Acompanhe todos os seus pedidos publicados e o número de fornecedores interessados.";
-
-        const minhasFestas = bancoFestas.filter(f => (f.emailPai === usuarioAtual.email || f.nome === usuarioAtual.nome) && !f.concluida);
-
-        if (minhasFestas.length === 0) {
-          histContainer.innerHTML = '<p style="color:var(--text-muted);">Você não possui festas ativas no momento.</p>';
-          return;
-        }
-
-        minhasFestas.forEach(p => {
-          const temaTxt = p.tema || "Ainda não definido";
-          const horarioTxt = p.horario || "Ainda não definido";
-          const pessoasTxt = p.qtdPessoas ? `${p.qtdPessoas} pessoas` : "Não informado";
-          const comentTxt = p.comentarios ? `<div class="detalhe-item full-width"><strong>OBSERVAÇÕES / DETALHES</strong><span>${p.comentarios}</span></div>` : '';
-
-          histContainer.innerHTML += `
-            <div class="festa-card">
-              <div class="festa-header"><span class="tag-servico">${p.servico}</span><span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;"><img src="balão.png" alt="Balão" class="menu-icon-img"> ${p.cidade} (${p.bairro})</span></div>
-              <div class="festa-detalhes">
-                <div class="detalhe-item"><strong>TEMA</strong><span>${temaTxt}</span></div>
-                <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${p.orcamento}</span></div>
-                <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(p.data)} às ${horarioTxt}</span></div>
-                <div class="detalhe-item"><strong>CONVIDADOS</strong><span>${pessoasTxt}</span></div>
-                ${comentTxt}
-                <div class="detalhe-item full-width"><strong>FORNECEDORES INTERESSADOS</strong><span style="color:var(--primary); font-weight:700;">${p.desbloqueios} de ${p.maxDesbloqueios} te chamaram</span></div>
-              </div>
-            </div>`;
-        });
-      } else {
-        titulo.innerText = "Contatos Liberados";
-        subtitulo.innerText = "Acesse diretamente o WhatsApp dos contratantes cujas vagas você desbloqueou.";
-
-        const pendentes = minhasOportunidadesDesbloqueadas.filter(o => o.desbloqueadoPor === usuarioAtual.email && !o.avaliadoPeloFornecedor);
-
-        if (pendentes.length === 0) {
-          histContainer.innerHTML = '<p style="color:var(--text-muted);">Você não possui contatos pendentes de avaliação.</p>';
-          return;
-        }
-
-        pendentes.forEach(o => {
-          const temaTxt = o.tema || "Ainda não definido";
-          const horarioTxt = o.horario || "Ainda não definido";
-          const pessoasTxt = o.qtdPessoas ? `${o.qtdPessoas} pessoas` : "Não informado";
-          const comentTxt = o.comentarios ? `<div class="detalhe-item full-width"><strong>OBSERVAÇÕES / DETALHES</strong><span>${o.comentarios}</span></div>` : '';
-
-          histContainer.innerHTML += `
-            <div class="festa-card">
-              <div class="festa-header"><span class="tag-servico">${o.servico}</span><span style="font-size:0.85rem; color:var(--text-muted); font-weight:600;"><img src="balão.png" alt="Balão" class="menu-icon-img"> ${o.cidade} (${o.bairro})</span></div>
-              <div class="festa-detalhes">
-                <div class="detalhe-item"><strong>CLIENTE</strong><span>${o.nome}</span></div>
-                <div class="detalhe-item"><strong>TEMA</strong><span>${o.tema || "Ainda não definido"}</span></div>
-                <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${o.orcamento}</span></div>
-                <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(o.data)} às ${horarioTxt}</span></div>
-                <div class="detalhe-item"><strong>CONVIDADOS</strong><span>${pessoasTxt}</span></div>
-                ${comentTxt}
-              </div>
-              <a href="https://wa.me/55${o.whatsapp.replace(/\D/g,'')}" target="_blank" class="whatsapp-revelado">📱 Abrir Conversa no WhatsApp (${o.whatsapp})</a>
-            </div>`;
-        });
-      }
-    }
-
-    function carregarHistoricoConcluidas() {
-      if(!usuarioAtual) return;
-      const container = document.getElementById('historicoConcluidasContainer');
-      container.innerHTML = '';
-
-      if (usuarioAtual.tipo === 'pai') {
-        const concluidas = bancoFestas.filter(f => (f.emailPai === usuarioAtual.email || f.nome === usuarioAtual.nome) && f.concluida);
-
-        if (concluidas.length === 0) {
-          container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma festa concluída encontrada no histórico.</p>';
-          return;
-        }
-
-        concluidas.forEach(p => {
-          container.innerHTML += `
-            <div class="festa-card" style="opacity: 0.85;">
-              <div class="festa-header"><span class="tag-servico">${p.servico}</span><span style="color:#059669; font-weight:700; font-size:0.85rem;">✅ Festa Concluída</span></div>
-              <div class="festa-detalhes">
-                <div class="detalhe-item"><strong>TEMA</strong><span>${p.tema || "Ainda não definido"}</span></div>
-                <div class="detalhe-item"><strong>LOCAL</strong><span>${p.cidade} (${p.bairro})</span></div>
-                <div class="detalhe-item"><strong>DATA</strong><span>${formatarDataBR(p.data)}</span></div>
-              </div>
-            </div>`;
-        });
-      } else {
-        const concluidasForn = minhasOportunidadesDesbloqueadas.filter(o => o.desbloqueadoPor === usuarioAtual.email && o.avaliadoPeloFornecedor);
-
-        if (concluidasForn.length === 0) {
-          container.innerHTML = '<p style="color:var(--text-muted);">Nenhum trabalho concluído/avaliado no histórico.</p>';
-          return;
-        }
-
-        concluidasForn.forEach(o => {
-          container.innerHTML += `
-            <div class="festa-card" style="opacity: 0.85;">
-              <div class="festa-header"><span class="tag-servico">${o.servico}</span><span style="color:#059669; font-weight:700; font-size:0.85rem;">✅ Avaliação Concluída</span></div>
-              <div class="festa-detalhes">
-                <div class="detalhe-item"><strong>CLIENTE</strong><span>${o.nome}</span></div>
-                <div class="detalhe-item"><strong>TEMA</strong><span>${o.tema || "Ainda não definido"}</span></div>
-                <div class="detalhe-item"><strong>DATA</strong><span>${formatarDataBR(o.data)}</span></div>
-              </div>
-            </div>`;
-        });
-      }
-    }
-
-    window.addEventListener('DOMContentLoaded', function() {
+    /* =========================================================
+       6. CARREGAMENTO INICIAL DE SESSÃO
+       ========================================================= */
+    window.addEventListener('DOMContentLoaded', async function() {
       verificarBannerCookies();
-      if (usuarioAtual) {
-        const todosDesbloqueios = JSON.parse(localStorage.getItem('qff_desbloqueios')) || [];
-        minhasOportunidadesDesbloqueadas = todosDesbloqueios.filter(d => d.desbloqueadoPor === usuarioAtual.email);
-        atualizarInterfacePosLogin();
-        const abaSalva = localStorage.getItem('qff_aba_atual') || 'home';
-        trocarAba(abaSalva);
+
+      // Checar sessão ativa no Supabase Auth
+      const { data: { session } } = await _supabase.auth.getSession();
+
+      if (session) {
+        authUser = session.user;
+        const { data: profile } = await _supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', authUser.id)
+          .single();
+
+        if (profile) {
+          usuarioAtual = profile;
+          atualizarInterfacePosLogin();
+        }
       }
+
+      trocarAba('home');
     });
   </script>
 </body>
