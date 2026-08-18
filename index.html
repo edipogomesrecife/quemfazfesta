@@ -1534,6 +1534,17 @@
   </div>
 
   <script>
+    /* =========================================================
+       1. INICIALIZAÇÃO DO SUPABASE
+       ========================================================= */
+    const SUPABASE_URL = 'https://mipvzmxrmljoxbtjrnlz.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_fjURoHCtHSmy-HthR3bcAA_zIJ-hSqJ';
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    /* =========================================================
+       2. DADOS E VARIÁVEIS GERAIS DO SISTEMA
+       ========================================================= */
     const PadraoUsuarios = [
       { email: "pai@teste.com", senha: "123", tipo: "pai", nome: "Camila Peixoto", whatsapp: "(81) 99999-8888", notaMedia: 5.0, avaliacoesRecebidas: 1, banido: false },
       { email: "fornecedor@teste.com", senha: "123", tipo: "fornecedor", nome: "Studio Foto & Arte", whatsapp: "(81) 98888-7777", categoria: "Fotografia & Filmagem", saldoCreditos: 12, totalCreditosGratuitosRecebidos: 12, totalDesbloqueiosRealizados: 0, notaMedia: 5.0, avaliacoesRecebidas: 1, ultimoComentario: "Excelente atendimento e pontualidade!", banido: false }
