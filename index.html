@@ -249,12 +249,6 @@
     }
 
     .mural-grid { display: flex; flex-direction: column; gap: 16px; }
-    
-    .categoria-grupo-titulo {
-      font-size: 1.2rem; font-weight: 700; color: var(--primary-dark);
-      margin-top: 12px; margin-bottom: -4px; border-bottom: 2px solid var(--festive);
-      padding-bottom: 4px; display: inline-block;
-    }
 
     .festa-card {
       background-color: var(--card-bg); border: 1px solid var(--border-color);
@@ -291,36 +285,6 @@
     }
     .btn-desbloquear:hover { background-color: #E05548; }
     .btn-desbloquear:disabled { background-color: #CBD5E1; cursor: not-allowed; }
-
-    .btn-ja-liberado {
-      background-color: #DCFCE7; color: #166534; border: 1px solid #86EFAC;
-      padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
-    }
-
-    .whatsapp-revelado {
-      background-color: #DCFCE7; color: #166534; padding: 10px 16px;
-      border-radius: 10px; font-weight: 700; text-decoration: none; text-align: center; display: block;
-    }
-
-    .notif-card-item {
-      background: var(--card-bg); border: 1px solid var(--border-color);
-      border-radius: 12px; padding: 16px 20px; margin-bottom: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 8px;
-    }
-    .notif-header-line { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; }
-    .notif-tag { padding: 2px 8px; border-radius: 6px; font-weight: 800; text-transform: uppercase; font-size: 0.7rem; }
-    .tag-wpp { background-color: #DCFCE7; color: #15803D; }
-    .tag-email { background-color: #E0F2FE; color: #0369A1; }
-    .tag-site { background-color: #FEF3C7; color: #B45309; }
-
-    .btn-link-notif {
-      background-color: var(--primary); color: white; border: none;
-      padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 700;
-      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-      align-self: flex-start; margin-top: 4px; transition: background-color 0.2s;
-    }
-    .btn-link-notif:hover { background-color: var(--primary-dark); }
 
     .pacotes-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -383,14 +347,14 @@
     .faq-item h4 { font-size: 1.05rem; color: var(--primary-dark); margin-bottom: 6px; font-weight: 700; }
     .faq-item p { font-size: 0.95rem; color: var(--text-main); line-height: 1.6; }
 
-    .card-sobre { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); max-width: 850px; margin: 0 auto; }
     .card-politica-conteudo h1 { font-size: 1.8rem; color: var(--primary-dark); margin-bottom: 8px; text-align: center; }
     .card-politica-conteudo .subtitulo-documento { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
-    .card-sobre h2, .card-politica-conteudo h2 { font-size: 1.25rem; color: var(--primary-dark); margin-top: 24px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; font-weight: 700; }
-    .card-sobre h2:first-of-type, .card-politica-conteudo h2:first-of-type { margin-top: 0; }
-    .card-sobre p, .card-politica-conteudo p { margin-bottom: 14px; color: var(--text-main); font-size: 0.95rem; line-height: 1.7; }
-    .card-sobre ul, .card-politica-conteudo ul { margin-bottom: 18px; padding-left: 20px; color: var(--text-main); }
-    .card-sobre li, .card-politica-conteudo li { margin-bottom: 8px; font-size: 0.93rem; line-height: 1.6; }
+    .card-politica-conteudo h2 { font-size: 1.25rem; color: var(--primary-dark); margin-top: 24px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; font-weight: 700; }
+    .card-politica-conteudo h2:first-of-type { margin-top: 0; }
+    .card-politica-conteudo h3 { font-size: 1.05rem; color: var(--primary-dark); margin-top: 18px; margin-bottom: 8px; font-weight: 700; }
+    .card-politica-conteudo p { margin-bottom: 14px; color: var(--text-main); font-size: 0.95rem; line-height: 1.7; }
+    .card-politica-conteudo ul { margin-bottom: 18px; padding-left: 20px; color: var(--text-main); }
+    .card-politica-conteudo li { margin-bottom: 8px; font-size: 0.93rem; line-height: 1.6; }
 
     .cookie-banner {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
@@ -524,7 +488,7 @@
             <div>
               <h2><img src="negócios.png" alt="Negócios" class="card-title-icon"> Para Fornecedores</h2>
               <ul>
-                <li>✅ <strong>Ganhe 3 Créditos Grátis:</strong> Teste o Mural de Oportunidades no cadastro (1 crédito por oportunidade).</li>
+                <li>✅ <strong>Ganhe Créditos Grátis:</strong> Teste o Mural de Oportunidades no cadastro (1 crédito por oportunidade).</li>
                 <li>✅ <strong>Qualifique:</strong> Veja data, hora, bairro, orçamento e outras informações antes de liberar o contato.</li>
                 <li>✅ <strong>Cashback:</strong> Cashback de 50% exatos em créditos comprados se não fechar contrato.</li>
               </ul>
@@ -735,6 +699,345 @@
       </div>
     </section>
 
+    <!-- TERMOS DE USO -->
+    <section id="view-termos-uso" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>1. TERMOS DE USO</h1>
+          <div class="subtitulo-documento">Quem Faz Festa documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Objeto e aceitação</h2>
+          <p>Estes Termos de Uso regulam o acesso e a utilização do Quem Faz Festa, marketplace e mural de oportunidades destinado a conectar contratantes e fornecedores de serviços relacionados a festas e eventos.</p>
+          <p>Ao criar uma conta, publicar uma oportunidade, desbloquear um contato, adquirir créditos ou utilizar qualquer funcionalidade da plataforma, o usuário declara que leu, compreendeu e concorda com estes Termos e com as políticas complementares aplicáveis.</p>
+
+          <h2>Papel da plataforma</h2>
+          <p>O Quem Faz Festa atua como plataforma tecnológica de conexão e divulgação de oportunidades. A plataforma não é parte dos contratos celebrados entre contratantes e fornecedores, não presta os serviços anunciados pelos fornecedores e não participa das negociações, pagamentos, execução, entrega, qualidade ou cancelamento dos serviços contratados entre as partes.</p>
+          <p>Cada contratante e cada fornecedor é responsável pelas obrigações que assumir diretamente com a outra parte, sem prejuízo das responsabilidades que possam decorrer da legislação aplicável à própria plataforma.</p>
+
+          <h2>Cadastro e elegibilidade</h2>
+          <p>O usuário deve fornecer dados verdadeiros, atuais e completos. É vedado criar conta fictícia, duplicada ou destinada a testes sem autorização.</p>
+          <p>O uso da plataforma é destinado a maiores de 18 anos. A plataforma poderá solicitar informações ou documentos adicionais para verificar identidade, atividade profissional ou prevenir fraude.</p>
+
+          <h2>Oportunidades e contatos</h2>
+          <p>Os pedidos publicados pelos contratantes devem corresponder a necessidades reais. O número de fornecedores que poderá desbloquear uma oportunidade poderá ser limitado pela plataforma.</p>
+          <p>A liberação de dados de contato ocorrerá conforme as regras de privacidade, elegibilidade e créditos vigentes.</p>
+
+          <h2>Conduta</h2>
+          <p>É proibido utilizar a plataforma para fraude, assédio, spam, discriminação, ameaça, prática ilícita, divulgação indevida de dados pessoais, manipulação de avaliações, criação de contas múltiplas para obtenção de vantagens ou tentativa de contornar mecanismos de segurança.</p>
+
+          <h2>Contratações externas</h2>
+          <p>Contratante e fornecedor são orientados a formalizar qualquer contratação por escrito, descrevendo serviço, data, horário, valores, itens incluídos, condições de pagamento e cancelamento.</p>
+          <p>O Quem Faz Festa não garante que uma oportunidade resulte em contratação e não garante a qualidade, disponibilidade ou execução de qualquer fornecedor.</p>
+
+          <h2>Suspensão e encerramento</h2>
+          <p>A plataforma poderá suspender, restringir ou encerrar contas que violem estes Termos ou políticas complementares, especialmente em situações de fraude, risco à segurança, abuso, uso indevido de dados ou reincidência.</p>
+          <p>Medidas urgentes poderão ser aplicadas sem aviso prévio quando necessárias para proteger usuários, dados, créditos ou a integridade da plataforma. Quando cabível, o usuário poderá apresentar esclarecimentos ou recurso.</p>
+
+          <h2>Alterações e legislação</h2>
+          <p>Os Termos poderão ser atualizados para refletir mudanças legais, operacionais ou de segurança. A versão vigente ficará disponível na plataforma.</p>
+          <p>Aplicam-se as leis brasileiras, observadas as regras de competência e proteção do consumidor eventualmente incidentes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE PRIVACIDADE -->
+    <section id="view-politica-privacidade" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>2. POLÍTICA DE PRIVACIDADE</h1>
+          <div class="subtitulo-documento">Quem Faz Festa documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Objetivo</h2>
+          <p>Esta Política explica como o Quem Faz Festa coleta, utiliza, armazena e compartilha dados pessoais no contexto de suas funcionalidades, em conformidade com a legislação brasileira aplicável, especialmente a Lei Geral de Proteção de Dados Pessoais (LGPD).</p>
+
+          <h2>Dados coletados</h2>
+          <p>Podem ser coletados nome, e-mail, telefone/WhatsApp, cidade, bairro, informações do evento, categoria de serviço, orçamento, avaliações, histórico de utilização, dados necessários à conta e registros técnicos de segurança.</p>
+
+          <h2>Finalidades</h2>
+          <p>Os dados são utilizados para criar e administrar contas, publicar e encaminhar oportunidades, permitir o contato entre as partes, processar créditos, prevenir fraude e abuso, manter a segurança, prestar atendimento, melhorar a plataforma e cumprir obrigações legais.</p>
+
+          <h2>Compartilhamento de contato</h2>
+          <p>Ao publicar uma oportunidade, o contratante será informado de que seu contato poderá ser disponibilizado a fornecedores elegíveis que desbloquearem a oportunidade, dentro dos limites e condições apresentados na plataforma.</p>
+
+          <h2>Contato de privacidade</h2>
+          <p><strong>Canal responsável:</strong> privacidade@quemfazfesta.com.br<br>
+          <strong>Controlador:</strong> Quem Faz Festa Soluções Tecnológicas Ltda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓDIGO DE CONDUTA DOS FORNECEDORES -->
+    <section id="view-conduta-fornecedores" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>3. CÓDIGO DE CONDUTA DOS FORNECEDORES</h1>
+          <div class="subtitulo-documento">Quem Faz Festa documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Compromisso profissional</h2>
+          <p>O fornecedor deve agir com honestidade, cordialidade, transparência e respeito em todas as interações realizadas em razão de oportunidades obtidas no Quem Faz Festa.</p>
+
+          <h2>Primeiro contato</h2>
+          <p>Identifique-se claramente, mencione a oportunidade correspondente, apresente proposta objetiva e respeite a preferência do cliente quanto à comunicação.</p>
+          <p>Não envie mensagens repetitivas, em massa ou insistentes. Se o cliente informar que não tem interesse, interrompa a abordagem.</p>
+
+          <h2>Orçamentos e publicidade</h2>
+          <p>Informações sobre preços, experiência, portfólio, disponibilidade, qualificações, certificados e condições do serviço devem ser verdadeiras.</p>
+          <p>É proibido ocultar custos relevantes, apresentar condições enganosas ou alterar substancialmente a proposta sem informar o cliente.</p>
+
+          <h2>Contrato e execução</h2>
+          <p>O fornecedor é responsável por formalizar a contratação e cumprir integralmente o que foi acordado. Deve possuir capacidade técnica, operacional e legal para prestar o serviço anunciado e obter licenças, autorizações, registros ou seguros exigidos para sua atividade.</p>
+
+          <h2>Dados pessoais</h2>
+          <p>O contato recebido por meio da plataforma deve ser usado exclusivamente para a oportunidade correspondente. É proibido vender, compartilhar, publicar, adicionar a grupos ou utilizar os dados para marketing não autorizado.</p>
+
+          <h2>Proibições</h2>
+          <p>Fraude, falsidade de identidade, múltiplas contas para obter vantagens, manipulação de avaliações, tentativa de burlar créditos, obtenção indevida de contatos, assédio, discriminação, ameaça, conteúdo ofensivo ou qualquer atividade ilícita.</p>
+
+          <h2>Avaliações e reputação</h2>
+          <p>É proibido combinar avaliações falsas, pressionar clientes para alterar notas, retaliar avaliações negativas ou criar avaliações por contas próprias ou de terceiros.</p>
+
+          <h2>Sanções</h2>
+          <p>Infrações poderão gerar advertência, restrição, suspensão temporária ou banimento. Fraudes, ameaças, uso indevido grave de dados e outras condutas graves poderão resultar em banimento imediato.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGRAS PARA CONTRATANTES -->
+    <section id="view-regras-contratantes" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>4. REGRAS PARA CONTRATANTES</h1>
+          <div class="subtitulo-documento">Quem Faz Festa documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Pedidos reais</h2>
+          <p>Pedidos publicados devem representar uma necessidade real de contratação. Não são permitidos pedidos fictícios, testes, duplicados ou destinados a coletar contatos.</p>
+
+          <h2>Informações verdadeiras</h2>
+          <p>O contratante deve informar corretamente data, localidade, categoria, orçamento estimado, telefone e demais dados essenciais. Alterações relevantes devem ser atualizadas quando possível.</p>
+
+          <h2>Recebimento de contatos</h2>
+          <p>Ao publicar uma oportunidade, o contratante reconhece que fornecedores elegíveis poderão receber acesso ao contato dentro do limite informado pela plataforma.</p>
+
+          <h2>Comunicação respeitosa</h2>
+          <p>O contratante deve tratar os profissionais com respeito e não utilizar a plataforma para assédio, discriminação, ameaça, fraude ou obtenção indevida de propostas.</p>
+
+          <h2>Contratação segura</h2>
+          <p>Recomenda-se verificar portfólio e referências, confirmar disponibilidade, detalhar tudo o que será contratado e exigir contrato escrito antes de pagamentos antecipados.</p>
+
+          <h2>Uso indevido</h2>
+          <p>É proibido criar múltiplos pedidos para a mesma necessidade sem finalidade legítima, fornecer contato de terceiros sem autorização, tentar obter serviços fraudulentamente ou manipular avaliações.</p>
+
+          <h2>Suspensão</h2>
+          <p>Pedidos ou contas poderão ser removidos ou suspensos quando houver indícios de fraude, abuso, dados falsos, comportamento ofensivo, tentativa de coletar contatos indevidamente ou outras violações.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE CRÉDITOS -->
+    <section id="view-politica-creditos" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>5. POLÍTICA DE CRÉDITOS</h1>
+          <div class="subtitulo-documento">Quem Faz Festa documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Natureza dos créditos</h2>
+          <p>Créditos são unidades de utilização da plataforma destinadas a permitir o desbloqueio de oportunidades conforme as regras vigentes. Não constituem moeda, depósito bancário ou participação societária.</p>
+
+          <h2>Condição Especial de Lançamento (Primeiros 100 Fornecedores)</h2>
+          <p>Os primeiros 100 (cem) fornecedores cadastrados na plataforma receberão, em caráter promocional e por única vez, um saldo inicial de 12 (doze) créditos gratuitos.</p>
+          <p>Durante o uso desses 12 créditos iniciais de lançamento, cada oportunidade exigirá determinada quantidade de créditos de acordo com critérios e faixas de orçamento divulgados na plataforma através do Mural de Oportunidades.</p>
+          <p>Os 12 créditos concedidos gratuitamente nesta oferta de lançamento não dão direito ao benefício de cashback/retorno de créditos em caso de não fechamento de negócio.</p>
+
+          <h2>Regra Geral de Créditos Gratuitos (A partir do 101° Fornecedor)</h2>
+          <p>A partir do 101º (centésimo primeiro) fornecedor cadastrado, o bônus de cadastro retornará automaticamente ao padrão de 3 (três) créditos gratuitos creditados na criação da conta.</p>
+          <p>Os créditos concedidos gratuitamente no cadastro inicial não possuem cobertura da política de cashback.</p>
+
+          <h2>Compra de pacotes</h2>
+          <p>Os pacotes, preços, quantidade de créditos, condições de pagamento e eventuais promoções serão apresentados antes da compra. A plataforma disponibilizará as informações exigidas pela legislação aplicável ao comércio eletrônico.</p>
+
+          <h2>Uso e desbloqueio regular</h2>
+          <p>Após a utilização dos créditos gratuitos do bônus de boas-vindas, cada oportunidade exigirá determinada quantidade de créditos de acordo com critérios e faixas de orçamento divulgados na plataforma. O desbloqueio somente ocorrerá após confirmação do usuário.</p>
+
+          <h2>Proteção de créditos / Cashback</h2>
+          <p>A política de retorno/cashback de 50% dos créditos investidos em caso de oportunidade não convertida em contrato aplica-se exclusivamente aos créditos comprados pelos fornecedores.</p>
+          <p>O retorno não constitui garantia de contratação nem indenização por oportunidade perdida, mas um benefício de proteção ao investimento pago do profissional.</p>
+
+          <h2>Exclusões do cashback</h2>
+          <p>Não haverá retorno de cashback nos créditos gratuitos promocionais de cadastro (sejam os 12 iniciais do lançamento dos 100 primeiros ou os 3 do fluxo padrão), nem quando houver fraude, ausência injustificada de contato pelo fornecedor, tentativa de burlar o sistema, uso de múltiplas contas ou banimento por infração.</p>
+
+          <h2>Reembolsos e arrependimento</h2>
+          <p>Solicitações de cancelamento, reembolso ou exercício de direitos previstos na legislação serão tratadas conforme a natureza da compra e a legislação aplicável. Nenhuma cláusula desta política pretende afastar o direito legal do consumidor.</p>
+
+          <h2>Abuso e alterações</h2>
+          <p>A plataforma poderá invalidar créditos obtidos fraudulentamente. Preços e pacotes poderão ser alterados para compras futuras, mantendo-se as condições para créditos já adquiridos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE DENÚNCIAS E SEGURANÇA -->
+    <section id="view-politica-denuncias" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>6. POLÍTICA DE DENÚNCIAS E SEGURANÇA</h1>
+          <div class="subtitulo-documento">Quem Faz Festa documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Objetivo</h2>
+          <p>Esta política estabelece mecanismos para denunciar comportamentos abusivos, fraudulentos ou incompatíveis com a segurança da comunidade.</p>
+
+          <h2>O que pode ser denunciado</h2>
+          <p>Spam, assédio, ameaça, discriminação, fraude, golpe, identidade falsa, pedido fictício, cobrança indevida, uso indevido de dados, avaliação falsa, tentativa de burlar créditos, conteúdo ilegal e qualquer violação dos Termos ou Código de Conduta.</p>
+
+          <h2>Como denunciar</h2>
+          <p>A plataforma disponibiliza o canal direto via e-mail: <strong>denuncia@quemfazfesta.com.br</strong>. A denúncia deve conter, quando possível, identificação da conta, oportunidade envolvida, descrição dos fatos, datas e evidências (como capturas de tela).</p>
+
+          <h2>Análise</h2>
+          <p>A plataforma poderá analisar registros, informações fornecidas pelas partes e sinais técnicos necessários à apuração, respeitando a legislação aplicável e a proteção de dados.</p>
+
+          <h2>Medidas preventivas</h2>
+          <p>Enquanto uma ocorrência é analisada, a plataforma poderá limitar temporariamente determinadas funcionalidades quando houver risco de fraude, segurança ou prejuízo a usuários.</p>
+
+          <h2>Sanções</h2>
+          <p>Conforme gravidade e reincidência: advertência, remoção de conteúdo, restrição, suspensão, encerramento da conta e, quando cabível, preservação ou encaminhamento de informações às autoridades competentes.</p>
+
+          <h2>Recurso</h2>
+          <p>Quando apropriado, o usuário poderá apresentar esclarecimentos ou recurso por canal informado pela plataforma. Em situações urgentes de segurança, a suspensão preventiva poderá ocorrer antes da conclusão da análise.</p>
+
+          <h2>Proteção contra retaliação</h2>
+          <p>É proibido retaliar, ameaçar ou constranger pessoa que tenha realizado denúncia de boa-fé.</p>
+
+          <div style="margin-top:24px; text-align:center;">
+            <button class="btn-submit" style="max-width:320px;" onclick="exibirModalAviso('📢 Canal de Denúncia', 'Para registrar uma denúncia, envie um e-mail com as evidências/prints para <strong>denuncia@quemfazfesta.com.br</strong>.')">Registrar uma Denúncia Agora</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE RESPONSABILIDADE & SOBRE A PLATAFORMA -->
+    <section id="view-sobre-plataforma" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>7. POLÍTICA DE RESPONSABILIDADE</h1>
+          <div class="subtitulo-documento">Quem Faz Festa documento integrante do conjunto de políticas da plataforma.</div>
+
+          <h2>Natureza da atividade</h2>
+          <p>O Quem Faz Festa é uma plataforma de conexão. Sua função é disponibilizar tecnologia para publicação de oportunidades, descoberta de fornecedores e disponibilização de contatos conforme as regras do serviço.</p>
+
+          <h2>Ausência de participação na contratação</h2>
+          <p>A plataforma não integra os contratos entre contratantes e fornecedores, não recebe ou administra os pagamentos relativos aos serviços contratados entre eles e não executa os serviços anunciados.</p>
+
+          <h2>Responsabilidade das partes</h2>
+          <p>Fornecedor e contratante são responsáveis pelas informações que fornecem, pelas propostas apresentadas, pelas negociações realizadas, pelos contratos celebrados, pelos pagamentos realizados diretamente entre eles e pela execução das obrigações que assumirem.</p>
+
+          <h2>Não garantia de resultado</h2>
+          <p>A publicação de uma oportunidade não garante recebimento de propostas, contratação, disponibilidade do fornecedor, qualidade do serviço ou resultado econômico.</p>
+
+          <h2>Informações de terceiros</h2>
+          <p>As informações apresentadas pelos usuários são de responsabilidade de quem as fornece. O cadastro na plataforma não representa certificação, aprovação, recomendação ou garantia de qualidade, experiência, idoneidade ou execução dos serviços pelo Quem Faz Festa.</p>
+
+          <h2>Limites legais</h2>
+          <p>Nenhuma disposição desta política pretende excluir ou limitar direitos ou responsabilidades que não possam ser afastados pela legislação aplicável. As limitações devem ser interpretadas dentro dos limites permitidos pela lei.</p>
+
+          <h2>Indisponibilidade e terceiros</h2>
+          <p>Serviços de terceiros, como provedores de hospedagem, mensageria, pagamentos ou infraestrutura, podem sofrer indisponibilidades. A plataforma adotará medidas razoáveis para continuidade e segurança, sem garantir disponibilidade ininterrupta.</p>
+
+          <h2>Prevenção de riscos</h2>
+          <p>Usuários devem manter credenciais seguras, desconfiar de solicitações incomuns, confirmar identidade e condições comerciais e formalizar contratações por escrito.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLÍTICA DE COOKIES -->
+    <section id="view-politica-cookies" class="view-section">
+      <div class="container">
+        <div class="card-politica-conteudo">
+          <h1>8. POLÍTICA DE COOKIES</h1>
+          <div class="subtitulo-documento">Quem Faz Festa documento integrante do conjunto de políticas da plataforma. Última atualização: agosto de 2026.</div>
+
+          <h2>1. Sobre esta Política</h2>
+          <p>Esta Política de Cookies explica como o Quem Faz Festa utiliza cookies e tecnologias semelhantes quando você acessa ou utiliza nossa plataforma.</p>
+          <p>Nosso objetivo é explicar, de forma clara e transparente, quais tecnologias podem ser utilizadas, para que servem, por quanto tempo podem permanecer no dispositivo e quais opções estão disponíveis para o usuário.</p>
+          <p>Esta Política deve ser lida em conjunto com os Termos de Uso e a Política de Privacidade do Quem Faz Festa.</p>
+
+          <h2>2. O que são cookies?</h2>
+          <p>Cookies são pequenos arquivos ou informações armazenados no dispositivo do usuário quando ele acessa determinados sites.</p>
+          <p>Eles podem permitir, por exemplo: manter uma sessão de usuário; lembrar determinadas preferências; garantir o funcionamento de recursos da plataforma; melhorar segurança; compreender como a plataforma é utilizada; realizar análises de desempenho; apresentar conteúdos ou publicidade personalizada, quando aplicável.</p>
+          <p>A ANPD também reconhece tecnologias semelhantes aos cookies, incluindo mecanismos utilizados para armazenamento e identificação no dispositivo.</p>
+
+          <h2>3. Quais tecnologias o Quem Faz Festa utiliza?</h2>
+          <h3>3.1. Cookies necessários</h3>
+          <p>São aqueles necessários para que a plataforma funcione adequadamente e disponibilize funcionalidades solicitadas pelo usuário. Podem ser utilizados para autenticação, manutenção da sessão, segurança, prevenção de fraude, controle de acesso, armazenamento de preferências essenciais e funcionamento da conta.</p>
+
+          <h3>3.2. Tecnologias de armazenamento local</h3>
+          <p>O Quem Faz Festa poderá utilizar mecanismos de armazenamento local do navegador, como Local Storage ou tecnologias equivalentes, para determinadas funcionalidades técnicas. Esses mecanismos não são necessariamente cookies, mas podem exercer funções semelhantes e, por isso, são abrangidos por esta Política quando utilizados.</p>
+
+          <h3>3.3. Cookies analíticos ou de desempenho</h3>
+          <p>Caso sejam implementadas ferramentas de análise de audiência e desempenho, poderão ser utilizados cookies para compreender como os usuários interagem com o Quem Faz Festa. Enquanto essas ferramentas não estiverem efetivamente implementadas, elas não deverão ser consideradas como cookies ativos do Quem Faz Festa.</p>
+
+          <h3>3.4. Cookies de publicidade e marketing</h3>
+          <p>O Quem Faz Festa poderá, futuramente, utilizar tecnologias de terceiros destinadas a medir campanhas publicitárias, criar públicos ou personalizar publicidade. Essas tecnologias somente serão implementadas quando houver necessidade operacional e serão apresentadas ao usuário de acordo com as regras aplicáveis.</p>
+
+          <h2>4. Cookies próprios e de terceiros</h2>
+          <p>Cookies próprios são definidos diretamente pelo Quem Faz Festa ou por serviços operados em seu nome, podendo estar relacionados à autenticação, sessão e funcionamento da plataforma.</p>
+          <p>Cookies de terceiros são definidos por domínios ou serviços diferentes daquele que o usuário está acessando. Eles podem ser utilizados quando o Quem Faz Festa integrar serviços externos, como ferramentas de análise, publicidade, segurança, pagamento ou comunicação.</p>
+
+          <h2>5. Finalidades</h2>
+          <p>Os cookies e tecnologias semelhantes poderão ser utilizados para funcionamento, autenticação, segurança, preferências, desempenho, análise e marketing, quando aplicável. As tecnologias não deverão ser utilizadas para finalidades incompatíveis com aquelas informadas ao usuário.</p>
+
+          <h2>6. Cookies necessários e cookies não necessários</h2>
+          <p>O Quem Faz Festa diferencia tecnologias necessárias daquelas que não são essenciais para o funcionamento básico da plataforma.</p>
+          <p>Cookies necessários são utilizados para funções essenciais, como autenticação, segurança e funcionamento da conta. Cookies não necessários são aqueles cuja desativação não impede o funcionamento básico da plataforma, como determinados cookies analíticos ou de publicidade.</p>
+          <p>A ANPD recomenda que o usuário tenha controle sobre cookies não necessários e aponta como boa prática disponibilizar opções de aceitar, rejeitar e gerenciar esses cookies.</p>
+
+          <h2>7. Banner de Cookies</h2>
+          <p>Quando houver cookies ou tecnologias não necessárias que dependam de consentimento, o Quem Faz Festa poderá apresentar um banner de cookies no primeiro acesso.</p>
+          <p>O banner deverá informar que a plataforma utiliza cookies, suas principais finalidades, onde consultar esta Política e as opções de aceitar, rejeitar e configurar cookies opcionais.</p>
+          <p>O usuário não deverá ser obrigado a aceitar cookies não necessários simplesmente para continuar navegando.</p>
+
+          <h2>8. Gerenciamento de preferências</h2>
+          <p>Quando houver cookies opcionais, o usuário poderá alterar suas preferências por meio do mecanismo de gerenciamento disponibilizado pelo Quem Faz Festa.</p>
+          <p>Sempre que tecnicamente possível, o usuário poderá aceitar todos, rejeitar opcionais ou configurar preferências.</p>
+
+          <h2>9. Consentimento</h2>
+          <p>Quando o tratamento de dados pessoais por meio de cookies depender de consentimento, este deverá ser obtido de forma livre, informada e inequívoca, para finalidade determinada. O consentimento não deverá ser presumido simplesmente pela continuidade da navegação.</p>
+          <p>Quando aplicável, o usuário poderá retirar o consentimento utilizando o mecanismo de gerenciamento de preferências.</p>
+
+          <h2>10. Prazo de armazenamento</h2>
+          <p>Cookies de sessão podem ser utilizados apenas durante a sessão de navegação e normalmente são eliminados quando o navegador é encerrado.</p>
+          <p>Cookies persistentes podem permanecer no dispositivo durante determinado período ou até serem excluídos pelo usuário.</p>
+          <p>O prazo específico deverá ser definido de acordo com cada cookie ou tecnologia efetivamente utilizada. O Quem Faz Festa não deverá manter cookies por período superior ao necessário para a finalidade para a qual foram utilizados, observadas as obrigações legais aplicáveis.</p>
+
+          <h2>11. Compartilhamento com terceiros</h2>
+          <p>O Quem Faz Festa poderá utilizar serviços de terceiros que processem informações por meio de cookies ou tecnologias semelhantes.</p>
+          <p>Quando isso ocorrer, a plataforma deverá identificar, conforme aplicável, o terceiro envolvido, a finalidade, a categoria da tecnologia, o período de retenção, as informações tratadas, eventual transferência internacional e a forma de gerenciamento das preferências.</p>
+
+          <h2>12. Cookies e dados pessoais</h2>
+          <p>Nem todo cookie necessariamente contém dados pessoais. Entretanto, determinadas informações obtidas por cookies ou tecnologias semelhantes podem ser relacionadas ou associadas a uma pessoa identificável.</p>
+          <p>Quando isso ocorrer, o tratamento deverá observar a Política de Privacidade do Quem Faz Festa e a legislação aplicável à proteção de dados pessoais.</p>
+
+          <h2>13. Segurança</h2>
+          <p>O Quem Faz Festa adotará medidas técnicas e administrativas razoáveis para proteger informações tratadas por meio de cookies e tecnologias semelhantes contra acessos não autorizados, perda, alteração ou uso indevido.</p>
+          <p>A proteção das informações também depende das configurações e da segurança do dispositivo e navegador utilizados pelo próprio usuário.</p>
+
+          <h2>14. Como o usuário pode controlar cookies pelo navegador</h2>
+          <p>O usuário pode configurar seu navegador para bloquear determinados cookies, apagar cookies existentes, receber avisos antes de armazenar determinados cookies ou bloquear cookies de terceiros.</p>
+          <p>Entretanto, o bloqueio de cookies necessários poderá impedir ou prejudicar o funcionamento de determinadas funcionalidades do Quem Faz Festa.</p>
+
+          <h2>15. Alterações desta Política</h2>
+          <p>Esta Política poderá ser atualizada sempre que houver alteração nas funcionalidades da plataforma, inclusão ou remoção de ferramentas de terceiros, alteração nas tecnologias utilizadas, mudanças nas finalidades de tratamento, alterações legais ou regulatórias ou necessidade de melhoria de segurança ou transparência.</p>
+          <p>A versão mais recente estará disponível na plataforma. Quando uma alteração for relevante, o Quem Faz Festa poderá apresentar novo aviso ou solicitar nova manifestação de consentimento, quando exigido.</p>
+
+          <h2>16. Relação com a Política de Privacidade</h2>
+          <p>Esta Política de Cookies complementa a Política de Privacidade do Quem Faz Festa.</p>
+          <p>A Política de Privacidade apresenta informações mais amplas sobre dados pessoais coletados, finalidades do tratamento, compartilhamento, direitos dos titulares, segurança, retenção e atendimento às solicitações dos titulares.</p>
+          <p>A Política de Cookies concentra-se especificamente no uso de cookies e tecnologias semelhantes.</p>
+
+          <h2>17. Contato</h2>
+          <p><strong>E-mail:</strong> privacidade@quemfazfesta.com.br<br>
+          <strong>Controlador:</strong> Quem Faz Festa Soluções Tecnológicas Ltda.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- TELA DE DÚVIDAS E PERGUNTAS FREQUENTES (FAQ) -->
     <section id="view-faq" class="view-section">
       <div class="container">
@@ -776,7 +1079,7 @@
 
           <div class="faq-item">
             <h4>1. Como funcionam os créditos de boas-vindas no cadastro?</h4>
-            <p>Ao se cadastrar como fornecedor, você ganha gratuitamente créditos para testar a plataforma. Os primeiros 100 cadastrados ganham <strong>12 créditos grátis</strong> promocionais de lançamento.</p>
+            <p>Ao se cadastrar como fornecedor, você ganha automaticamente <strong>3 créditos gratuitos</strong> (ou <strong>12 créditos promocionais</strong> para os primeiros 100 cadastrados) para testar e desbloquear oportunidades no Mural.</p>
           </div>
 
           <div class="faq-item">
@@ -785,8 +1088,8 @@
           </div>
 
           <div class="faq-item">
-            <h4>3. Por que algumas oportunidades custam mais créditos que outras?</h4>
-            <p>O custo de desbloqueio varia de acordo com a faixa do orçamento total informado pelo cliente de acordo com o potencial do negócio (ex: de 1 a 6 créditos).</p>
+            <h4>3. Por que algumas oportunidades custam mais de 1 crédito?</h4>
+            <p>O custo de desbloqueio varia de acordo com a faixa do orçamento total informado pelo cliente. Festas de maior valor exigem mais créditos para a liberação do contato direto via WhatsApp.</p>
           </div>
 
           <div class="faq-item">
@@ -797,159 +1100,17 @@
       </div>
     </section>
 
-    <!-- TERMOS DE USO -->
-    <section id="view-termos-uso" class="view-section">
-      <div class="container">
-        <div class="card-politica-conteudo">
-          <h1>1. TERMOS DE USO</h1>
-          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-
-          <h2>Objeto e aceitação</h2>
-          <p>Estes Termos de Uso regulam o acesso e a utilização do Quem Faz Festa, marketplace e mural de oportunidades destinado a conectar contratantes e fornecedores de serviços relacionados a festas e eventos.</p>
-          <p>Ao criar uma conta, publicar uma oportunidade, desbloquear um contato, adquirir créditos ou utilizar qualquer funcionalidade da plataforma, o usuário declara que leu, compreendeu e concorda com estes Termos e com as políticas complementares aplicáveis.</p>
-
-          <h2>Papel da plataforma</h2>
-          <p>O Quem Faz Festa atua como plataforma tecnológica de conexão e divulgação de oportunidades. A plataforma não é parte dos contratos celebrados entre contratantes e fornecedores, não presta os serviços anunciados pelos fornecedores e não participa das negociações, pagamentos, execução, entrega, qualidade ou cancelamento dos serviços contratados entre as partes.</p>
-          <p>Cada contratante e cada fornecedor é responsável pelas obrigações que assumir diretamente com a outra parte, sem prejuízo das responsabilidades que possam decorrer da legislação aplicável à própria plataforma.</p>
-
-          <h2>Cadastro e elegibilidade</h2>
-          <p>O usuário deve fornecer dados verdadeiros, atuais e completos. É vedado criar conta fictícia, duplicada ou destinada a testes sem autorização.</p>
-          <p>O uso da plataforma é destinado a maiores de 18 anos. A plataforma poderá solicitar informações ou documentos adicionais para verificar identidade, atividade profissional ou prevenir fraude.</p>
-
-          <h2>Oportunidades e contatos</h2>
-          <p>Os pedidos publicados pelos contratantes devem corresponder a necessidades reais. O número de fornecedores que poderá desbloquear uma oportunidade poderá ser limitado pela plataforma.</p>
-          <p>A liberação de dados de contato ocorrerá conforme as regras de privacidade, elegibilidade e créditos vigentes.</p>
-
-          <h2>Conduta</h2>
-          <p>É proibido utilizar a plataforma para fraude, assédio, spam, discriminação, ameaça, prática ilícita, divulgação indevida de dados pessoais, manipulação de avaliações, criação de contas múltiplas para obtenção de vantagens ou tentativa de contornar mecanismos de segurança.</p>
-
-          <h2>Contratações externas</h2>
-          <p>Contratante e fornecedor são orientados a formalizar qualquer contratação por escrito, descrevendo serviço, data, horário, valores, itens incluídos, condições de pagamento e cancelamento.</p>
-          <p>O Quem Faz Festa não garante que uma oportunidade resulte em contratação e não garante a qualidade, disponibilidade ou execução de qualquer fornecedor.</p>
-
-          <h2>Suspensão e encerramento</h2>
-          <p>A plataforma poderá suspender, restringir ou encerrar contas que violem estes Termos ou políticas complementares, especialmente em situações de fraude, risco à segurança, abuso, uso indevido de dados ou reincidência.</p>
-          <p>Medidas urgentes poderão ser aplicadas sem aviso prévio quando necessárias para proteger usuários, dados, créditos ou a integridade da plataforma. Quando cabível, o usuário poderá apresentar esclarecimentos ou recurso.</p>
-
-          <h2>Alterações e legislação</h2>
-          <p>Os Termos poderão ser atualizados para refletir mudanças legais, operacionais ou de segurança. A versão vigente ficará disponível na plataforma.</p>
-          <p>Aplicam-se as leis brasileiras, observadas as regras de competência e proteção do consumidor eventualmente incidentes.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- POLÍTICA DE PRIVACIDADE -->
-    <section id="view-politica-privacidade" class="view-section">
-      <div class="container">
-        <div class="card-politica-conteudo">
-          <h1>2. POLÍTICA DE PRIVACIDADE</h1>
-          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-
-          <h2>Objetivo</h2>
-          <p>Esta Política explica como o Quem Faz Festa coleta, utiliza, armazena e compartilha dados pessoais no contexto de suas funcionalidades, em conformidade com a legislação brasileira aplicável, especialmente a Lei Geral de Proteção de Dados Pessoais (LGPD).</p>
-
-          <h2>Dados coletados</h2>
-          <p>Podem ser coletados nome, e-mail, telefone/WhatsApp, cidade, bairro, informações do evento, categoria de serviço, orçamento, avaliações, histórico de utilização, dados necessários à conta e registros técnicos de segurança.</p>
-
-          <h2>Finalidades</h2>
-          <p>Os dados são utilizados para criar e administrar contas, publicar e encaminhar oportunidades, permitir o contato entre as partes, processar créditos, prevenir fraude e abuso, manter a segurança, prestar atendimento, melhorar a plataforma e cumprir obrigações legais.</p>
-
-          <h2>Compartilhamento de contato</h2>
-          <p>Ao publicar uma oportunidade, o contratante será informado de que seu contato poderá ser disponibilizado a fornecedores elegíveis que desbloquearem a oportunidade, dentro dos limites e condições apresentados na plataforma.</p>
-
-          <h2>Contato de privacidade</h2>
-          <p><strong>Canal responsável:</strong> privacidade@quemfazfesta.com.br<br>
-          <strong>Controlador:</strong> Quem Faz Festa Soluções Tecnológicas Ltda.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CÓDIGO DE CONDUTA DOS FORNECEDORES -->
-    <section id="view-conduta-fornecedores" class="view-section">
-      <div class="container">
-        <div class="card-politica-conteudo">
-          <h1>3. CÓDIGO DE CONDUTA DOS FORNECEDORES</h1>
-          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-          <h2>Compromisso profissional</h2>
-          <p>O fornecedor deve agir com honestidade, cordialidade, transparência e respeito em todas as interações realizadas em razão de oportunidades obtidas no Quem Faz Festa.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- REGRAS PARA CONTRATANTES -->
-    <section id="view-regras-contratantes" class="view-section">
-      <div class="container">
-        <div class="card-politica-conteudo">
-          <h1>4. REGRAS PARA CONTRATANTES</h1>
-          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-          <h2>Pedidos reais</h2>
-          <p>Pedidos publicados devem representar uma necessidade real de contratação. Não são permitidos pedidos fictícios, testes, duplicados ou destinados a coletar contatos.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- POLÍTICA DE CRÉDITOS -->
-    <section id="view-politica-creditos" class="view-section">
-      <div class="container">
-        <div class="card-politica-conteudo">
-          <h1>5. POLÍTICA DE CRÉDITOS</h1>
-          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-          <h2>Natureza dos créditos</h2>
-          <p>Créditos são unidades de utilização da plataforma destinadas a permitir o desbloqueio de oportunidades conforme as regras vigentes.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- POLÍTICA DE DENÚNCIAS E SEGURANÇA -->
-    <section id="view-politica-denuncias" class="view-section">
-      <div class="container">
-        <div class="card-politica-conteudo">
-          <h1>6. POLÍTICA DE DENÚNCIAS E SEGURANÇA</h1>
-          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-          <h2>Objetivo</h2>
-          <p>Esta política estabelece mecanismos para denunciar comportamentos abusivos, fraudulentos ou incompatíveis com a segurança da comunidade.</p>
-          <div style="margin-top:24px; text-align:center;">
-            <button class="btn-submit" style="max-width:320px;" onclick="exibirModalAviso('📢 Canal de Denúncia', 'Para registrar uma denúncia, envie um e-mail com as evidências/prints para <strong>denuncia@quemfazfesta.com.br</strong>.')">Registrar uma Denúncia Agora</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- POLÍTICA DE RESPONSABILIDADE & SOBRE A PLATAFORMA -->
-    <section id="view-sobre-plataforma" class="view-section">
-      <div class="container">
-        <div class="card-politica-conteudo">
-          <h1>7. POLÍTICA DE RESPONSABILIDADE</h1>
-          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma.</div>
-          <h2>Natureza da atividade</h2>
-          <p>O Quem Faz Festa é uma plataforma de conexão. Sua função é disponibilizar tecnologia para publicação de oportunidades.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- POLÍTICA DE COOKIES -->
-    <section id="view-politica-cookies" class="view-section">
-      <div class="container">
-        <div class="card-politica-conteudo">
-          <h1>8. POLÍTICA DE COOKIES</h1>
-          <div class="subtitulo-documento">Quem Faz Festa — documento integrante do conjunto de políticas da plataforma. Última atualização: agosto de 2026.</div>
-          <h2>1. Sobre esta Política</h2>
-          <p>Esta Política de Cookies explica como o Quem Faz Festa utiliza cookies e tecnologias semelhantes quando você acessa ou utiliza nossa plataforma.</p>
-        </div>
-      </div>
-    </section>
-
     <!-- TELA DE LOGIN -->
     <section id="view-login" class="view-section">
       <div class="container" style="max-width:450px;">
         <div class="card-form">
           <h2 style="margin-bottom:8px;">Acessar sua Conta</h2>
-          <p style="color:var(--text-muted); margin-bottom:20px;">Entre com seu e-mail e senha cadastrados.</p>
+          <p style="color:var(--text-muted); margin-bottom:20px;">Entre com seu e-mail ou WhatsApp e senha cadastrados.</p>
 
           <form id="formLogin">
             <div class="form-group">
-              <label>E-mail *</label>
-              <input type="email" id="login-email" placeholder="seu@email.com" required>
+              <label>E-mail ou WhatsApp *</label>
+              <input type="text" id="login-email" placeholder="seu@email.com ou (81) 99999-9999" required>
             </div>
             <div class="form-group">
               <label>Senha *</label>
@@ -976,7 +1137,7 @@
           <p style="color:var(--text-muted); margin-bottom:20px;">Crie sua conta gratuita para enviar seus pedidos de orçamento.</p>
           <form id="formCadastroPais">
             <div class="form-group"><label>Nome Completo *</label><input type="text" id="cad-pai-nome" required></div>
-            <div class="form-group"><label>E-mail *</label><input type="email" id="cad-pai-email" required></div>
+            <div class="form-group"><label>E-mail <span style="font-weight: 400; color: var(--text-muted);">(Opcional)</span></label><input type="email" id="cad-pai-email" placeholder="seu@email.com (opcional)"></div>
             <div class="form-group"><label>WhatsApp *</label><input type="tel" id="cad-pai-whatsapp" placeholder="(81) 99999-9999" required></div>
             <div class="form-group"><label>Criar Senha *</label><input type="password" id="cad-pai-senha" required></div>
             <div class="form-group"><label>Confirmar Senha *</label><input type="password" id="cad-pai-senha-confirma" required></div>
@@ -1006,7 +1167,7 @@
           <p style="color:var(--text-muted); margin-bottom:20px;">Cadastre-se para receber <strong>créditos grátis</strong> de boas-vindas e acessar o mural.</p>
           <form id="formCadastroFornecedor">
             <div class="form-group"><label>Nome da Empresa *</label><input type="text" id="cad-forn-nome" required></div>
-            <div class="form-group"><label>E-mail *</label><input type="email" id="cad-forn-email" required></div>
+            <div class="form-group"><label>E-mail <span style="font-weight: 400; color: var(--text-muted);">(Opcional)</span></label><input type="email" id="cad-forn-email" placeholder="seu@email.com (opcional)"></div>
             <div class="form-group"><label>WhatsApp *</label><input type="tel" id="cad-forn-whatsapp" placeholder="(81) 99999-9999" required></div>
             
             <div class="form-group"><label>Categoria Principal *</label>
@@ -1451,6 +1612,7 @@
 
     // Notificações via Supabase DB
     async function enviarNotificacao(destinatarioEmail, tipoCanal, titulo, mensagem, festaIdTarget = null, categoriaTarget = null) {
+      if(!destinatarioEmail || destinatarioEmail.includes('@quemfazfesta.local')) return;
       const { error } = await _supabase.from('notificacoes').insert([{
         destinatario_email: destinatarioEmail,
         tipo_canal: tipoCanal,
@@ -1463,7 +1625,7 @@
     }
 
     async function atualizarBadgeNotificacoes() {
-      if(!usuarioAtual) return;
+      if(!usuarioAtual || !usuarioAtual.email) return;
       const { data } = await _supabase
         .from('notificacoes')
         .select('id')
@@ -1474,19 +1636,35 @@
       if (badge && data) badge.innerText = data.length;
     }
 
-    // Login
+    // Login (permite entrar com E-mail ou com o WhatsApp cadastrado)
     document.getElementById('formLogin').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const emailDigitado = document.getElementById('login-email').value;
+      const loginInput = document.getElementById('login-email').value.trim();
       const senhaDigitada = document.getElementById('login-senha').value;
 
+      let emailParaLogin = loginInput;
+
+      // Se o usuário digitou telefone (somente números ou formato de telefone), busca o e-mail correspondente no perfil
+      if (!loginInput.includes('@')) {
+        const numLimpo = loginInput.replace(/\D/g, '');
+        const { data: profileEncontrado } = await _supabase
+          .from('profiles')
+          .select('email')
+          .ilike('whatsapp', `%${numLimpo}%`)
+          .maybeSingle();
+
+        if (profileEncontrado && profileEncontrado.email) {
+          emailParaLogin = profileEncontrado.email;
+        }
+      }
+
       const { data: authData, error: authError } = await _supabase.auth.signInWithPassword({
-        email: emailDigitado,
+        email: emailParaLogin,
         password: senhaDigitada
       });
 
       if (authError) {
-        exibirModalAviso("⚠️ Erro de Autenticação", "E-mail ou senha incorretos!");
+        exibirModalAviso("⚠️ Erro de Autenticação", "E-mail/WhatsApp ou senha incorretos!");
         return;
       }
 
@@ -1525,15 +1703,21 @@
     // Cadastro Contratante (Pais)
     document.getElementById('formCadastroPais').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const nome = document.getElementById('cad-pai-nome').value;
-      const email = document.getElementById('cad-pai-email').value;
-      const whatsapp = document.getElementById('cad-pai-whatsapp').value;
+      const nome = document.getElementById('cad-pai-nome').value.trim();
+      let email = document.getElementById('cad-pai-email').value.trim();
+      const whatsapp = document.getElementById('cad-pai-whatsapp').value.trim();
       const senha = document.getElementById('cad-pai-senha').value;
       const confirma = document.getElementById('cad-pai-senha-confirma').value;
 
       if (senha !== confirma) {
         exibirModalAviso("⚠️ Senhas Incompatíveis", "As senhas não coincidem!");
         return;
+      }
+
+      // Se não preencheu e-mail, gera um e-mail técnico válido baseado no WhatsApp
+      if (!email) {
+        const numLimpo = whatsapp.replace(/\D/g, '');
+        email = `user_${numLimpo || Date.now()}@quemfazfesta.local`;
       }
 
       // Criar usuário no auth enviando metadados
@@ -1564,7 +1748,6 @@
       }]).select().single();
 
       if (profileError) {
-        // Se falhou no insert manual, busca se foi inserido via Trigger do banco
         const { data: triggerProfile } = await _supabase
           .from('profiles')
           .select('*')
@@ -1591,9 +1774,9 @@
     // Cadastro Fornecedor
     document.getElementById('formCadastroFornecedor').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const nome = document.getElementById('cad-forn-nome').value;
-      const email = document.getElementById('cad-forn-email').value;
-      const whatsapp = document.getElementById('cad-forn-whatsapp').value;
+      const nome = document.getElementById('cad-forn-nome').value.trim();
+      let email = document.getElementById('cad-forn-email').value.trim();
+      const whatsapp = document.getElementById('cad-forn-whatsapp').value.trim();
       const categoria = document.getElementById('cad-forn-categoria').value;
       const senha = document.getElementById('cad-forn-senha').value;
       const confirma = document.getElementById('cad-forn-senha-confirma').value;
@@ -1601,6 +1784,12 @@
       if (senha !== confirma) {
         exibirModalAviso("⚠️ Senhas Incompatíveis", "As senhas não coincidem!");
         return;
+      }
+
+      // Se não preencheu e-mail, gera um e-mail técnico válido baseado no WhatsApp
+      if (!email) {
+        const numLimpo = whatsapp.replace(/\D/g, '');
+        email = `forn_${numLimpo || Date.now()}@quemfazfesta.local`;
       }
 
       // Contar total de fornecedores cadastrados
@@ -1646,7 +1835,6 @@
       }]).select().single();
 
       if (profileError) {
-        // Se o insert falhou (por exemplo via RLS), verifica se o registro foi inserido automaticamente via Trigger
         const { data: triggerProfile } = await _supabase
           .from('profiles')
           .select('*')
@@ -2026,16 +2214,13 @@
     }
 
     async function trocarAba(aba, atualizarHash = true) {
-      // 1. Oculta todas as seções e remove a classe active de todos os botões do menu
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 
-      // 2. Atualiza a URL com a hashtag para suportar F5 / Reload da página
       if (atualizarHash) {
         window.location.hash = aba;
       }
 
-      // 3. Mapeia e destaca o botão correspondente no menu superior
       const mapaBotoes = {
         'home': 'btn-nav-home',
         'login': 'btn-nav-login',
@@ -2051,7 +2236,6 @@
         if (btnAtivo) btnAtivo.classList.add('active');
       }
 
-      // 4. Exibe e carrega os dados da aba solicitada
       if (aba === 'home') {
         if (usuarioAtual) {
           if (usuarioAtual.tipo === 'pai') {
@@ -2171,7 +2355,6 @@
         }
       }
 
-      // Lê a hashtag atual da URL ou adota 'home' por padrão
       const abaInicial = window.location.hash.replace('#', '') || 'home';
       trocarAba(abaInicial, false);
     });
