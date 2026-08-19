@@ -2025,12 +2025,34 @@
       atualizarPendenciasAtalho();
     }
 
-    async function trocarAba(aba) {
+    async function trocarAba(aba, atualizarHash = true) {
+      // 1. Oculta todas as seções e remove a classe active de todos os botões do menu
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 
+      // 2. Atualiza a URL com a hashtag para suportar F5 / Reload da página
+      if (atualizarHash) {
+        window.location.hash = aba;
+      }
+
+      // 3. Mapeia e destaca o botão correspondente no menu superior
+      const mapaBotoes = {
+        'home': 'btn-nav-home',
+        'login': 'btn-nav-login',
+        'cadastro-pais': 'btn-nav-pais',
+        'cadastro-fornecedor': 'btn-nav-fornecedores',
+        'criar-festa': 'btn-nav-criar',
+        'mural': 'btn-nav-mural',
+        'notificacoes': 'btn-nav-notificacoes'
+      };
+
+      if (mapaBotoes[aba]) {
+        const btnAtivo = document.getElementById(mapaBotoes[aba]);
+        if (btnAtivo) btnAtivo.classList.add('active');
+      }
+
+      // 4. Exibe e carrega os dados da aba solicitada
       if (aba === 'home') {
-        document.getElementById('btn-nav-home').classList.add('active');
         if (usuarioAtual) {
           if (usuarioAtual.tipo === 'pai') {
             document.getElementById('view-home-pais').classList.add('active');
@@ -2122,8 +2144,13 @@
     }
 
     /* =========================================================
-       6. CARREGAMENTO INICIAL DE SESSÃO
+       6. CARREGAMENTO INICIAL DE SESSÃO E ROTEAMENTO POR HASH
        ========================================================= */
+    window.addEventListener('hashchange', function() {
+      const abaHash = window.location.hash.replace('#', '') || 'home';
+      trocarAba(abaHash, false);
+    });
+
     window.addEventListener('DOMContentLoaded', async function() {
       verificarBannerCookies();
 
@@ -2144,7 +2171,9 @@
         }
       }
 
-      trocarAba('home');
+      // Lê a hashtag atual da URL ou adota 'home' por padrão
+      const abaInicial = window.location.hash.replace('#', '') || 'home';
+      trocarAba(abaInicial, false);
     });
   </script>
 </body>
