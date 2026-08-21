@@ -1676,7 +1676,7 @@
       if (badge && data) badge.innerText = data.length;
     }
 
-    // Login (permite entrar com E-mail ou com o WhatsApp cadastrado)
+    // Login com tolerância a falhas (cria perfil caso não exista)
     document.getElementById('formLogin').addEventListener('submit', async function(e) {
       e.preventDefault();
       const loginInput = document.getElementById('login-email').value.trim();
@@ -1684,7 +1684,7 @@
 
       let emailParaLogin = loginInput;
 
-      // Se o usuário digitou telefone (somente números ou formato de telefone), busca o e-mail correspondente no perfil
+      // Se o usuário digitou telefone, busca o e-mail correspondente no perfil
       if (!loginInput.includes('@')) {
         const numLimpo = loginInput.replace(/\D/g, '');
         const { data: profileEncontrado } = await _supabase
@@ -1708,19 +1708,45 @@
         return;
       }
 
-      // Buscar perfil
-      const { data: profile, error: profileError } = await _supabase
+      // Buscar perfil usando maybeSingle()
+      let { data: profile } = await _supabase
         .from('profiles')
         .select('*')
         .eq('id', authData.user.id)
-        .single();
+        .maybeSingle();
 
-      if (profileError || !profile) {
-        exibirModalAviso("⚠️ Erro", "Perfil do usuário não encontrado.");
-        return;
+      // Se o usuário existe na Auth mas não em profiles, realiza a inserção do perfil em fallback
+      if (!profile) {
+        const nomeMeta = authData.user.user_metadata?.nome || authData.user.email.split('@')[0];
+        const tipoMeta = authData.user.user_metadata?.tipo || 'pai';
+        const whatsappMeta = authData.user.user_metadata?.whatsapp || '';
+
+        const { data: novoProfile, error: insertError } = await _supabase
+          .from('profiles')
+          .insert([{
+            id: authData.user.id,
+            email: authData.user.email,
+            nome: nomeMeta,
+            whatsapp: whatsappMeta,
+            tipo: tipoMeta
+          }])
+          .select()
+          .maybeSingle();
+
+        if (insertError) {
+          profile = {
+            id: authData.user.id,
+            email: authData.user.email,
+            nome: nomeMeta,
+            whatsapp: whatsappMeta,
+            tipo: tipoMeta
+          };
+        } else {
+          profile = novoProfile;
+        }
       }
 
-      if (profile.banido) {
+      if (profile && profile.banido) {
         await _supabase.auth.signOut();
         exibirModalAviso("🚫 Conta Suspensa", "Sua conta foi suspensa.");
         return;
@@ -1817,22 +1843,21 @@
         nome: nome,
         whatsapp: whatsapp,
         tipo: 'pai'
-      }]).select().single();
+      }]).select().maybeSingle();
 
       if (profileError) {
         const { data: triggerProfile } = await _supabase
           .from('profiles')
           .select('*')
           .eq('id', authData.user.id)
-          .single();
+          .maybeSingle();
 
         if (triggerProfile) {
           authUser = authData.user;
           usuarioAtual = triggerProfile;
         } else {
-          console.error("Erro detalhado do Supabase:", profileError);
-          exibirModalAviso("⚠️ Erro no Perfil", `Falha ao registrar perfil de usuário: ${profileError.message || profileError.details}`);
-          return;
+          authUser = authData.user;
+          usuarioAtual = { id: authData.user.id, email, nome, whatsapp, tipo: 'pai' };
         }
       } else {
         authUser = authData.user;
@@ -1904,22 +1929,21 @@
         tipo: 'fornecedor',
         saldo_creditos: creditosIniciais,
         total_creditos_gratuitos: creditosIniciais
-      }]).select().single();
+      }]).select().maybeSingle();
 
       if (profileError) {
         const { data: triggerProfile } = await _supabase
           .from('profiles')
           .select('*')
           .eq('id', authData.user.id)
-          .single();
+          .maybeSingle();
 
         if (triggerProfile) {
           authUser = authData.user;
           usuarioAtual = triggerProfile;
         } else {
-          console.error("Erro detalhado do Supabase:", profileError);
-          exibirModalAviso("⚠️ Erro no Perfil", `Falha ao registrar perfil de fornecedor: ${profileError.message || profileError.details}`);
-          return;
+          authUser = authData.user;
+          usuarioAtual = { id: authData.user.id, email, nome, whatsapp, categoria, tipo: 'fornecedor', saldo_creditos: creditosIniciais };
         }
       } else {
         authUser = authData.user;
@@ -1962,7 +1986,7 @@
         comentarios: document.getElementById('comentariosAdicionais').value.trim()
       };
 
-      const { data, error } = await _supabase.from('festas').insert([novaFesta]).select().single();
+      const { data, error } = await _supabase.from('festas').insert([novaFesta]).select().maybeSingle();
 
       if (error) {
         exibirModalAviso("⚠️ Erro", `Não foi possível publicar a festa: ${error.message}`);
@@ -1979,7 +2003,7 @@
       if (fornecedores) {
         const msgNotificacao = `Nova oportunidade publicada! Cliente procura ${servicoSel} em ${novaFesta.bairro} (${novaFesta.cidade}).`;
         for (let forn of fornecedores) {
-          await enviarNotificacao(forn.email, 'whatsapp', 'Nova Oportunidade no Mural', msgNotificacao, data.id, servicoSel);
+          await enviarNotificacao(forn.email, 'whatsapp', 'Nova Oportunidade no Mural', msgNotificacao, data ? data.id : null, servicoSel);
         }
       }
 
@@ -1990,7 +2014,7 @@
 
     // Desbloquear Contato (Fornecedor compra/usa créditos)
     async function desbloquearContato(festaId) {
-      const { data: festa } = await _supabase.from('festas').select('*').eq('id', festaId).single();
+      const { data: festa } = await _supabase.from('festas').select('*').eq('id', festaId).maybeSingle();
       if (!festa) return;
 
       const { data: jaDesbloqueado } = await _supabase
@@ -2074,7 +2098,7 @@
       });
     }
 
-    // Atualizar Dados da Conta (Corrigido usando maybeSingle)
+    // Atualizar Dados da Conta
     document.getElementById('formAtualizarConta').addEventListener('submit', async function(e) {
       e.preventDefault();
       
@@ -2310,8 +2334,8 @@
       document.getElementById('userDropdownWrapper').style.display = 'block';
       document.getElementById('btn-nav-notificacoes').style.display = 'inline-block';
 
-      document.getElementById('nav-user-name').innerText = usuarioAtual.nome.split(' ')[0];
-      document.querySelectorAll('.nome-usuario-boasvindas').forEach(el => el.innerText = usuarioAtual.nome);
+      document.getElementById('nav-user-name').innerText = usuarioAtual.nome ? usuarioAtual.nome.split(' ')[0] : 'Usuário';
+      document.querySelectorAll('.nome-usuario-boasvindas').forEach(el => el.innerText = usuarioAtual.nome || 'Usuário');
 
       if (usuarioAtual.tipo === 'pai') {
         document.getElementById('btn-nav-criar').style.display = 'inline-block';
@@ -2466,21 +2490,29 @@
         }
       });
 
-      // Checar sessão ativa no Supabase Auth
+      // Checar sessão ativa no Supabase Auth usando maybeSingle()
       const { data: { session } } = await _supabase.auth.getSession();
 
       if (session) {
         authUser = session.user;
-        const { data: profile } = await _supabase
+        let { data: profile } = await _supabase
           .from('profiles')
           .select('*')
           .eq('id', authUser.id)
-          .single();
+          .maybeSingle();
 
-        if (profile) {
-          usuarioAtual = profile;
-          atualizarInterfacePosLogin();
+        if (!profile) {
+          profile = {
+            id: authUser.id,
+            email: authUser.email,
+            nome: authUser.user_metadata?.nome || authUser.email.split('@')[0],
+            whatsapp: authUser.user_metadata?.whatsapp || '',
+            tipo: authUser.user_metadata?.tipo || 'pai'
+          };
         }
+
+        usuarioAtual = profile;
+        atualizarInterfacePosLogin();
       }
 
       const abaInicial = window.location.hash.replace('#', '') || 'home';
