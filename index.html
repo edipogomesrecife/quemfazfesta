@@ -2074,31 +2074,68 @@
       });
     }
 
-    // Atualizar Dados da Conta
+    // Atualizar Dados da Conta (Ajustado para redirecionamento via e-mail e tratamento de sessão/erros)
     document.getElementById('formAtualizarConta').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const novoNome = document.getElementById('account-nome').value;
-      const novoWhatsapp = document.getElementById('account-whatsapp').value;
+      
+      const novoNome = document.getElementById('account-nome').value.trim();
+      const novoWhatsapp = document.getElementById('account-whatsapp').value.trim();
       const novaSenha = document.getElementById('account-nova-senha').value;
       const confirmaNovaSenha = document.getElementById('account-nova-senha-confirma').value;
 
+      // 1. Atualização de Senha no Auth do Supabase (se informada)
       if (novaSenha !== "" || confirmaNovaSenha !== "") {
         if (novaSenha !== confirmaNovaSenha) {
-          exibirModalAviso("⚠️ Erro", "As senhas não coincidem!");
+          exibirModalAviso("⚠️ Atenção", "As senhas digitadas não coincidem!");
           return;
         }
-        await _supabase.auth.updateUser({ password: novaSenha });
+
+        if (novaSenha.length < 6) {
+          exibirModalAviso("⚠️ Senha Fraca", "A nova senha deve ter no mínimo 6 caracteres.");
+          return;
+        }
+
+        const { error: authError } = await _supabase.auth.updateUser({ password: novaSenha });
+
+        if (authError) {
+          exibirModalAviso("⚠️ Erro ao Redefinir Senha", authError.message);
+          return;
+        }
       }
 
-      const { data, error } = await _supabase.from('profiles').update({
-        nome: novoNome,
-        whatsapp: novoWhatsapp
-      }).eq('id', usuarioAtual.id).select().single();
+      // 2. Busca o ID do usuário diretamente da sessão ativa se `usuarioAtual` ainda não tiver sido carregado
+      const { data: { session } } = await _supabase.auth.getSession();
+      const userId = usuarioAtual ? usuarioAtual.id : (session ? session.user.id : null);
 
-      if (!error) {
+      if (!userId) {
+        exibirModalAviso("⚠️ Sessão Expirada", "Sua sessão expirou. Solicite o e-mail de recuperação novamente.");
+        return;
+      }
+
+      // 3. Atualização dos Dados do Perfil na Tabela `profiles`
+      const { data, error } = await _supabase
+        .from('profiles')
+        .update({
+          nome: novoNome,
+          whatsapp: novoWhatsapp
+        })
+        .eq('id', userId)
+        .select()
+        .single();
+
+      if (error) {
+        exibirModalAviso("⚠️ Erro no Perfil", error.message);
+      } else {
         usuarioAtual = data;
         atualizarInterfacePosLogin();
-        exibirModalAviso("✅ Dados Atualizados", "Alterações salvas com sucesso!");
+        
+        // Limpa os campos de senha após salvar
+        document.getElementById('account-nova-senha').value = '';
+        document.getElementById('account-nova-senha-confirma').value = '';
+
+        exibirModalAviso("✅ Sucesso!", "Sua senha e dados cadastrais foram atualizados com sucesso!", "Ir para o Início", function() {
+          trocarAba('home');
+        });
       }
     });
 
