@@ -2074,7 +2074,7 @@
       });
     }
 
-    // Atualizar Dados da Conta (Ajustado para redirecionamento via e-mail e tratamento de sessão/erros)
+    // Atualizar Dados da Conta (Corrigido usando maybeSingle)
     document.getElementById('formAtualizarConta').addEventListener('submit', async function(e) {
       e.preventDefault();
       
@@ -2112,7 +2112,7 @@
         return;
       }
 
-      // 3. Atualização dos Dados do Perfil na Tabela `profiles`
+      // 3. Atualização dos Dados do Perfil na Tabela `profiles` usando maybeSingle()
       const { data, error } = await _supabase
         .from('profiles')
         .update({
@@ -2121,12 +2121,18 @@
         })
         .eq('id', userId)
         .select()
-        .single();
+        .maybeSingle();
 
       if (error) {
         exibirModalAviso("⚠️ Erro no Perfil", error.message);
       } else {
-        usuarioAtual = data;
+        if (data) {
+          usuarioAtual = data;
+        } else if (usuarioAtual) {
+          usuarioAtual.nome = novoNome;
+          usuarioAtual.whatsapp = novoWhatsapp;
+        }
+        
         atualizarInterfacePosLogin();
         
         // Limpa os campos de senha após salvar
