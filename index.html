@@ -239,6 +239,12 @@
     }
     .btn-submit:hover { background-color: var(--primary-dark); }
 
+    .link-esqueci-senha {
+      display: block; text-align: right; margin-top: 6px; font-size: 0.85rem;
+      color: var(--primary-dark); font-weight: 700; text-decoration: none; cursor: pointer;
+    }
+    .link-esqueci-senha:hover { text-decoration: underline; color: var(--accent); }
+
     .link-alternativo { text-align: center; margin-top: 16px; font-size: 0.9rem; color: var(--text-muted); }
     .link-alternativo a { color: var(--accent); font-weight: 700; text-decoration: none; cursor: pointer; }
 
@@ -1114,18 +1120,44 @@
               <label>E-mail ou WhatsApp *</label>
               <input type="text" id="login-email" placeholder="seu@email.com ou (81) 99999-9999" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom: 8px;">
               <label>Senha *</label>
               <input type="password" id="login-senha" placeholder="******" required>
             </div>
 
-            <button type="submit" class="btn-submit">Entrar no Sistema</button>
+            <!-- BOTÃO / LINK DE ESQUECI MINHA SENHA -->
+            <a onclick="trocarAba('recuperar-senha')" class="link-esqueci-senha">🔑 Esqueci minha senha</a>
+
+            <button type="submit" class="btn-submit" style="margin-top: 18px;">Entrar no Sistema</button>
           </form>
 
           <div class="link-alternativo">
             Ainda não tem conta? <br>
             <a onclick="trocarAba('cadastro-pais')">Cadastrar como Pai/Mãe</a> | 
             <a onclick="trocarAba('cadastro-fornecedor')">Cadastrar como Fornecedor</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TELA DE RECUPERAÇÃO DE SENHA -->
+    <section id="view-recuperar-senha" class="view-section">
+      <div class="container" style="max-width:450px;">
+        <div class="card-form">
+          <h2 style="margin-bottom:8px;">Recuperar Senha</h2>
+          <p style="color:var(--text-muted); margin-bottom:20px;">Informe seu e-mail cadastrado para receber as instruções de redefinição de senha.</p>
+
+          <form id="formRecuperarSenha">
+            <div class="form-group">
+              <label>Seu E-mail Cadastrado *</label>
+              <input type="email" id="recuperar-email" placeholder="seu@email.com" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Enviar Link de Recuperação</button>
+          </form>
+
+          <div class="link-alternativo">
+            Lembrou da senha? <a onclick="trocarAba('login')">Voltar para o Login</a>
           </div>
         </div>
       </div>
@@ -1708,6 +1740,35 @@
       }
     });
 
+    // RECUPERAÇÃO DE SENHA VIA EMAIL
+    document.getElementById('formRecuperarSenha').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const emailDigitado = document.getElementById('recuperar-email').value.trim();
+
+      if (emailDigitado.endsWith('@quemfazfesta.local')) {
+        exibirModalAviso(
+          "⚠️ Cadastro sem E-mail", 
+          "Sua conta foi criada utilizando apenas o número do WhatsApp. Para redefinir sua senha, entre em contato direto com o nosso suporte."
+        );
+        return;
+      }
+
+      const { error } = await _supabase.auth.resetPasswordForEmail(emailDigitado, {
+        redirectTo: window.location.origin + '/#minha-conta'
+      });
+
+      if (error) {
+        exibirModalAviso("⚠️ Erro na Solicitação", error.message);
+      } else {
+        exibirModalAviso(
+          "📧 E-mail Enviado!", 
+          `Enviamos um link de redefinição de senha para <strong>${emailDigitado}</strong>. Verifique sua caixa de entrada e spam.`,
+          "Voltar ao Login",
+          function() { trocarAba('login'); }
+        );
+      }
+    });
+
     // Cadastro Contratante (Pais)
     document.getElementById('formCadastroPais').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -2258,6 +2319,8 @@
         }
       } else if (aba === 'login') {
         document.getElementById('view-login').classList.add('active');
+      } else if (aba === 'recuperar-senha') {
+        document.getElementById('view-recuperar-senha').classList.add('active');
       } else if (aba === 'cadastro-pais') {
         document.getElementById('view-cadastro-pais').classList.add('active');
       } else if (aba === 'cadastro-fornecedor') {
