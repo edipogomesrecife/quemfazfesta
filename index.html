@@ -793,7 +793,7 @@
           <p>É proibido ocultar custos relevantes, apresentar condições enganosas ou alterar substancialmente a proposta sem informar o cliente.</p>
 
           <h2>Contrato e execução</h2>
-          <p>O fornecedor é responsável por formalizar a contratação e cumprir integralmente o que foi acordado. Deve possuir capacidade técnica, operacional e legal para prestar o serviço anunciado e obter licenças, autorizações, registros ou seguros exigidos para sua atividade.</p>
+          <p>O fornecedor é responsável por formalizar a contratação e cumprir integralmente o que foi acordado. Deve possuir capacidade técnica, operacional e legal para prestar o serviço anunciado e obter licenças, autorizaciones, registros ou seguros exigidos para sua atividade.</p>
 
           <h2>Dados pessoais</h2>
           <p>O contato recebido por meio da plataforma deve ser usado exclusivamente para a oportunidade correspondente. É proibido vender, compartilhar, publicar, adicionar a grupos ou utilizar os dados para marketing não autorizado.</p>
@@ -1740,7 +1740,7 @@
       }
     });
 
-    // RECUPERAÇÃO DE SENHA VIA EMAIL
+    // RECUPERAÇÃO DE SENHA VIA EMAIL (AJUSTADO PARA GITHUB PAGES)
     document.getElementById('formRecuperarSenha').addEventListener('submit', async function(e) {
       e.preventDefault();
       const emailDigitado = document.getElementById('recuperar-email').value.trim();
@@ -1753,8 +1753,11 @@
         return;
       }
 
+      // Garante que o redirecionamento aponte exatamente para o repositório no GitHub Pages
+      const urlRedirecionamento = window.location.origin + window.location.pathname;
+
       const { error } = await _supabase.auth.resetPasswordForEmail(emailDigitado, {
-        redirectTo: window.location.origin + '/#minha-conta'
+        redirectTo: urlRedirecionamento
       });
 
       if (error) {
@@ -2408,6 +2411,17 @@
 
     window.addEventListener('DOMContentLoaded', async function() {
       verificarBannerCookies();
+
+      // Escuta o evento de recuperação de senha ao abrir o link recebido por e-mail
+      _supabase.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'PASSWORD_RECOVERY') {
+          exibirModalAviso(
+            "🔑 Redefinição de Senha", 
+            "Acesso liberado pelo link do e-mail! Digite sua nova senha nos campos 'Nova Senha' e clique em 'Salvar Alterações'."
+          );
+          trocarAba('minha-conta');
+        }
+      });
 
       // Checar sessão ativa no Supabase Auth
       const { data: { session } } = await _supabase.auth.getSession();
