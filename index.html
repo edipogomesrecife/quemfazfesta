@@ -869,7 +869,7 @@
           <p>Após a utilização dos créditos gratuitos do bônus de boas-vindas, cada oportunidade exigirá determinada quantidade de créditos de acordo com critérios e faixas de orçamento divulgados na plataforma. O desbloqueio somente ocorrerá após confirmação do usuário.</p>
 
           <h2>Proteção de créditos / Cashback</h2>
-          <p>A política de retorno/cashback de 50% dos créditos investidos em caso de oportunidade não convertida em contrato aplica-se exclusivamente aos créditos comprados pelos fornecedores.</p>
+          <p>A política de retorno/cashback de 50% dos créditos investedos em caso de oportunidade não convertida em contrato aplica-se exclusivamente aos créditos comprados pelos fornecedores.</p>
           <p>O retorno não constitui garantia de contratação nem indenização por oportunidade perdida, mas um benefício de proteção ao investimento pago do profissional.</p>
 
           <h2>Exclusões do cashback</h2>
@@ -1179,7 +1179,7 @@
             <div class="checkbox-termos-box">
               <input type="checkbox" id="cad-pai-aceite-termos" required>
               <label for="cad-pai-aceite-termos">
-                Li e aceito os <a onclick="trocarAba('termos-uso')">Termos de Uso</a>, a <a onclick="trocarAba('politica-privacidade')">Política de Privacidade</a> e as <a onclick="trocarAba('regras-contratantes')">Regras para Contratantes</a> da plataforma. *
+                Li e aceito os <a onclick="trocarAba('termos-uso')">Termos de Uso</a>, a <a onclick="trocarAba('politica-privacidade')">Política de Privacidade</a> e as <a onclick="trocarAba('regras-contratantes')">Regras para Contratantes</a>. Autorizo o recebimento de notificações e lembretes sobre meus pedidos via WhatsApp. *
               </label>
             </div>
 
@@ -1231,7 +1231,7 @@
             <div class="checkbox-termos-box">
               <input type="checkbox" id="cad-forn-aceite-termos" required>
               <label for="cad-forn-aceite-termos">
-                Li e concordo com os <a onclick="trocarAba('termos-uso')">Termos de Uso</a>, a <a onclick="trocarAba('politica-privacidade')">Política de Privacidade</a>, o <a onclick="trocarAba('conduta-fornecedores')">Código de Conduta dos Fornecedores</a> e a <a onclick="trocarAba('politica-creditos')">Política de Créditos</a>. *
+                Li e concordo com os <a onclick="trocarAba('termos-uso')">Termos de Uso</a>, a <a onclick="trocarAba('politica-privacidade')">Política de Privacidade</a>, o <a onclick="trocarAba('conduta-fornecedores')">Código de Conduta dos Fornecedores</a> e a <a onclick="trocarAba('politica-creditos')">Política de Créditos</a>. Autorizo o recebimento de alertas de novas oportunidades e avisos via WhatsApp. *
               </label>
             </div>
 
@@ -2072,7 +2072,13 @@
 
           atualizarExibicaoSaldo();
 
-          const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico} e entrará em contato em breve.`;
+          // Formatação dinâmica da reputação do fornecedor para o cliente
+          const notaTexto = (usuarioAtual.total_avaliacoes && usuarioAtual.total_avaliacoes > 0)
+            ? `⭐ Nota: ${Number(usuarioAtual.nota_media).toFixed(1)} / 5.0\n💬 Última avaliação recebida: "${usuarioAtual.ultimo_comentario || 'Excelente atendimento!'}"`
+            : `🌱 Novo na plataforma — ainda sem avaliações.`;
+
+          const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico} e entrará em contato em breve.\n\n${notaTexto}`;
+
           await enviarNotificacao(festa.email_pai, 'whatsapp', 'Fornecedor Interessado', msgCliente);
 
           exibirModalAviso("💬 Contato Liberado", `O contato do cliente é: <strong>${festa.whatsapp_pai}</strong>`, "Abrir WhatsApp", function() {
