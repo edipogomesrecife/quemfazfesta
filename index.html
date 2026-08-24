@@ -582,6 +582,7 @@
           <button class="btn-filtro" onclick="filtrarMural('Doces', this)">Doces</button>
           <button class="btn-filtro" onclick="filtrarMural('Brinquedos', this)">Brinquedos</button>
           <button class="btn-filtro" onclick="filtrarMural('Espaço para festa', this)">Espaço</button>
+          <button class="btn-filtro" onclick="filtrarMural('Tabuleiros Gerais', this)">Tabuleiros Gerais</button>
           <button class="btn-filtro" onclick="filtrarMural('DJ/Música/Banda', this)">Música/DJ</button>
           <button class="btn-filtro" onclick="filtrarMural('Personagem', this)">Personagem</button>
           <button class="btn-filtro" onclick="filtrarMural('Lembrancinhas/Personalizados', this)">Lembrancinhas</button>
@@ -1212,6 +1213,7 @@
                 <option value="Doces">Doces</option>
                 <option value="Brinquedos">Brinquedos</option>
                 <option value="Espaço para festa">Espaço para festa</option>
+                <option value="Tabuleiros Gerais">Tabuleiros Gerais</option>
                 <option value="DJ/Música/Banda">DJ/Música/Banda</option>
                 <option value="Personagem">Personagem</option>
                 <option value="Lembrancinhas/Personalizados">Lembrancinhas/Personalizados</option>
@@ -1260,6 +1262,7 @@
                 <option value="Doces">Doces</option>
                 <option value="Brinquedos">Brinquedos</option>
                 <option value="Espaço para festa">Espaço para festa</option>
+                <option value="Tabuleiros Gerais">Tabuleiros Gerais</option>
                 <option value="DJ/Música/Banda">DJ/Música/Banda</option>
                 <option value="Personagem">Personagem</option>
                 <option value="Lembrancinhas/Personalizados">Lembrancinhas/Personalizados</option>
@@ -1349,8 +1352,9 @@
       <div class="container">
         <div class="fornecedor-bar">
           <div><span>Profissional: <strong class="nome-usuario-boasvindas">Fornecedor</strong></span></div>
-          <div style="display:flex; align-items:center; font-weight:700; color:var(--primary);">
+          <div style="display:flex; align-items:center; font-weight:700; color:var(--primary); font-size:1.1rem;">
             <img src="créditos.png" alt="Créditos" class="saldo-icon-img"> Saldo: <span class="saldo-creditos-val">0</span> Créditos
+            <button class="btn-comprar-topo" onclick="trocarAba('comprar-creditos')">+ Comprar Créditos</button>
           </div>
         </div>
         <div style="margin-bottom:16px;">
@@ -1367,6 +1371,7 @@
             <label class="checkbox-item"><input type="checkbox" value="Doces" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Doces</label>
             <label class="checkbox-item"><input type="checkbox" value="Brinquedos" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Brinquedos</label>
             <label class="checkbox-item"><input type="checkbox" value="Espaço para festa" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Espaço para festa</label>
+            <label class="checkbox-item"><input type="checkbox" value="Tabuleiros Gerais" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Tabuleiros Gerais</label>
             <label class="checkbox-item"><input type="checkbox" value="DJ/Música/Banda" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> DJ/Música/Banda</label>
             <label class="checkbox-item"><input type="checkbox" value="Personagem" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Personagem</label>
             <label class="checkbox-item"><input type="checkbox" value="Lembrancinhas/Personalizados" class="chk-categoria-mural" onchange="renderizarMuralCompleto()"> Lembrancinhas/Personalizados</label>
@@ -1691,17 +1696,20 @@
 
       let emailParaLogin = loginInput;
 
-      // Se o usuário digitou telefone, busca o e-mail correspondente no perfil
+      // Se o usuário digitou telefone (ou algo que não contenha @), busca o e-mail correspondente no perfil
       if (!loginInput.includes('@')) {
         const numLimpo = loginInput.replace(/\D/g, '');
         const { data: profileEncontrado } = await _supabase
           .from('profiles')
-          .select('email')
+          .select('email, whatsapp')
           .ilike('whatsapp', `%${numLimpo}%`)
           .maybeSingle();
 
         if (profileEncontrado && profileEncontrado.email) {
           emailParaLogin = profileEncontrado.email;
+        } else {
+          exibirModalAviso("⚠️ Erro de Autenticação", "Número de telefone não encontrado em nossa base de dados.");
+          return;
         }
       }
 
@@ -1773,7 +1781,7 @@
       }
     });
 
-    // RECUPERAÇÃO DE SENHA VIA EMAIL (AJUSTADO PARA GITHUB PAGES)
+    // RECUPERAÇÃO DE SENHA VIA EMAIL
     document.getElementById('formRecuperarSenha').addEventListener('submit', async function(e) {
       e.preventDefault();
       const emailDigitado = document.getElementById('recuperar-email').value.trim();
@@ -1786,7 +1794,6 @@
         return;
       }
 
-      // Garante que o redirecionamento aponte exatamente para o repositório no GitHub Pages
       const urlRedirecionamento = window.location.origin + window.location.pathname;
 
       const { error } = await _supabase.auth.resetPasswordForEmail(emailDigitado, {
@@ -2123,7 +2130,6 @@
             return;
           }
 
-          // Redireciona para o Checkout Pro (Sandbox de testes ou Produção)
           const urlPagamento = data.sandbox_init_point || data.init_point;
           window.location.href = urlPagamento;
 
@@ -2194,7 +2200,6 @@
         
         atualizarInterfacePosLogin();
         
-        // Limpa os campos de senha após salvar
         document.getElementById('account-nova-senha').value = '';
         document.getElementById('account-nova-senha-confirma').value = '';
 
@@ -2514,7 +2519,6 @@
     window.addEventListener('DOMContentLoaded', async function() {
       verificarBannerCookies();
 
-      // Escuta o evento de recuperação de senha ao abrir o link recebido por e-mail
       _supabase.auth.onAuthStateChange(async (event, session) => {
         if (event === 'PASSWORD_RECOVERY') {
           exibirModalAviso(
@@ -2525,7 +2529,6 @@
         }
       });
 
-      // Checar sessão ativa no Supabase Auth usando maybeSingle()
       const { data: { session } } = await _supabase.auth.getSession();
 
       if (session) {
