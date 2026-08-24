@@ -1698,17 +1698,19 @@
 
       // Se o usuário digitou telefone (ou algo que não contenha @), busca o e-mail correspondente no perfil
       if (!loginInput.includes('@')) {
-        const numLimpo = loginInput.replace(/\D/g, '');
+        const numLimpo = loginInput.replace(/\D/g, ''); // extrai apenas dígitos
+
+        // Busca flexível no Supabase para formatos com ou sem máscara
         const { data: profileEncontrado } = await _supabase
           .from('profiles')
           .select('email, whatsapp')
-          .ilike('whatsapp', `%${numLimpo}%`)
+          .or(`whatsapp.ilike.%${numLimpo}%,whatsapp.ilike.%${loginInput}%`)
           .maybeSingle();
 
         if (profileEncontrado && profileEncontrado.email) {
           emailParaLogin = profileEncontrado.email;
         } else {
-          exibirModalAviso("⚠️ Erro de Autenticação", "Número de telefone não encontrado em nossa base de dados.");
+          exibirModalAviso("⚠️ Erro de Autenticação", "Número de WhatsApp não encontrado em nossa base de dados.");
           return;
         }
       }
