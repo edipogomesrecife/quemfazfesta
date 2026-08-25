@@ -1688,7 +1688,7 @@
       if (badge && data) badge.innerText = data.length;
     }
 
-    // Login com tolerância a falhas (cria perfil caso não exista)
+    // Login ajustado para tratar busca por telefone com e sem formatação
     document.getElementById('formLogin').addEventListener('submit', async function(e) {
       e.preventDefault();
       const loginInput = document.getElementById('login-email').value.trim();
@@ -1696,19 +1696,26 @@
 
       let emailParaLogin = loginInput;
 
-      // Se o usuário digitou telefone (ou algo que não contenha @), busca o e-mail correspondente no perfil
+      // Se o usuário digitou telefone (ou algo sem @), realiza a busca na tabela profiles
       if (!loginInput.includes('@')) {
-        const numLimpo = loginInput.replace(/\D/g, ''); // extrai apenas dígitos
+        const numLimpo = loginInput.replace(/\D/g, ''); // extrai apenas os números
 
-        // Busca flexível no Supabase para formatos com ou sem máscara
-        const { data: profileEncontrado } = await _supabase
+        // Realiza a busca tentando bater o número limpo ou a string exata informada
+        let { data: perfis } = await _supabase
           .from('profiles')
-          .select('email, whatsapp')
-          .or(`whatsapp.ilike.%${numLimpo}%,whatsapp.ilike.%${loginInput}%`)
-          .maybeSingle();
+          .select('*')
+          .filter('whatsapp', 'ilike', `%${numLimpo}%`);
 
-        if (profileEncontrado && profileEncontrado.email) {
-          emailParaLogin = profileEncontrado.email;
+        if ((!perfis || perfis.length === 0) && numLimpo !== loginInput) {
+          const { data: perfisAlt } = await _supabase
+            .from('profiles')
+            .select('*')
+            .filter('whatsapp', 'ilike', `%${loginInput}%`);
+          perfis = perfisAlt;
+        }
+
+        if (perfis && perfis.length > 0) {
+          emailParaLogin = perfis[0].email;
         } else {
           exibirModalAviso("⚠️ Erro de Autenticação", "Número de WhatsApp não encontrado em nossa base de dados.");
           return;
@@ -1725,14 +1732,14 @@
         return;
       }
 
-      // Buscar perfil usando maybeSingle()
+      // Buscar perfil do usuário autenticado
       let { data: profile } = await _supabase
         .from('profiles')
         .select('*')
         .eq('id', authData.user.id)
         .maybeSingle();
 
-      // Se o usuário existe na Auth mas não em profiles, realiza a inserção do perfil em fallback
+      // Fallback para criação de perfil em caso de ausência na tabela
       if (!profile) {
         const nomeMeta = authData.user.user_metadata?.nome || authData.user.email.split('@')[0];
         const tipoMeta = authData.user.user_metadata?.tipo || 'pai';
@@ -1820,6 +1827,7 @@
       const nome = document.getElementById('cad-pai-nome').value.trim();
       let email = document.getElementById('cad-pai-email').value.trim();
       const whatsapp = document.getElementById('cad-pai-whatsapp').value.trim();
+      const numLimpo = whatsapp.replace(/\D/g, ''); // Salva limpo para evitar problemas de busca
       const senha = document.getElementById('cad-pai-senha').value;
       const confirma = document.getElementById('cad-pai-senha-confirma').value;
 
@@ -1828,20 +1836,17 @@
         return;
       }
 
-      // Se não preencheu e-mail, gera um e-mail técnico válido baseado no WhatsApp
       if (!email) {
-        const numLimpo = whatsapp.replace(/\D/g, '');
         email = `user_${numLimpo || Date.now()}@quemfazfesta.local`;
       }
 
-      // Criar usuário no auth enviando metadados
       const { data: authData, error: authError } = await _supabase.auth.signUp({
         email: email,
         password: senha,
         options: {
           data: {
             nome: nome,
-            whatsapp: whatsapp,
+            whatsapp: numLimpo,
             tipo: 'pai'
           }
         }
@@ -1852,12 +1857,11 @@
         return;
       }
 
-      // Tenta inserir na tabela profiles de forma direta
       const { data: profile, error: profileError } = await _supabase.from('profiles').insert([{
         id: authData.user.id,
         email: email,
         nome: nome,
-        whatsapp: whatsapp,
+        whatsapp: numLimpo,
         tipo: 'pai'
       }]).select().maybeSingle();
 
@@ -1873,7 +1877,7 @@
           usuarioAtual = triggerProfile;
         } else {
           authUser = authData.user;
-          usuarioAtual = { id: authData.user.id, email, nome, whatsapp, tipo: 'pai' };
+          usuarioAtual = { id: authData.user.id, email, nome, whatsapp: numLimpo, tipo: 'pai' };
         }
       } else {
         authUser = authData.user;
@@ -1890,6 +1894,7 @@
       const nome = document.getElementById('cad-forn-nome').value.trim();
       let email = document.getElementById('cad-forn-email').value.trim();
       const whatsapp = document.getElementById('cad-forn-whatsapp').value.trim();
+      const numLimpo = whatsapp.replace(/\D/g, ''); // Salva limpo para padronizar buscas
       const categoria = document.getElementById('cad-forn-categoria').value;
       const senha = document.getElementById('cad-forn-senha').value;
       const confirma = document.getElementById('cad-forn-senha-confirma').value;
@@ -1899,13 +1904,10 @@
         return;
       }
 
-      // Se não preencheu e-mail, gera um e-mail técnico válido baseado no WhatsApp
       if (!email) {
-        const numLimpo = whatsapp.replace(/\D/g, '');
         email = `forn_${numLimpo || Date.now()}@quemfazfesta.local`;
       }
 
-      // Contar total de fornecedores cadastrados
       const { count } = await _supabase
         .from('profiles')
         .select('*', { count: 'exact', head: true })
@@ -1914,14 +1916,13 @@
       const ehPrimeiros100 = (count || 0) < 100;
       const creditosIniciais = ehPrimeiros100 ? 12 : 3;
 
-      // Criar usuário auth enviando metadados
       const { data: authData, error: authError } = await _supabase.auth.signUp({
         email: email,
         password: senha,
         options: {
           data: {
             nome: nome,
-            whatsapp: whatsapp,
+            whatsapp: numLimpo,
             tipo: 'fornecedor',
             categoria: categoria,
             saldo_creditos: creditosIniciais,
@@ -1935,12 +1936,11 @@
         return;
       }
 
-      // Inserção na tabela de perfis
       const { data: profile, error: profileError } = await _supabase.from('profiles').insert([{
         id: authData.user.id,
         email: email,
         nome: nome,
-        whatsapp: whatsapp,
+        whatsapp: numLimpo,
         categoria: categoria,
         tipo: 'fornecedor',
         saldo_creditos: creditosIniciais,
@@ -1959,7 +1959,7 @@
           usuarioAtual = triggerProfile;
         } else {
           authUser = authData.user;
-          usuarioAtual = { id: authData.user.id, email, nome, whatsapp, categoria, tipo: 'fornecedor', saldo_creditos: creditosIniciais };
+          usuarioAtual = { id: authData.user.id, email, nome, whatsapp: numLimpo, categoria, tipo: 'fornecedor', saldo_creditos: creditosIniciais };
         }
       } else {
         authUser = authData.user;
@@ -2009,7 +2009,6 @@
         return;
       }
 
-      // Notificar Fornecedores da Categoria
       const { data: fornecedores } = await _supabase
         .from('profiles')
         .select('email')
@@ -2028,7 +2027,7 @@
       });
     });
 
-    // Desbloquear Contato (Fornecedor compra/usa créditos)
+    // Desbloquear Contato
     async function desbloquearContato(festaId) {
       const { data: festa } = await _supabase.from('festas').select('*').eq('id', festaId).maybeSingle();
       if (!festa) return;
@@ -2058,7 +2057,6 @@
         if (festa.desbloqueios < festa.max_desbloqueios) {
           const novoSaldo = Number(usuarioAtual.saldo_creditos) - custoNecessario;
 
-          // Atualizar créditos do fornecedor
           await _supabase.from('profiles').update({
             saldo_creditos: novoSaldo,
             total_desbloqueios: (usuarioAtual.total_desbloqueios || 0) + 1
@@ -2066,12 +2064,10 @@
 
           usuarioAtual.saldo_creditos = novoSaldo;
 
-          // Atualizar contador na festa
           await _supabase.from('festas').update({
             desbloqueios: festa.desbloqueios + 1
           }).eq('id', festaId);
 
-          // Inserir registro de Desbloqueio
           await _supabase.from('desbloqueios').insert([{
             festa_id: festaId,
             fornecedor_id: usuarioAtual.id,
@@ -2081,7 +2077,6 @@
 
           atualizarExibicaoSaldo();
 
-          // Formatação dinâmica da reputação do fornecedor para o cliente
           const notaTexto = (usuarioAtual.total_avaliacoes && usuarioAtual.total_avaliacoes > 0)
             ? `⭐ Nota: ${Number(usuarioAtual.nota_media).toFixed(1)} / 5.0\n💬 Última avaliação recebida: "${usuarioAtual.ultimo_comentario || 'Excelente atendimento!'}"`
             : `🌱 Novo na plataforma — ainda sem avaliações.`;
@@ -2100,7 +2095,7 @@
       });
     }
 
-    // Comprar Créditos via Mercado Pago (Checkout Pro)
+    // Comprar Créditos via Mercado Pago
     async function comprarCreditos(pacote, qtd, preco) {
       if (!usuarioAtual) {
         exibirModalAviso("⚠️ Autenticação necessária", "Faça login para adquirir pacotes de créditos.");
@@ -2147,10 +2142,10 @@
       
       const novoNome = document.getElementById('account-nome').value.trim();
       const novoWhatsapp = document.getElementById('account-whatsapp').value.trim();
+      const numLimpo = novoWhatsapp.replace(/\D/g, '');
       const novaSenha = document.getElementById('account-nova-senha').value;
       const confirmaNovaSenha = document.getElementById('account-nova-senha-confirma').value;
 
-      // 1. Atualização de Senha no Auth do Supabase (se informada)
       if (novaSenha !== "" || confirmaNovaSenha !== "") {
         if (novaSenha !== confirmaNovaSenha) {
           exibirModalAviso("⚠️ Atenção", "As senhas digitadas não coincidem!");
@@ -2170,7 +2165,6 @@
         }
       }
 
-      // 2. Busca o ID do usuário diretamente da sessão ativa se `usuarioAtual` ainda não tiver sido carregado
       const { data: { session } } = await _supabase.auth.getSession();
       const userId = usuarioAtual ? usuarioAtual.id : (session ? session.user.id : null);
 
@@ -2179,12 +2173,11 @@
         return;
       }
 
-      // 3. Atualização dos Dados do Perfil na Tabela `profiles` usando maybeSingle()
       const { data, error } = await _supabase
         .from('profiles')
         .update({
           nome: novoNome,
-          whatsapp: novoWhatsapp
+          whatsapp: numLimpo
         })
         .eq('id', userId)
         .select()
@@ -2197,7 +2190,7 @@
           usuarioAtual = data;
         } else if (usuarioAtual) {
           usuarioAtual.nome = novoNome;
-          usuarioAtual.whatsapp = novoWhatsapp;
+          usuarioAtual.whatsapp = numLimpo;
         }
         
         atualizarInterfacePosLogin();
