@@ -1993,7 +1993,7 @@
         whatsapp_pai: usuarioAtual.whatsapp,
         servico: servicoSel,
         tema: document.getElementById('chk-tema-nao-definido').checked ? "Ainda não definido" : document.getElementById('tema').value,
-        data: document.getElementById('data').value,
+        data_festa: document.getElementById('data').value, // ✅ AJUSTADO PARA CORRESPONDER À COLUNA DO BANCO DE DADOS
         horario: document.getElementById('chk-horario-nao-definido').checked ? "Ainda não definido" : document.getElementById('horario').value,
         qtd_pessoas: document.getElementById('qtdPessoas').value,
         cidade: document.getElementById('cidade').value,
@@ -2291,7 +2291,7 @@
           <div class="detalhe-item"><strong>CLIENTE</strong><span>${festa.nome_pai}</span></div>
           <div class="detalhe-item"><strong>TEMA</strong><span>${festa.tema || "Ainda não definido"}</span></div>
           <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${festa.orcamento}</span></div>
-          <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(festa.data)} às ${festa.horario || "Não informado"}</span></div>
+          <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(festa.data_festa)} às ${festa.horario || "Não informado"}</span></div>
           <div class="detalhe-item"><strong>LOCAL</strong><span>${festa.cidade} (${festa.bairro})</span></div>
         </div>
         <div class="festa-footer">
@@ -2324,7 +2324,7 @@
             <div class="festa-header"><span class="tag-servico">${p.servico}</span></div>
             <div class="festa-detalhes">
               <div class="detalhe-item"><strong>TEMA</strong><span>${p.tema}</span></div>
-              <div class="detalhe-item"><strong>DATA</strong><span>${formatarDataBR(p.data)}</span></div>
+              <div class="detalhe-item"><strong>DATA</strong><span>${formatarDataBR(p.data_festa)}</span></div>
               <div class="detalhe-item full-width"><strong>STATUS</strong><span style="color:var(--primary); font-weight:700;">${p.desbloqueios} de ${p.max_desbloqueios} fornecedores te chamaram</span></div>
             </div>
           </div>`;
