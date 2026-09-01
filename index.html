@@ -1993,7 +1993,7 @@
         whatsapp_pai: usuarioAtual.whatsapp,
         servico: servicoSel,
         tema: document.getElementById('chk-tema-nao-definido').checked ? "Ainda não definido" : document.getElementById('tema').value,
-        data_festa: document.getElementById('data').value, // ✅ AJUSTADO PARA CORRESPONDER À COLUNA DO BANCO DE DADOS
+        data_festa: document.getElementById('data').value,
         horario: document.getElementById('chk-horario-nao-definido').checked ? "Ainda não definido" : document.getElementById('horario').value,
         qtd_pessoas: document.getElementById('qtdPessoas').value,
         cidade: document.getElementById('cidade').value,
@@ -2085,7 +2085,7 @@
 
           await enviarNotificacao(festa.email_pai, 'whatsapp', 'Fornecedor Interessado', msgCliente);
 
-          exibirModalAviso("💬 Contato Liberado", `O contato do cliente é: <strong>${festa.whatsapp_pai}</strong>`, "Abrir WhatsApp", function() {
+          exibirModalAviso("💬 Contato Liberado", `Nome do Cliente: <strong>${festa.nome_pai}</strong><br>WhatsApp: <strong>${festa.whatsapp_pai}</strong>`, "Abrir WhatsApp", function() {
             window.open(`https://wa.me/55${festa.whatsapp_pai.replace(/\D/g,'')}`, '_blank');
             trocarAba('home');
           });
@@ -2288,7 +2288,7 @@
       card.innerHTML = `
         <div class="festa-header"><span class="tag-servico">${festa.servico}</span></div>
         <div class="festa-detalhes">
-          <div class="detalhe-item"><strong>CLIENTE</strong><span>${festa.nome_pai}</span></div>
+          <div class="detalhe-item"><strong>CLIENTE</strong><span>🔒 Oculto (Desbloqueie para ver)</span></div>
           <div class="detalhe-item"><strong>TEMA</strong><span>${festa.tema || "Ainda não definido"}</span></div>
           <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${festa.orcamento}</span></div>
           <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(festa.data_festa)} às ${festa.horario || "Não informado"}</span></div>
