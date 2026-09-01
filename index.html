@@ -1847,15 +1847,21 @@
     }
 
     /* =========================================================
-       LÓGICA DO CHATBOT E SUPORTE VIA EMAIL (FORMSPREE AJUSTADO)
+       LÓGICA DO CHATBOT E SUPORTE VIA EMAIL (AJUSTADO E CORRIGIDO)
        ========================================================= */
     function toggleChatWidget() {
       const box = document.getElementById('chatBoxWidget');
+      const body = document.getElementById('chatBoxBody');
       const isVisible = box.style.display === 'flex';
-      box.style.display = isVisible ? 'none' : 'flex';
 
-      if (!isVisible && document.getElementById('chatBoxBody').innerHTML.trim() === '') {
-        iniciarChat();
+      if (isVisible) {
+        box.style.display = 'none';
+      } else {
+        box.style.display = 'flex';
+        // Renderiza o conteúdo caso a caixa de texto esteja vazia
+        if (body.children.length === 0 || body.innerHTML.trim() === '') {
+          iniciarChat();
+        }
       }
     }
 
