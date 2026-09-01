@@ -382,11 +382,11 @@
     }
     .cookie-banner-btn:hover { background-color: var(--primary-dark); }
 
-    /* WIDGET DE CHAT / SUPORTE NO CANTO INFERIOR ESQUERDO */
+    /* WIDGET DE CHAT / SUPORTE NO CANTO INFERIOR DIREITO */
     .chat-widget-btn {
       position: fixed;
       bottom: 24px;
-      left: 24px;
+      right: 24px;
       background-color: var(--primary);
       color: white;
       border: none;
@@ -411,7 +411,7 @@
       display: none;
       position: fixed;
       bottom: 85px;
-      left: 24px;
+      right: 24px;
       width: 360px;
       max-width: calc(100vw - 48px);
       height: 520px;
@@ -1847,7 +1847,7 @@
     }
 
     /* =========================================================
-       LÓGICA DO CHATBOT E SUPORTE VIA EMAIL
+       LÓGICA DO CHATBOT E SUPORTE VIA EMAIL (FORMSPREE AJUSTADO)
        ========================================================= */
     function toggleChatWidget() {
       const box = document.getElementById('chatBoxWidget');
@@ -1944,7 +1944,7 @@
       body.innerHTML += `<div class="chat-msg user">Enviando mensagem...</div>`;
 
       try {
-        const response = await fetch('https://formspree.io/f/xbjnqkyw', {
+        const response = await fetch('https://formspree.io/f/xljebeoj', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
