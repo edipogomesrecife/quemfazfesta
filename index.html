@@ -2245,8 +2245,22 @@
         return;
       }
 
+      // Busca os IDs das festas que o fornecedor atual já desbloqueou
+      let idsDesbloqueados = [];
+      if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
+        const { data: desbloqueios } = await _supabase
+          .from('desbloqueios')
+          .select('festa_id')
+          .eq('fornecedor_id', usuarioAtual.id);
+
+        if (desbloqueios) {
+          idsDesbloqueados = desbloqueios.map(d => d.festa_id);
+        }
+      }
+
       festas.forEach(festa => {
-        container.appendChild(criarCardFesta(festa));
+        const jaDesbloqueou = idsDesbloqueados.includes(festa.id);
+        container.appendChild(criarCardFesta(festa, jaDesbloqueou));
       });
     }
 
@@ -2271,26 +2285,50 @@
         return;
       }
 
+      // Busca os IDs das festas que o fornecedor atual já desbloqueou
+      let idsDesbloqueados = [];
+      if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
+        const { data: desbloqueios } = await _supabase
+          .from('desbloqueios')
+          .select('festa_id')
+          .eq('fornecedor_id', usuarioAtual.id);
+
+        if (desbloqueios) {
+          idsDesbloqueados = desbloqueios.map(d => d.festa_id);
+        }
+      }
+
       festas.forEach(festa => {
-        container.appendChild(criarCardFesta(festa));
+        const jaDesbloqueou = idsDesbloqueados.includes(festa.id);
+        container.appendChild(criarCardFesta(festa, jaDesbloqueou));
       });
     }
 
-    function criarCardFesta(festa) {
+    function criarCardFesta(festa, jaDesbloqueou = false) {
       const card = document.createElement('div');
       card.className = 'festa-card';
       card.id = `festa-card-${festa.id}`;
       const esgotado = festa.desbloqueios >= festa.max_desbloqueios;
       const custoNecessario = calcularCustoCreditos(festa.orcamento);
 
-      const botaoAcao = `<button class="btn-desbloquear" onclick="desbloquearContato(${festa.id})" ${esgotado ? 'disabled' : ''}>
-        ${esgotado ? 'Vagas Esgotadas' : `🔓 Desbloquear WhatsApp (${custoNecessario} Cred.)`}
-      </button>`;
+      let clienteInfo = '🔒 Oculto (Desbloqueie para ver)';
+      let botaoAcao = '';
+
+      if (jaDesbloqueou) {
+        clienteInfo = `<strong>${festa.nome_pai}</strong><br><small style="color:var(--primary-dark); font-weight:700;">📱 ${festa.whatsapp_pai}</small>`;
+        botaoAcao = `<button class="btn-desbloquear" style="background-color: var(--primary);" onclick="window.open('https://wa.me/55${festa.whatsapp_pai.replace(/\D/g,'')}', '_blank')">
+          💬 Abrir WhatsApp
+        </button>`;
+      } else {
+        botaoAcao = `<button class="btn-desbloquear" onclick="desbloquearContato(${festa.id})" ${esgotado ? 'disabled' : ''}>
+          ${esgotado ? 'Vagas Esgotadas' : `🔓 Desbloquear WhatsApp (${custoNecessario} Cred.)`}
+        </button>`;
+      }
 
       card.innerHTML = `
         <div class="festa-header"><span class="tag-servico">${festa.servico}</span></div>
         <div class="festa-detalhes">
-          <div class="detalhe-item"><strong>CLIENTE</strong><span>🔒 Oculto (Desbloqueie para ver)</span></div>
+          <div class="detalhe-item"><strong>CLIENTE</strong><span>${clienteInfo}</span></div>
           <div class="detalhe-item"><strong>TEMA</strong><span>${festa.tema || "Ainda não definido"}</span></div>
           <div class="detalhe-item"><strong>ORÇAMENTO MÁXIMO</strong><span>${festa.orcamento}</span></div>
           <div class="detalhe-item"><strong>DATA & HORÁRIO</strong><span>${formatarDataBR(festa.data_festa)} às ${festa.horario || "Não informado"}</span></div>
