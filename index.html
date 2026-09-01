@@ -1002,6 +1002,7 @@
           <h2>7. Banner de Cookies</h2>
           <p>Quando houver cookies ou tecnologias não necessárias que dependam de consentimento, o Quem Faz Festa poderá apresentar um banner de cookies no primeiro acesso.</p>
           <p>O banner deverá informar que a plataforma utiliza cookies, suas principais finalidades, onde consultar esta Política e as opções de aceitar, rejeitar e configurar cookies opcionais.</p>
+
           <p>O usuário não deverá ser obrigado a aceitar cookies não necessários simplesmente para continuar navegando.</p>
 
           <h2>8. Gerenciamento de preferências</h2>
@@ -1936,16 +1937,21 @@
         return;
       }
 
-      const { data: profile, error: profileError } = await _supabase.from('profiles').insert([{
-        id: authData.user.id,
-        email: email,
-        nome: nome,
-        whatsapp: numLimpo,
-        categoria: categoria,
-        tipo: 'fornecedor',
-        saldo_creditos: creditosIniciais,
-        total_creditos_gratuitos: creditosIniciais
-      }]).select().maybeSingle();
+      // Utiliza upsert para sobrescrever a linha criada pela Trigger ou criar uma nova se não existir
+      const { data: profile, error: profileError } = await _supabase
+        .from('profiles')
+        .upsert([{
+          id: authData.user.id,
+          email: email,
+          nome: nome,
+          whatsapp: numLimpo,
+          categoria: categoria,
+          tipo: 'fornecedor',
+          saldo_creditos: creditosIniciais,
+          total_creditos_gratuitos: creditosIniciais
+        }], { onConflict: 'id' })
+        .select()
+        .maybeSingle();
 
       if (profileError) {
         const { data: triggerProfile } = await _supabase
@@ -1954,18 +1960,14 @@
           .eq('id', authData.user.id)
           .maybeSingle();
 
-        if (triggerProfile) {
-          authUser = authData.user;
-          usuarioAtual = triggerProfile;
-        } else {
-          authUser = authData.user;
-          usuarioAtual = { id: authData.user.id, email, nome, whatsapp: numLimpo, categoria, tipo: 'fornecedor', saldo_creditos: creditosIniciais };
-        }
+        usuarioAtual = triggerProfile || { 
+          id: authData.user.id, email, nome, whatsapp: numLimpo, categoria, tipo: 'fornecedor', saldo_creditos: creditosIniciais 
+        };
       } else {
-        authUser = authData.user;
         usuarioAtual = profile;
       }
 
+      authUser = authData.user;
       atualizarInterfacePosLogin();
 
       const mensagemBoasVindas = ehPrimeiros100
