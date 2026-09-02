@@ -1986,6 +1986,22 @@
        4. OPERAÇÕES NO SUPABASE (AUTENTICAÇÃO & DB)
        ========================================================= */
 
+    // Integração com Edge Function para envio via WhatsApp Cloud API
+    async function dispararWhatsappAPI(telefoneDestino) {
+      try {
+        await fetch('https://mipvzmxrmljoxbtjrnlz.supabase.co/functions/v1/enviar-whatsapp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${_supabase.supabaseKey}`
+          },
+          body: JSON.stringify({ telefone: telefoneDestino })
+        });
+      } catch (err) {
+        console.error("Erro ao enviar mensagem via WhatsApp API:", err);
+      }
+    }
+
     // Notificações via Supabase DB
     async function enviarNotificacao(destinatarioEmail, tipoCanal, titulo, mensagem, festaIdTarget = null, categoriaTarget = null) {
       if(!destinatarioEmail || destinatarioEmail.includes('@quemfazfesta.local')) return;
@@ -1997,6 +2013,19 @@
         festa_id_target: festaIdTarget,
         categoria_target: categoriaTarget
       }]);
+
+      if (tipoCanal === 'whatsapp') {
+        const { data: perfilDestino } = await _supabase
+          .from('profiles')
+          .select('whatsapp')
+          .eq('email', destinatarioEmail)
+          .maybeSingle();
+
+        if (perfilDestino && perfilDestino.whatsapp) {
+          dispararWhatsappAPI(perfilDestino.whatsapp);
+        }
+      }
+
       if (!error) atualizarBadgeNotificacoes();
     }
 
