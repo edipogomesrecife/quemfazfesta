@@ -1159,6 +1159,7 @@
 
           <h2>14. Como o usuário pode controlar cookies pelo navegador</h2>
           <p>O usuário pode configurar seu navegador para bloquear determinados cookies, apagar cookies existentes, receber avisos antes de armazenar determinados cookies ou bloquear cookies de terceiros.</p>
+
           <p>Entretanto, o bloqueio de cookies necessários poderá impedir ou prejudicar o funcionamento de determinadas funcionalidades do Quem Faz Festa.</p>
 
           <h2>15. Alterações desta Política</h2>
@@ -2358,7 +2359,7 @@
       });
     });
 
-    // Publicar Festa
+    // Publicar Festa (CORRIGIDO PARA EVITAR MENSAGENS DUPLICADAS NO WHATSAPP)
     document.getElementById('formFesta').addEventListener('submit', async function(e) {
       e.preventDefault();
       let servicoSel = document.getElementById('servico').value;
@@ -2399,7 +2400,8 @@
       if (fornecedores) {
         const msgNotificacao = `Nova oportunidade publicada! Cliente procura ${servicoSel} em ${novaFesta.bairro} (${novaFesta.cidade}).`;
         for (let forn of fornecedores) {
-          await enviarNotificacao(forn.email, 'whatsapp', 'Nova Oportunidade no Mural', msgNotificacao, data ? data.id : null, servicoSel);
+          // Alterado para 'notificacao_sistema' para não disparar mensagem repetida do WhatsApp via enviarNotificacao
+          await enviarNotificacao(forn.email, 'notificacao_sistema', 'Nova Oportunidade no Mural', msgNotificacao, data ? data.id : null, servicoSel);
           
           if (forn.whatsapp) {
             dispararWhatsappAPI(forn.whatsapp, {
