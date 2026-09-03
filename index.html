@@ -1589,6 +1589,35 @@
               <input type="email" id="account-email" disabled style="opacity:0.7;">
             </div>
 
+            <!-- CAMPO DE CATEGORIA PRINCIPAL PARA FORNECEDOR -->
+            <div class="form-group" id="grupoAccountCategoria" style="display:none;">
+              <label>Categoria Principal *</label>
+              <select id="account-categoria">
+                <option value="Decoração Completa">Decoração Completa</option>
+                <option value="Pegue e Monte">Pegue e Monte</option>
+                <option value="Buffet & Salgados">Buffet & Salgados</option>
+                <option value="Bolo">Bolo</option>
+                <option value="Doces">Doces</option>
+                <option value="Brinquedos">Brinquedos</option>
+                <option value="Carretinha Kids">Carretinha Kids</option>
+                <option value="Espaço para festa">Espaço para festa</option>
+                <option value="Tabuleiros Gerais">Tabuleiros Gerais</option>
+                <option value="DJ/Música/Banda">DJ/Música/Banda</option>
+                <option value="Personagem">Personagem</option>
+                <option value="Lembrancinhas/Personalizados">Lembrancinhas/Personalizados</option>
+                <option value="Convites">Convites</option>
+                <option value="Roupas e Calçados">Roupas e Calçados</option>
+                <option value="Fantasias">Fantasias</option>
+                <option value="Laços e Acessórios">Laços e Acessórios</option>
+                <option value="Palhaço">Palhaço</option>
+                <option value="Fotografia & Filmagem">Fotografia & Filmagem</option>
+                <option value="Storymaker">Storymaker</option>
+                <option value="Videomaker Mobile">Videomaker Mobile</option>
+                <option value="Recreação & Animação">Recreação & Animação</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+
             <div class="form-group">
               <label>WhatsApp do Contato</label>
               <input type="tel" id="account-whatsapp" placeholder="(81) 99999-9999" required>
@@ -2501,7 +2530,7 @@
       });
     }
 
-    // Atualizar Dados da Conta
+    // Atualizar Dados da Conta (AJUSTADO PARA INCLUIR A CATEGORIA DO FORNECEDOR)
     document.getElementById('formAtualizarConta').addEventListener('submit', async function(e) {
       e.preventDefault();
       
@@ -2538,12 +2567,18 @@
         return;
       }
 
+      const dadosAtualizacao = {
+        nome: novoNome,
+        whatsapp: numLimpo
+      };
+
+      if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
+        dadosAtualizacao.categoria = document.getElementById('account-categoria').value;
+      }
+
       const { data, error } = await _supabase
         .from('profiles')
-        .update({
-          nome: novoNome,
-          whatsapp: numLimpo
-        })
+        .update(dadosAtualizacao)
         .eq('id', userId)
         .select()
         .maybeSingle();
@@ -2556,6 +2591,9 @@
         } else if (usuarioAtual) {
           usuarioAtual.nome = novoNome;
           usuarioAtual.whatsapp = numLimpo;
+          if (dadosAtualizacao.categoria) {
+            usuarioAtual.categoria = dadosAtualizacao.categoria;
+          }
         }
         
         atualizarInterfacePosLogin();
@@ -2855,11 +2893,22 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // CARREGAR DADOS NA TELA DE MINHA CONTA (AJUSTADO PARA A CATEGORIA)
     function carregarDadosConta() {
       if (usuarioAtual) {
         document.getElementById('account-nome').value = usuarioAtual.nome || "";
         document.getElementById('account-email').value = usuarioAtual.email || "";
         document.getElementById('account-whatsapp').value = usuarioAtual.whatsapp || "";
+
+        const grupoCat = document.getElementById('grupoAccountCategoria');
+        if (usuarioAtual.tipo === 'fornecedor') {
+          grupoCat.style.display = 'block';
+          if (usuarioAtual.categoria) {
+            document.getElementById('account-categoria').value = usuarioAtual.categoria;
+          }
+        } else {
+          grupoCat.style.display = 'none';
+        }
       }
     }
 
