@@ -658,7 +658,7 @@
           <button class="cta-big" onclick="trocarAba('criar-festa')"><img src="balão.png" alt="Criar Festa" class="menu-icon-img"> Publicar Nova Festa</button>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+        <div style="display:flex; justify-space-between; align-items:center; margin-bottom: 16px;">
           <h2 style="font-size: 1.3rem; color: var(--primary-dark);">Resumo das Suas Festas Ativas</h2>
           <button class="btn-filtro" onclick="simularLembreteWpp('pai')" style="background:#DCFCE7; color:#166534; border:none;">📱 Simular Lembrete WhatsApp</button>
         </div>
@@ -1858,7 +1858,6 @@
         box.style.display = 'none';
       } else {
         box.style.display = 'flex';
-        // Renderiza o conteúdo caso a caixa de texto esteja vazia
         if (body.children.length === 0 || body.innerHTML.trim() === '') {
           iniciarChat();
         }
@@ -1987,7 +1986,7 @@
        ========================================================= */
 
     // Integração com Edge Function para envio via WhatsApp Cloud API
-    async function dispararWhatsappAPI(telefoneDestino) {
+    async function dispararWhatsappAPI(telefoneDestino, dadosExtra = {}) {
       if (!telefoneDestino) return;
       try {
         await fetch('https://mipvzmxrmljoxbtjrnlz.supabase.co/functions/v1/enviar-whatsapp', {
@@ -1996,7 +1995,10 @@
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${_supabase.supabaseKey}`
           },
-          body: JSON.stringify({ telefone: telefoneDestino })
+          body: JSON.stringify({ 
+            telefone: telefoneDestino,
+            ...dadosExtra
+          })
         });
       } catch (err) {
         console.error("Erro ao enviar mensagem via WhatsApp API:", err);
@@ -2050,11 +2052,9 @@
 
       let emailParaLogin = loginInput;
 
-      // Se o usuário digitou telefone (ou algo sem @), realiza a busca na tabela profiles
       if (!loginInput.includes('@')) {
-        const numLimpo = loginInput.replace(/\D/g, ''); // extrai apenas os números
+        const numLimpo = loginInput.replace(/\D/g, '');
 
-        // Realiza a busca tentando bater o número limpo ou a string exata informada
         let { data: perfis } = await _supabase
           .from('profiles')
           .select('*')
@@ -2086,14 +2086,12 @@
         return;
       }
 
-      // Buscar perfil do usuário autenticado
       let { data: profile } = await _supabase
         .from('profiles')
         .select('*')
         .eq('id', authData.user.id)
         .maybeSingle();
 
-      // Fallback para criação de perfil em caso de ausência na tabela
       if (!profile) {
         const nomeMeta = authData.user.user_metadata?.nome || authData.user.email.split('@')[0];
         const tipoMeta = authData.user.user_metadata?.tipo || 'pai';
@@ -2181,7 +2179,7 @@
       const nome = document.getElementById('cad-pai-nome').value.trim();
       let email = document.getElementById('cad-pai-email').value.trim();
       const whatsapp = document.getElementById('cad-pai-whatsapp').value.trim();
-      const numLimpo = whatsapp.replace(/\D/g, ''); // Salva limpo para evitar problemas de busca
+      const numLimpo = whatsapp.replace(/\D/g, '');
       const senha = document.getElementById('cad-pai-senha').value;
       const confirma = document.getElementById('cad-pai-senha-confirma').value;
 
@@ -2248,7 +2246,7 @@
       const nome = document.getElementById('cad-forn-nome').value.trim();
       let email = document.getElementById('cad-forn-email').value.trim();
       const whatsapp = document.getElementById('cad-forn-whatsapp').value.trim();
-      const numLimpo = whatsapp.replace(/\D/g, ''); // Salva limpo para padronizar buscas
+      const numLimpo = whatsapp.replace(/\D/g, '');
       const categoria = document.getElementById('cad-forn-categoria').value;
       const senha = document.getElementById('cad-forn-senha').value;
       const confirma = document.getElementById('cad-forn-senha-confirma').value;
@@ -2290,7 +2288,6 @@
         return;
       }
 
-      // Utiliza upsert para sobrescrever a linha criada pela Trigger ou criar uma nova se não existir
       const { data: profile, error: profileError } = await _supabase
         .from('profiles')
         .upsert([{
@@ -2364,12 +2361,9 @@
         return;
       }
 
-      // Disparo direto da Edge Function para teste e notificação via WhatsApp
-      dispararWhatsappAPI(novaFesta.whatsapp_pai);
-
       const { data: fornecedores } = await _supabase
         .from('profiles')
-        .select('email')
+        .select('email, whatsapp, nome')
         .eq('tipo', 'fornecedor')
         .eq('categoria', servicoSel);
 
@@ -2377,6 +2371,12 @@
         const msgNotificacao = `Nova oportunidade publicada! Cliente procura ${servicoSel} em ${novaFesta.bairro} (${novaFesta.cidade}).`;
         for (let forn of fornecedores) {
           await enviarNotificacao(forn.email, 'whatsapp', 'Nova Oportunidade no Mural', msgNotificacao, data ? data.id : null, servicoSel);
+          
+          if (forn.whatsapp) {
+            dispararWhatsappAPI(forn.whatsapp, {
+              template: 'nova_festa_fornecedor'
+            });
+          }
         }
       }
 
@@ -2435,14 +2435,18 @@
 
           atualizarExibicaoSaldo();
 
-          // Disparo direto da Edge Function ao desbloquear
-          dispararWhatsappAPI(festa.whatsapp_pai);
+          const notaFormatada = (usuarioAtual.total_avaliacoes && usuarioAtual.total_avaliacoes > 0)
+            ? `★ ${Number(usuarioAtual.nota_media).toFixed(1)}`
+            : `Novo na plataforma — ainda sem avaliações`;
 
-          const notaTexto = (usuarioAtual.total_avaliacoes && usuarioAtual.total_avaliacoes > 0)
-            ? `⭐ Nota: ${Number(usuarioAtual.nota_media).toFixed(1)} / 5.0\n💬 Última avaliação recebida: "${usuarioAtual.ultimo_comentario || 'Excelente atendimento!'}"`
-            : `🌱 Novo na plataforma — ainda sem avaliações.`;
+          dispararWhatsappAPI(festa.whatsapp_pai, {
+            template: 'fornecedor_liberou_festa',
+            nomeFornecedor: usuarioAtual.nome,
+            servico: festa.servico,
+            notaFornecedor: notaFormatada
+          });
 
-          const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico} e entrará em contato em breve.\n\n${notaTexto}`;
+          const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico}. Ele possui nota ${notaFormatada} e entrará em contato em breve.`;
 
           await enviarNotificacao(festa.email_pai, 'whatsapp', 'Fornecedor Interessado', msgCliente);
 
@@ -2604,7 +2608,6 @@
         return;
       }
 
-      // Busca os IDs das festas que o fornecedor atual já desbloqueou
       let idsDesbloqueados = [];
       if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
         const { data: desbloqueios } = await _supabase
@@ -2644,7 +2647,6 @@
         return;
       }
 
-      // Busca os IDs das festas que o fornecedor atual já desbloqueou
       let idsDesbloqueados = [];
       if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
         const { data: desbloqueios } = await _supabase
