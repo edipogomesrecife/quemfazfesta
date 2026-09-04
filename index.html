@@ -708,7 +708,7 @@
           <button class="btn-filtro" onclick="filtrarMural('Espaço para festa', this)">Espaço</button>
           <button class="btn-filtro" onclick="filtrarMural('Tabuleiros Gerais', this)">Tabuleiros Gerais</button>
           <button class="btn-filtro" onclick="filtrarMural('DJ/Música/Banda', this)">Música/DJ</button>
-          <button class="btn-filtro" onclick="filtrarMural('Personagem', this)">Personagem</button>
+          <button class="btn-filtro" onclick="filtrarMural('Personagem', this)">Personagem</option>
           <button class="btn-filtro" onclick="filtrarMural('Lembrancinhas/Personalizados', this)">Lembrancinhas</button>
           <button class="btn-filtro" onclick="filtrarMural('Convites', this)">Convites</button>
           <button class="btn-filtro" onclick="filtrarMural('Roupas e Calçados', this)">Roupas e Calçados</button>
@@ -754,7 +754,7 @@
             </div>
 
             <div class="form-group">
-              <label>Qual foi o resultado da negociação? *</label>
+              <label id="labelStatusFechamento">Qual foi o resultado da negociação? *</label>
               <select id="statusFechamento" required>
                 <option value="fechado">✅ Contrato Fechado com Sucesso</option>
                 <option value="nao_fechado">❌ Não Fechamos Negócio (Ganhe 50% de Cashback em Créditos Comprados)</option>
@@ -762,7 +762,7 @@
             </div>
 
             <div class="form-group">
-              <label>Nota de Atendimento *</label>
+              <label id="labelStarAtendimento">Nota de Atendimento *</label>
               <div class="stars-selector" id="starAtendimento">
                 <span onclick="setStars('starAtendimento', 1)">★</span>
                 <span onclick="setStars('starAtendimento', 2)">★</span>
@@ -773,7 +773,7 @@
             </div>
 
             <div class="form-group" id="grupoPrestacaoServico">
-              <label>Nota da Prestação do Serviço *</label>
+              <label id="labelStarServico">Nota da Prestação do Serviço *</label>
               <div class="stars-selector" id="starServico">
                 <span onclick="setStars('starServico', 1)">★</span>
                 <span onclick="setStars('starServico', 2)">★</span>
@@ -1116,6 +1116,7 @@
 
           <h2>4. Cookies próprios e de terceiros</h2>
           <p>Cookies próprios são definidos diretamente pelo Quem Faz Festa ou por serviços operados em seu nome, podendo estar relacionados à autenticação, sessão e funcionamento da plataforma.</p>
+
           <p>Cookies de terceiros são definidos por domínios ou serviços diferentes daquele que o usuário está acessando. Eles podem ser utilizados quando o Quem Faz Festa integrar serviços externos, como ferramentas de análise, publicidade, segurança, pagamento ou comunicação.</p>
 
           <h2>5. Finalidades</h2>
@@ -1873,6 +1874,67 @@
         exibirModalAviso("🌱 Bem-vindo(a) & Boas Práticas", mensagemBoasPraticas, "Entendido, vamos fechar festas! 🚀", function() {
           localStorage.setItem(`qff_boas_praticas_${usuarioAtual.id}`, 'true');
         });
+      }
+    }
+
+    /* Configura dinamicamente o formulário de confirmação/avaliação dependendo do perfil logado */
+    async function prepararTelaConfirmacaoAvaliacao() {
+      const labelSelecione = document.getElementById('labelSelecione');
+      const labelStarAtendimento = document.getElementById('labelStarAtendimento');
+      const labelStarServico = document.getElementById('labelStarServico');
+      const grupoComentario = document.getElementById('grupoComentarioContainer');
+      const selectSelect = document.getElementById('selectFestaFornecedor');
+      
+      selectSelect.innerHTML = '<option value="">Carregando opções...</option>';
+
+      if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
+        // FORNECEDOR
+        labelSelecione.innerText = "Selecione a Oportunidade / Festa *";
+        labelStarAtendimento.innerText = "Nota de Comunicação com o Cliente *";
+        labelStarServico.innerText = "Nota de Clareza das Informações do Evento *";
+        if (grupoComentario) grupoComentario.style.display = 'none';
+
+        const { data: desbloqueios } = await _supabase
+          .from('desbloqueios')
+          .select('id, festa_id, festas(id, servico, tema, nome_pai, bairro)')
+          .eq('fornecedor_id', usuarioAtual.id)
+          .eq('avaliado_pelo_fornecedor', false);
+
+        selectSelect.innerHTML = '';
+        if (!desbloqueios || desbloqueios.length === 0) {
+          selectSelect.innerHTML = '<option value="">Nenhuma oportunidade pendente de confirmação</option>';
+        } else {
+          selectSelect.innerHTML = '<option value="">Escolha uma oportunidade...</option>';
+          desbloqueios.forEach(item => {
+            const f = item.festas;
+            if (f) {
+              selectSelect.innerHTML += `<option value="${item.id}">${f.servico} - ${f.nome_pai} (${f.bairro})</option>`;
+            }
+          });
+        }
+
+      } else {
+        // PAIS / CONTRATANTES
+        labelSelecione.innerText = "Selecione o Fornecedor Contratado *";
+        labelStarAtendimento.innerText = "Nota de Atendimento *";
+        labelStarServico.innerText = "Nota da Prestação do Serviço *";
+        if (grupoComentario) grupoComentario.style.display = 'block';
+
+        const { data: minhasFestas } = await _supabase
+          .from('festas')
+          .select('id, servico, tema')
+          .eq('user_id', usuarioAtual ? usuarioAtual.id : '')
+          .eq('concluida', false);
+
+        selectSelect.innerHTML = '';
+        if (!minhasFestas || minhasFestas.length === 0) {
+          selectSelect.innerHTML = '<option value="">Nenhuma festa pendente para avaliar</option>';
+        } else {
+          selectSelect.innerHTML = '<option value="">Escolha a festa para avaliar...</option>';
+          minhasFestas.forEach(f => {
+            selectSelect.innerHTML += `<option value="${f.id}">${f.servico} - ${f.tema}</option>`;
+          });
+        }
       }
     }
 
@@ -2885,6 +2947,9 @@
       } else if (aba === 'minha-conta') {
         document.getElementById('view-minha-conta').classList.add('active');
         carregarDadosConta();
+      } else if (aba === 'confirmar-festa') {
+        document.getElementById('view-confirmar-festa').classList.add('active');
+        await prepararTelaConfirmacaoAvaliacao();
       } else if (aba === 'notificacoes') {
         document.getElementById('view-notificacoes').classList.add('active');
         await carregarNotificacoesTela();
