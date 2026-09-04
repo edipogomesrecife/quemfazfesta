@@ -708,7 +708,7 @@
           <button class="btn-filtro" onclick="filtrarMural('Espaço para festa', this)">Espaço</button>
           <button class="btn-filtro" onclick="filtrarMural('Tabuleiros Gerais', this)">Tabuleiros Gerais</button>
           <button class="btn-filtro" onclick="filtrarMural('DJ/Música/Banda', this)">Música/DJ</button>
-          <button class="btn-filtro" onclick="filtrarMural('Personagem', this)">Personagem</option>
+          <button class="btn-filtro" onclick="filtrarMural('Personagem', this)">Personagem</button>
           <button class="btn-filtro" onclick="filtrarMural('Lembrancinhas/Personalizados', this)">Lembrancinhas</button>
           <button class="btn-filtro" onclick="filtrarMural('Convites', this)">Convites</button>
           <button class="btn-filtro" onclick="filtrarMural('Roupas e Calçados', this)">Roupas e Calçados</button>
@@ -745,7 +745,7 @@
       <div class="container" style="max-width: 650px;">
         <div class="card-form">
           <h2 id="tituloAvaliacao" style="margin-bottom:8px;">Confirmar Fechamento e Avaliar</h2>
-          <p id="subtituloAvaliacao" style="color:var(--text-muted); margin-bottom:24px;">Confirme se a negociação foi concluída. Caso não feche, você recebe exatos 50% dos créditos comprados de volta!</p>
+          <p id="subtituloAvaliacao" style="color:var(--text-muted); margin-bottom:24px;">Confirme se a negociação foi concluída para avaliar a experiência.</p>
 
           <form id="formConfirmacaoAvaliacao">
             <div class="form-group" id="grupoSelecioneFestaOuFornecedor">
@@ -756,8 +756,7 @@
             <div class="form-group">
               <label id="labelStatusFechamento">Qual foi o resultado da negociação? *</label>
               <select id="statusFechamento" required>
-                <option value="fechado">✅ Contrato Fechado com Sucesso</option>
-                <option value="nao_fechado">❌ Não Fechamos Negócio (Ganhe 50% de Cashback em Créditos Comprados)</option>
+                <!-- Opções serão preenchidas dinamicamente pelo JS -->
               </select>
             </div>
 
@@ -1879,7 +1878,9 @@
 
     /* Configura dinamicamente o formulário de confirmação/avaliação dependendo do perfil logado */
     async function prepararTelaConfirmacaoAvaliacao() {
+      const subtituloAvaliacao = document.getElementById('subtituloAvaliacao');
       const labelSelecione = document.getElementById('labelSelecione');
+      const selectStatusFechamento = document.getElementById('statusFechamento');
       const labelStarAtendimento = document.getElementById('labelStarAtendimento');
       const labelStarServico = document.getElementById('labelStarServico');
       const grupoComentario = document.getElementById('grupoComentarioContainer');
@@ -1889,10 +1890,16 @@
 
       if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
         // FORNECEDOR
+        subtituloAvaliacao.innerText = "Confirme se a negociação foi concluída. Caso não feche, você recebe exatos 50% dos créditos comprados de volta!";
         labelSelecione.innerText = "Selecione a Oportunidade / Festa *";
         labelStarAtendimento.innerText = "Nota de Comunicação com o Cliente *";
         labelStarServico.innerText = "Nota de Clareza das Informações do Evento *";
         if (grupoComentario) grupoComentario.style.display = 'none';
+
+        selectStatusFechamento.innerHTML = `
+          <option value="fechado">✅ Contrato Fechado com Sucesso</option>
+          <option value="nao_fechado">❌ Não Fechamos Negócio (Ganhe 50% de Cashback em Créditos Comprados)</option>
+        `;
 
         const { data: desbloqueios } = await _supabase
           .from('desbloqueios')
@@ -1915,10 +1922,16 @@
 
       } else {
         // PAIS / CONTRATANTES
+        subtituloAvaliacao.innerText = "Confirme se a negociação foi concluída e avalie o atendimento prestado pelo fornecedor.";
         labelSelecione.innerText = "Selecione o Fornecedor Contratado *";
         labelStarAtendimento.innerText = "Nota de Atendimento *";
         labelStarServico.innerText = "Nota da Prestação do Serviço *";
         if (grupoComentario) grupoComentario.style.display = 'block';
+
+        selectStatusFechamento.innerHTML = `
+          <option value="fechado">✅ Contrato Fechado com Sucesso</option>
+          <option value="nao_fechado">❌ Não Fechamos Negócio</option>
+        `;
 
         const { data: minhasFestas } = await _supabase
           .from('festas')
@@ -1937,6 +1950,117 @@
         }
       }
     }
+
+    /* Processar Envio do Formulário de Avaliação e Confirmação */
+    document.getElementById('formConfirmacaoAvaliacao').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const itemSelecionadoId = document.getElementById('selectFestaFornecedor').value;
+      const statusNegocio = document.getElementById('statusFechamento').value;
+      const nota1 = notasForm.starAtendimento || 5;
+      const nota2 = notasForm.starServico || 5;
+      const comentario = document.getElementById('comentarioAvaliacao').value.trim();
+
+      if (!itemSelecionadoId) {
+        exibirModalAviso("⚠️ Campo Obrigatório", "Por favor, selecione um item válido da lista.");
+        return;
+      }
+
+      if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
+        // LÓGICA DO FORNECEDOR
+        const { data: desbloqueio } = await _supabase
+          .from('desbloqueios')
+          .select('*')
+          .eq('id', itemSelecionadoId)
+          .maybeSingle();
+
+        if (!desbloqueio) {
+          exibirModalAviso("⚠️ Erro", "Registro de oportunidade não encontrado.");
+          return;
+        }
+
+        let cashbackGanho = 0;
+        if (statusNegocio === 'nao_fechado' && desbloqueio.creditos_gastos > 0) {
+          cashbackGanho = Math.floor(desbloqueio.creditos_gastos * 0.5);
+          if (cashbackGanho > 0) {
+            const novoSaldo = Number(usuarioAtual.saldo_creditos || 0) + cashbackGanho;
+            await _supabase.from('profiles').update({ saldo_creditos: novoSaldo }).eq('id', usuarioAtual.id);
+            usuarioAtual.saldo_creditos = novoSaldo;
+            atualizarExibicaoSaldo();
+          }
+        }
+
+        await _supabase.from('desbloqueios').update({
+          avaliado_pelo_fornecedor: true,
+          status_fechamento: statusNegocio,
+          nota_comunicacao: nota1,
+          nota_clareza: nota2
+        }).eq('id', itemSelecionadoId);
+
+        const msgSucesso = cashbackGanho > 0
+          ? `Sua confirmação foi enviada. Foram adicionados <strong>${cashbackGanho} crédito(s)</strong> de cashback em seu saldo!`
+          : `Sua confirmação foi registrada com sucesso!`;
+
+        exibirModalAviso("✅ Confirmação Registrada", msgSucesso, "OK", function() {
+          trocarAba('home');
+        });
+
+      } else {
+        // LÓGICA DO CONTRATANTE (PAI/MÃE)
+        const { data: festa } = await _supabase
+          .from('festas')
+          .select('*')
+          .eq('id', itemSelecionadoId)
+          .maybeSingle();
+
+        if (!festa) {
+          exibirModalAviso("⚠️ Erro", "Festa não encontrada.");
+          return;
+        }
+
+        // Marcar festa como concluída no banco
+        await _supabase.from('festas').update({
+          concluida: true,
+          status_fechamento: statusNegocio,
+          nota_atendimento: nota1,
+          nota_servico: nota2,
+          comentario_avaliacao: comentario
+        }).eq('id', itemSelecionadoId);
+
+        // Atualizar média de avaliações do fornecedor que atendeu a festa (se houver desbloqueio)
+        const { data: desbloqueios } = await _supabase
+          .from('desbloqueios')
+          .select('fornecedor_id')
+          .eq('festa_id', itemSelecionadoId);
+
+        if (desbloqueios && desbloqueios.length > 0) {
+          const notaMediaAvaliacao = (nota1 + nota2) / 2;
+          for (let d of desbloqueios) {
+            const { data: fornProfile } = await _supabase
+              .from('profiles')
+              .select('nota_media, total_avaliacoes')
+              .eq('id', d.fornecedor_id)
+              .maybeSingle();
+
+            if (fornProfile) {
+              const qtdAnterior = fornProfile.total_avaliacoes || 0;
+              const mediaAnterior = fornProfile.nota_media || 0;
+              const novaQtd = qtdAnterior + 1;
+              const novaMedia = ((mediaAnterior * qtdAnterior) + notaMediaAvaliacao) / novaQtd;
+
+              await _supabase.from('profiles').update({
+                nota_media: novaMedia,
+                total_avaliacoes: novaQtd
+              }).eq('id', d.fornecedor_id);
+            }
+          }
+        }
+
+        exibirModalAviso("⭐ Avaliação Enviada", "Obrigado por enviar sua avaliação e ajudar a comunidade Quem Faz Festa!", "OK", function() {
+          trocarAba('home');
+        });
+      }
+    });
 
     /* =========================================================
        LÓGICA DO CHATBOT E SUPORTE VIA EMAIL
@@ -2421,7 +2545,7 @@
       });
     });
 
-    // Publicar Festa (CORRIGIDO PARA O MURAL)
+    // Publicar Festa
     document.getElementById('formFesta').addEventListener('submit', async function(e) {
       e.preventDefault();
       let servicoSel = document.getElementById('servico').value;
@@ -2477,7 +2601,7 @@
       });
     });
 
-    // Desbloquear Contato (CORRIGIDO PARA ENVIAR APENAS A MENSAGEM DO FORNECEDOR LIBEROU AO CLIENTE)
+    // Desbloquear Contato
     async function desbloquearContato(festaId) {
       const { data: festa } = await _supabase.from('festas').select('*').eq('id', festaId).maybeSingle();
       if (!festa) return;
@@ -2527,12 +2651,10 @@
 
           atualizarExibicaoSaldo();
 
-          // Formatação limpa da nota do fornecedor
           const notaExibicao = (usuarioAtual.total_avaliacoes && usuarioAtual.total_avaliacoes > 0)
             ? `★ ${Number(usuarioAtual.nota_media).toFixed(1)}`
             : "Novo na plataforma";
 
-          // Envio exclusivo para o Pai/Mãe via WhatsApp Cloud API
           dispararWhatsappAPI(festa.whatsapp_pai, {
             template: 'fornecedor_liberou_festa',
             nomeFornecedor: usuarioAtual.nome,
@@ -2540,7 +2662,6 @@
             notaFornecedor: notaExibicao
           });
 
-          // Notificação do sistema armazenada para o contratante
           const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico} (${notaExibicao}) e entrará em contato em breve.`;
           await enviarNotificacao(festa.email_pai, 'notificacao_sistema', 'Fornecedor Interessado', msgCliente);
 
