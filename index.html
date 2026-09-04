@@ -658,7 +658,7 @@
           <button class="cta-big" onclick="trocarAba('criar-festa')"><img src="balão.png" alt="Criar Festa" class="menu-icon-img"> Publicar Nova Festa</button>
         </div>
 
-        <div style="display:flex; justify-space-between; align-items:center; margin-bottom: 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
           <h2 style="font-size: 1.3rem; color: var(--primary-dark);">Resumo das Suas Festas Ativas</h2>
           <button class="btn-filtro" onclick="simularLembreteWpp('pai')" style="background:#DCFCE7; color:#166534; border:none;">📱 Simular Lembrete WhatsApp</button>
         </div>
@@ -687,7 +687,7 @@
           <span style="font-size:0.9rem; text-decoration:underline;">Confirmar / Avaliar →</span>
         </div>
 
-        <div style="display:flex; justify-space-between; align-items:center; margin-bottom: 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
           <div>
             <h1 style="font-size:1.8rem; color:var(--primary-dark);">Publicações Recentes do Dia</h1>
             <p style="color:var(--text-muted)">Confira as últimas oportunidades de hoje (máximo de 3 por categoria).</p>
@@ -755,9 +755,7 @@
 
             <div class="form-group">
               <label id="labelStatusFechamento">Qual foi o resultado da negociação? *</label>
-              <select id="statusFechamento" required>
-                <!-- Opções serão preenchidas dinamicamente pelo JS -->
-              </select>
+              <select id="statusFechamento" required></select>
             </div>
 
             <div class="form-group">
@@ -1119,7 +1117,7 @@
           <p>Cookies de terceiros são definidos por domínios ou serviços diferentes daquele que o usuário está acessando. Eles podem ser utilizados quando o Quem Faz Festa integrar serviços externos, como ferramentas de análise, publicidade, segurança, pagamento ou comunicação.</p>
 
           <h2>5. Finalidades</h2>
-          <p>Os cookies e tecnologias semelhantes poderão ser utilizados para funcionamento, autenticação, segurança, preferências, desempenho, análise e marketing, quando aplicável. As tecnologias não deverão ser utilizadas para finalidades incompatíveis com aquelas informadas ao usuário.</p>
+          <p>Os cookies e tecnologias semelhantes poderão ser utilizados para funcionamento, autenticação, segurança, preferências, desempenho, análise e marketing, quando aplicável. As tecnologias não deverão ser utilizadas para finalidades incompatíveis comquelas informadas ao usuário.</p>
 
           <h2>6. Cookies necessários e cookies não necessários</h2>
           <p>O Quem Faz Festa diferencia tecnologias necessárias daquelas que não são essenciais para o funcionamento básico da plataforma.</p>
@@ -1903,9 +1901,9 @@
 
         const { data: desbloqueios } = await _supabase
           .from('desbloqueios')
-          .select('id, festa_id, festas(id, servico, tema, nome_pai, bairro)')
+          .select('id, festa_id, avaliado_pelo_fornecedor, festas(id, servico, tema, nome_pai, bairro)')
           .eq('fornecedor_id', usuarioAtual.id)
-          .eq('avaliado_pelo_fornecedor', false);
+          .or('avaliado_pelo_fornecedor.is.null,avaliado_pelo_fornecedor.eq.false');
 
         selectSelect.innerHTML = '';
         if (!desbloqueios || desbloqueios.length === 0) {
@@ -1982,7 +1980,7 @@
         // VERIFICAÇÃO DE DIVERGÊNCIA COM O CONTRATANTE
         if (desbloqueio.festas && desbloqueio.festas.status_fechamento) {
           const statusContratante = desbloqueio.festas.status_fechamento;
-          if (statusContratante !== statusNegocio) {
+          if (statusContratante && statusContratante !== statusNegocio) {
             exibirModalAviso(
               "⚠️ Informações Divergentes",
               `Não foi possível concluir sua avaliação. O contratante registrou que o contrato foi <strong>${statusContratante === 'fechado' ? 'FECHADO' : 'NÃO FECHADO'}</strong>, o que diverge da sua resposta. Por favor, entre em contato com nosso suporte para verificar este caso.`,
@@ -2019,7 +2017,7 @@
           : `Sua confirmação foi registrada com sucesso!`;
 
         exibirModalAviso("✅ Confirmação Registrada", msgSucesso, "OK", function() {
-          trocarAba('home');
+          trocarAba('historico-concluidas');
         });
 
       } else {
@@ -2098,10 +2096,78 @@
         }
 
         exibirModalAviso("⭐ Avaliação Enviada", "Obrigado por enviar sua avaliação e ajudar a comunidade Quem Faz Festa!", "OK", function() {
-          trocarAba('home');
+          trocarAba('historico-concluidas');
         });
       }
     });
+
+    /* CARREGAR HISTÓRICO DE FESTAS CONCLUÍDAS */
+    async function carregarHistoricoConcluidas() {
+      const container = document.getElementById('historicoConcluidasContainer');
+      container.innerHTML = '<p>Carregando histórico de concluídas...</p>';
+
+      if (!usuarioAtual) {
+        container.innerHTML = '<p style="color:var(--text-muted);">Faça login para visualizar seu histórico.</p>';
+        return;
+      }
+
+      if (usuarioAtual.tipo === 'fornecedor') {
+        const { data: concluidos, error } = await _supabase
+          .from('desbloqueios')
+          .select('*, festas(*)')
+          .eq('fornecedor_id', usuarioAtual.id)
+          .eq('avaliado_pelo_fornecedor', true);
+
+        container.innerHTML = '';
+
+        if (error || !concluidos || concluidos.length === 0) {
+          container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma oportunidade concluída ou avaliada no histórico.</p>';
+          return;
+        }
+
+        concluidos.forEach(item => {
+          const f = item.festas;
+          const statusTxt = item.status_fechamento === 'fechado' ? '✅ Negócio Fechado' : '❌ Não Fechado';
+          container.innerHTML += `
+            <div class="festa-card">
+              <div class="festa-header"><span class="tag-servico">${f ? f.servico : 'Serviço'}</span></div>
+              <div class="festa-detalhes">
+                <div class="detalhe-item"><strong>CLIENTE</strong><span>${f ? f.nome_pai : 'Cliente'}</span></div>
+                <div class="detalhe-item"><strong>RESULTADO</strong><span style="font-weight:700;">${statusTxt}</span></div>
+                <div class="detalhe-item"><strong>CRÉDITOS INVESTIDOS</strong><span>${item.creditos_gastos || 0} cred.</span></div>
+                <div class="detalhe-item"><strong>LOCAL</strong><span>${f ? `${f.cidade} (${f.bairro})` : '-'}</span></div>
+              </div>
+            </div>`;
+        });
+      } else {
+        const { data: festasConcluidas, error } = await _supabase
+          .from('festas')
+          .select('*')
+          .eq('user_id', usuarioAtual.id)
+          .eq('concluida', true);
+
+        container.innerHTML = '';
+
+        if (error || !festasConcluidas || festasConcluidas.length === 0) {
+          container.innerHTML = '<p style="color:var(--text-muted);">Nenhuma festa concluída no histórico.</p>';
+          return;
+        }
+
+        festasConcluidas.forEach(f => {
+          const statusTxt = f.status_fechamento === 'fechado' ? '✅ Negócio Fechado' : '❌ Não Fechado';
+          container.innerHTML += `
+            <div class="festa-card">
+              <div class="festa-header"><span class="tag-servico">${f.servico}</span></div>
+              <div class="festa-detalhes">
+                <div class="detalhe-item"><strong>TEMA</strong><span>${f.tema}</span></div>
+                <div class="detalhe-item"><strong>RESULTADO</strong><span style="font-weight:700;">${statusTxt}</span></div>
+                <div class="detalhe-item"><strong>DATA DA FESTA</strong><span>${formatarDataBR(f.data_festa)}</span></div>
+                <div class="detalhe-item full-width"><strong>AVALIAÇÃO REGISTRADA</strong><span>Atendimento: ${f.nota_atendimento || 5} ★ | Serviço: ${f.nota_servico || 5} ★</span></div>
+              </div>
+            </div>`;
+        });
+      }
+    }
 
     /* =========================================================
        LÓGICA DO CHATBOT E SUPORTE VIA EMAIL
@@ -3010,7 +3076,7 @@
         .from('desbloqueios')
         .select('id')
         .eq('fornecedor_id', usuarioAtual.id)
-        .eq('avaliado_pelo_fornecedor', false);
+        .or('avaliado_pelo_fornecedor.is.null,avaliado_pelo_fornecedor.eq.false');
 
       const qtd = pendentes ? pendentes.length : 0;
       const qtdEl = document.getElementById('qtdContatosLiberados');
@@ -3112,6 +3178,9 @@
       } else if (aba === 'confirmar-festa') {
         document.getElementById('view-confirmar-festa').classList.add('active');
         await prepararTelaConfirmacaoAvaliacao();
+      } else if (aba === 'historico-concluidas') {
+        document.getElementById('view-historico-concluidas').classList.add('active');
+        await carregarHistoricoConcluidas();
       } else if (aba === 'notificacoes') {
         document.getElementById('view-notificacoes').classList.add('active');
         await carregarNotificacoesTela();
