@@ -687,7 +687,7 @@
           <span style="font-size:0.9rem; text-decoration:underline;">Confirmar / Avaliar →</span>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+        <div style="display:flex; justify-space-between; align-items:center; margin-bottom: 20px;">
           <div>
             <h1 style="font-size:1.8rem; color:var(--primary-dark);">Publicações Recentes do Dia</h1>
             <p style="color:var(--text-muted)">Confira as últimas oportunidades de hoje (máximo de 3 por categoria).</p>
@@ -1782,7 +1782,7 @@
 
     function formatarTextoAvaliacao(nota, totalAvaliacoes) {
       if (!totalAvaliacoes || totalAvaliacoes === 0 || nota === null || nota === undefined) {
-        return "Novo na plataforma — ainda sem avaliações";
+        return "Novo na plataforma";
       }
       return `★ ${Number(nota).toFixed(1)}`;
     }
@@ -1877,7 +1877,7 @@
     }
 
     /* =========================================================
-       LÓGICA DO CHATBOT E SUPORTE VIA EMAIL (AJUSTADO E CORRIGIDO)
+       LÓGICA DO CHATBOT E SUPORTE VIA EMAIL
        ========================================================= */
     function toggleChatWidget() {
       const box = document.getElementById('chatBoxWidget');
@@ -2074,7 +2074,7 @@
       if (badge && data) badge.innerText = data.length;
     }
 
-    // Login ajustado para tratar busca por telefone com e sem formatação
+    // Login tratado para busca por e-mail e telefone
     document.getElementById('formLogin').addEventListener('submit', async function(e) {
       e.preventDefault();
       const loginInput = document.getElementById('login-email').value.trim();
@@ -2359,7 +2359,7 @@
       });
     });
 
-    // Publicar Festa (CORRIGIDO PARA EVITAR MENSAGENS DUPLICADAS NO WHATSAPP)
+    // Publicar Festa (CORRIGIDO PARA O MURAL)
     document.getElementById('formFesta').addEventListener('submit', async function(e) {
       e.preventDefault();
       let servicoSel = document.getElementById('servico').value;
@@ -2400,7 +2400,6 @@
       if (fornecedores) {
         const msgNotificacao = `Nova oportunidade publicada! Cliente procura ${servicoSel} em ${novaFesta.bairro} (${novaFesta.cidade}).`;
         for (let forn of fornecedores) {
-          // Alterado para 'notificacao_sistema' para não disparar mensagem repetida do WhatsApp via enviarNotificacao
           await enviarNotificacao(forn.email, 'notificacao_sistema', 'Nova Oportunidade no Mural', msgNotificacao, data ? data.id : null, servicoSel);
           
           if (forn.whatsapp) {
@@ -2416,7 +2415,7 @@
       });
     });
 
-    // Desbloquear Contato
+    // Desbloquear Contato (CORRIGIDO PARA ENVIAR APENAS A MENSAGEM DO FORNECEDOR LIBEROU AO CLIENTE)
     async function desbloquearContato(festaId) {
       const { data: festa } = await _supabase.from('festas').select('*').eq('id', festaId).maybeSingle();
       if (!festa) return;
@@ -2466,20 +2465,22 @@
 
           atualizarExibicaoSaldo();
 
-          const notaFormatada = (usuarioAtual.total_avaliacoes && usuarioAtual.total_avaliacoes > 0)
+          // Formatação limpa da nota do fornecedor
+          const notaExibicao = (usuarioAtual.total_avaliacoes && usuarioAtual.total_avaliacoes > 0)
             ? `★ ${Number(usuarioAtual.nota_media).toFixed(1)}`
-            : `Novo na plataforma — ainda sem avaliações`;
+            : "Novo na plataforma";
 
+          // Envio exclusivo para o Pai/Mãe via WhatsApp Cloud API
           dispararWhatsappAPI(festa.whatsapp_pai, {
             template: 'fornecedor_liberou_festa',
             nomeFornecedor: usuarioAtual.nome,
             servico: festa.servico,
-            notaFornecedor: notaFormatada
+            notaFornecedor: notaExibicao
           });
 
-          const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico}. Ele possui nota ${notaFormatada} e entrará em contato em breve.`;
-
-          await enviarNotificacao(festa.email_pai, 'whatsapp', 'Fornecedor Interessado', msgCliente);
+          // Notificação do sistema armazenada para o contratante
+          const msgCliente = `O fornecedor ${usuarioAtual.nome} liberou seu pedido de ${festa.servico} (${notaExibicao}) e entrará em contato em breve.`;
+          await enviarNotificacao(festa.email_pai, 'notificacao_sistema', 'Fornecedor Interessado', msgCliente);
 
           exibirModalAviso("💬 Contato Liberado", `Nome do Cliente: <strong>${festa.nome_pai}</strong><br>WhatsApp: <strong>${festa.whatsapp_pai}</strong>`, "Abrir WhatsApp", function() {
             window.open(`https://wa.me/55${festa.whatsapp_pai.replace(/\D/g,'')}`, '_blank');
@@ -2532,7 +2533,7 @@
       });
     }
 
-    // Atualizar Dados da Conta (AJUSTADO PARA INCLUIR A CATEGORIA DO FORNECEDOR)
+    // Atualizar Dados da Conta
     document.getElementById('formAtualizarConta').addEventListener('submit', async function(e) {
       e.preventDefault();
       
@@ -2895,7 +2896,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // CARREGAR DADOS NA TELA DE MINHA CONTA (AJUSTADO PARA A CATEGORIA)
+    // CARREGAR DADOS NA TELA DE MINHA CONTA
     function carregarDadosConta() {
       if (usuarioAtual) {
         document.getElementById('account-nome').value = usuarioAtual.nome || "";
