@@ -1951,7 +1951,7 @@
       }
     }
 
-    /* Processar Envio do Formulário de Avaliação e Confirmação */
+    /* Processar Envio do Formulário de Avaliação e Confirmação com Validação de Divergência */
     document.getElementById('formConfirmacaoAvaliacao').addEventListener('submit', async function(e) {
       e.preventDefault();
 
@@ -1970,13 +1970,30 @@
         // LÓGICA DO FORNECEDOR
         const { data: desbloqueio } = await _supabase
           .from('desbloqueios')
-          .select('*')
+          .select('*, festas(*)')
           .eq('id', itemSelecionadoId)
           .maybeSingle();
 
         if (!desbloqueio) {
           exibirModalAviso("⚠️ Erro", "Registro de oportunidade não encontrado.");
           return;
+        }
+
+        // VERIFICAÇÃO DE DIVERGÊNCIA COM O CONTRATANTE
+        if (desbloqueio.festas && desbloqueio.festas.status_fechamento) {
+          const statusContratante = desbloqueio.festas.status_fechamento;
+          if (statusContratante !== statusNegocio) {
+            exibirModalAviso(
+              "⚠️ Informações Divergentes",
+              `Não foi possível concluir sua avaliação. O contratante registrou que o contrato foi <strong>${statusContratante === 'fechado' ? 'FECHADO' : 'NÃO FECHADO'}</strong>, o que diverge da sua resposta. Por favor, entre em contato com nosso suporte para verificar este caso.`,
+              "Falar com o Suporte",
+              function() {
+                toggleChatWidget();
+                abrirFormularioSuporteSuporte();
+              }
+            );
+            return;
+          }
         }
 
         let cashbackGanho = 0;
@@ -2018,6 +2035,35 @@
           return;
         }
 
+        // VERIFICAÇÃO DE DIVERGÊNCIA COM O FORNECEDOR
+        const { data: desbloqueios } = await _supabase
+          .from('desbloqueios')
+          .select('*')
+          .eq('festa_id', itemSelecionadoId);
+
+        let existeDivergencia = false;
+        if (desbloqueios && desbloqueios.length > 0) {
+          for (let d of desbloqueios) {
+            if (d.status_fechamento && d.status_fechamento !== statusNegocio) {
+              existeDivergencia = true;
+              break;
+            }
+          }
+        }
+
+        if (existeDivergencia) {
+          exibirModalAviso(
+            "⚠️ Informações Divergentes",
+            `Não foi possível concluir sua avaliação. Há registros de fornecedores com informações divergentes da sua resposta quanto ao fechamento do contrato. Por favor, entre em contato com nosso suporte para regularizar.`,
+            "Falar com o Suporte",
+            function() {
+              toggleChatWidget();
+              abrirFormularioSuporteSuporte();
+            }
+          );
+          return;
+        }
+
         // Marcar festa como concluída no banco
         await _supabase.from('festas').update({
           concluida: true,
@@ -2027,12 +2073,7 @@
           comentario_avaliacao: comentario
         }).eq('id', itemSelecionadoId);
 
-        // Atualizar média de avaliações do fornecedor que atendeu a festa (se houver desbloqueio)
-        const { data: desbloqueios } = await _supabase
-          .from('desbloqueios')
-          .select('fornecedor_id')
-          .eq('festa_id', itemSelecionadoId);
-
+        // Atualizar média de avaliações dos fornecedores vinculados
         if (desbloqueios && desbloqueios.length > 0) {
           const notaMediaAvaliacao = (nota1 + nota2) / 2;
           for (let d of desbloqueios) {
