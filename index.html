@@ -1915,7 +1915,6 @@
       selectSelect.innerHTML = '<option value="">Carregando opções...</option>';
 
       if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
-        // FORNECEDOR
         subtituloAvaliacao.innerText = "Confirme se a negociação foi concluída. Caso não feche, você recebe exatos 50% dos créditos comprados de volta!";
         labelSelecione.innerText = "Selecione a Oportunidade / Festa *";
         labelStarAtendimento.innerText = "Nota de Comunicação com o Cliente *";
@@ -1927,11 +1926,12 @@
           <option value="nao_fechado">❌ Não Fechamos Negócio (Ganhe 50% de Cashback em Créditos Comprados)</option>
         `;
 
+        // Filtra apenas oportunidades que NENHUMA avaliação/divergência foi registrada ainda
         const { data: desbloqueios } = await _supabase
           .from('desbloqueios')
           .select('id, festa_id, avaliado_pelo_fornecedor, festas(id, servico, tema, nome_pai, bairro)')
           .eq('fornecedor_id', usuarioAtual.id)
-          .or('avaliado_pelo_fornecedor.is.null,avaliado_pelo_fornecedor.eq.false');
+          .eq('avaliado_pelo_fornecedor', false);
 
         selectSelect.innerHTML = '';
         if (!desbloqueios || desbloqueios.length === 0) {
@@ -1947,9 +1947,8 @@
         }
 
       } else {
-        // PAIS / CONTRATANTES
         subtituloAvaliacao.innerText = "Confirme se a negociação foi concluída e avalie o atendimento prestado pelo fornecedor.";
-        labelSelecione.innerText = "Selecione o Fornecedor Contratado *";
+        labelSelecione.innerText = "Selecione a Oportunidade *";
         labelStarAtendimento.innerText = "Nota de Atendimento *";
         labelStarServico.innerText = "Nota da Prestação do Serviço *";
         if (grupoComentario) grupoComentario.style.display = 'block';
@@ -1959,6 +1958,7 @@
           <option value="nao_fechado">❌ Não Fechamos Negócio</option>
         `;
 
+        // Filtra apenas festas ativas do contratante
         const { data: minhasFestas } = await _supabase
           .from('festas')
           .select('id, servico, tema')
