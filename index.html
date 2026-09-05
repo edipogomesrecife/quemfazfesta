@@ -1082,7 +1082,7 @@
           <p>Nenhuma disposição desta política pretende excluir ou limitar direitos ou responsabilidades que não possam ser afastados pela legislação aplicável. As limitações devem ser interpretadas dentro dos limites permitidos pela lei.</p>
 
           <h2>Indisponibilidade e terceiros</h2>
-          <p>Serviços de terceiros, como provedores de hospedagem, mensageria, pagamentos ou infraestrutura, podem sofrer indisponibilidades. A plataforma adotará medidas razoáveis para continuidade e segurança, sem garantir disponibilidade ininterrupta.</p>
+          <p>Serviços de terceiros, como provedores de hospedagem, mensageria, pagamentos ou infraestrutura, podem sofrer indisponividades. A plataforma adotará medidas razoáveis para continuidade e segurança, sem garantir disponibilidade ininterrupta.</p>
 
           <h2>Prevenção de riscos</h2>
           <p>Usuários devem manter credenciais seguras, desconfiar de solicitações incomuns, confirmar identidade e condições comerciais e formalizar contratações por escrito.</p>
@@ -2009,11 +2009,18 @@
         if (desbloqueio.festas && desbloqueio.festas.status_fechamento) {
           const statusContratante = desbloqueio.festas.status_fechamento;
           if (statusContratante && statusContratante !== statusNegocio) {
+            // Registra a divergência e retira do fluxo de pendências do fornecedor
+            await _supabase.from('desbloqueios').update({
+              avaliado_pelo_fornecedor: true,
+              status_fechamento: 'divergente'
+            }).eq('id', itemSelecionadoId);
+
             exibirModalAviso(
               "⚠️ Informações Divergentes",
-              `Não foi possível concluir sua avaliação. O contratante registrou que o contrato foi <strong>${statusContratante === 'fechado' ? 'FECHADO' : 'NÃO FECHADO'}</strong>, o que diverge da sua resposta. Por favor, entre em contato com nosso suporte para verificar este caso.`,
+              `O contratante registrou que o contrato foi <strong>${statusContratante === 'fechado' ? 'FECHADO' : 'NÃO FECHADO'}</strong>, o que diverge do seu registro. O caso foi enviado para análise do suporte e retirado do seu painel de pendências.`,
               "Falar com o Suporte",
               function() {
+                trocarAba('historico-concluidas');
                 toggleChatWidget();
                 abrirFormularioSuporteSuporte();
               }
@@ -2023,7 +2030,7 @@
         }
 
         let cashbackGanho = 0;
-        if (statusNegocio === 'nao_fechado' && desbloqueio.creditos_gastos > 0) {
+        if (statusNegocio === 'nao_fechado' && desbloqueio.creditos_gastos > 0 && !desbloqueio.avaliado_pelo_fornecedor) {
           cashbackGanho = Math.floor(desbloqueio.creditos_gastos * 0.5);
           if (cashbackGanho > 0) {
             const novoSaldo = Number(usuarioAtual.saldo_creditos || 0) + cashbackGanho;
@@ -2078,11 +2085,19 @@
         }
 
         if (existeDivergencia) {
+          // Encerra a festa e registra divergência para evitar reutilização contínua
+          await _supabase.from('festas').update({
+            concluida: true,
+            status_fechamento: 'divergente',
+            comentario_avaliacao: 'Conflito de informações registrado pelo sistema'
+          }).eq('id', itemSelecionadoId);
+
           exibirModalAviso(
             "⚠️ Informações Divergentes",
-            `Não foi possível concluir sua avaliação. Há registros de fornecedores com informações divergentes da sua resposta quanto ao fechamento do contrato. Por favor, entre em contato com nosso suporte para regularizar.`,
+            `Identificamos uma divergência de informações entre o contratante e o fornecedor. A festa foi arquivada e encaminhada para verificação do suporte.`,
             "Falar com o Suporte",
             function() {
+              trocarAba('historico-concluidas');
               toggleChatWidget();
               abrirFormularioSuporteSuporte();
             }
@@ -2155,7 +2170,10 @@
 
         concluidos.forEach(item => {
           const f = item.festas;
-          const statusTxt = item.status_fechamento === 'fechado' ? '✅ Negócio Fechado' : '❌ Não Fechado';
+          let statusTxt = '✅ Negócio Fechado';
+          if (item.status_fechamento === 'nao_fechado') statusTxt = '❌ Não Fechado';
+          if (item.status_fechamento === 'divergente') statusTxt = '⚠️ Em Análise (Divergente)';
+
           container.innerHTML += `
             <div class="festa-card">
               <div class="festa-header"><span class="tag-servico">${f ? f.servico : 'Serviço'}</span></div>
@@ -2182,7 +2200,10 @@
         }
 
         festasConcluidas.forEach(f => {
-          const statusTxt = f.status_fechamento === 'fechado' ? '✅ Negócio Fechado' : '❌ Não Fechado';
+          let statusTxt = '✅ Negócio Fechado';
+          if (f.status_fechamento === 'nao_fechado') statusTxt = '❌ Não Fechado';
+          if (f.status_fechamento === 'divergente') statusTxt = '⚠️ Em Análise (Divergente)';
+
           container.innerHTML += `
             <div class="festa-card">
               <div class="festa-header"><span class="tag-servico">${f.servico}</span></div>
