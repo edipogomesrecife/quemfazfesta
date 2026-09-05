@@ -1977,7 +1977,7 @@
       }
     }
 
-    /* Processar Envio do Formulário de Avaliação e Confirmação com Validação de Divergência */
+    /* Processar Envio do Formulário de Avaliação e Confirmação com Correção de Cashback */
     document.getElementById('formConfirmacaoAvaliacao').addEventListener('submit', async function(e) {
       e.preventDefault();
 
@@ -1994,7 +1994,7 @@
 
       try {
         if (usuarioAtual && usuarioAtual.tipo === 'fornecedor') {
-          // LÓGICA DO FORNECEDOR
+          // 1. BUSCA O DESBLOQUEIO E A FESTA VINCULADA
           const { data: desbloqueio, error: fetchErr } = await _supabase
             .from('desbloqueios')
             .select('*, festas(*)')
@@ -2007,17 +2007,28 @@
             return;
           }
 
-          // VERIFICAÇÃO DE DIVERGÊNCIA COM O CONTRATANTE
+          // 2. VERIFICAÇÃO DE DIVERGÊNCIA COM O CONTRATANTE
           if (desbloqueio.festas && desbloqueio.festas.status_fechamento) {
             const statusContratante = desbloqueio.festas.status_fechamento;
-            if (statusContratante && statusContratante !== statusNegocio) {
-              // REGISTRA A DIVERGÊNCIA NO BANCO PARA REMOVER DA LISTA PENDENTE E BLOQUEAR CASHBACK
-              const { error: updError } = await _supabase.from('desbloqueios').update({
+            
+            // Se o contratante avaliou diferente de 'divergente' e diferente da resposta do fornecedor
+            if (statusContratante && statusContratante !== 'divergente' && statusContratante !== statusNegocio) {
+              const dadosDivergencia = {
                 avaliado_pelo_fornecedor: true,
                 status_fechamento: 'divergente',
                 nota_comunicacao: nota1,
                 nota_clareza: nota2
-              }).eq('id', itemSelecionadoId);
+              };
+
+              let { error: updError } = await _supabase.from('desbloqueios').update(dadosDivergencia).eq('id', itemSelecionadoId);
+
+              if (updError && (updError.message.includes("nota_clareza") || updError.message.includes("nota_comunicacao") || updError.message.includes("status_fechamento"))) {
+                delete dadosDivergencia.nota_clareza;
+                delete dadosDivergencia.nota_comunicacao;
+                delete dadosDivergencia.status_fechamento;
+                const retry = await _supabase.from('desbloqueios').update(dadosDivergencia).eq('id', itemSelecionadoId);
+                updError = retry.error;
+              }
 
               if (updError) {
                 console.error("Erro ao salvar divergência no Supabase:", updError);
@@ -2039,24 +2050,40 @@
             }
           }
 
-          // CALCULA CASHBACK APENAS SE NÃO HOUVER DIVERGÊNCIA E O STATUS FOR 'NAO_FECHADO'
+          // 3. CÁLCULO E CONCESSÃO DO CASHBACK (EXECUTADO QUANDO NÃO HÁ DIVERGÊNCIA)
           let cashbackGanho = 0;
-          if (statusNegocio === 'nao_fechado' && desbloqueio.creditos_gastos > 0 && !desbloqueio.avaliado_pelo_fornecedor) {
-            cashbackGanho = Math.floor(desbloqueio.creditos_gastos * 0.5);
+          if (statusNegocio === 'nao_fechado' && Number(desbloqueio.creditos_gastos || 0) > 0) {
+            cashbackGanho = Math.floor(Number(desbloqueio.creditos_gastos) * 0.5);
             if (cashbackGanho > 0) {
               const novoSaldo = Number(usuarioAtual.saldo_creditos || 0) + cashbackGanho;
+              
+              // Atualiza saldo no banco de dados
               await _supabase.from('profiles').update({ saldo_creditos: novoSaldo }).eq('id', usuarioAtual.id);
+              
+              // Atualiza saldo local
               usuarioAtual.saldo_creditos = novoSaldo;
               atualizarExibicaoSaldo();
             }
           }
 
-          const { error: updErrorNormal } = await _supabase.from('desbloqueios').update({
+          // 4. ATUALIZA O REGISTRO DO DESBLOQUEIO COMO AVALIADO
+          const dadosSucessoFornecedor = {
             avaliado_pelo_fornecedor: true,
             status_fechamento: statusNegocio,
             nota_comunicacao: nota1,
             nota_clareza: nota2
-          }).eq('id', itemSelecionadoId);
+          };
+
+          let { error: updErrorNormal } = await _supabase.from('desbloqueios').update(dadosSucessoFornecedor).eq('id', itemSelecionadoId);
+
+          // Fallback para caso as colunas não existam no banco
+          if (updErrorNormal && (updErrorNormal.message.includes("nota_clareza") || updErrorNormal.message.includes("nota_comunicacao") || updErrorNormal.message.includes("status_fechamento"))) {
+            delete dadosSucessoFornecedor.nota_clareza;
+            delete dadosSucessoFornecedor.nota_comunicacao;
+            delete dadosSucessoFornecedor.status_fechamento;
+            const retry = await _supabase.from('desbloqueios').update(dadosSucessoFornecedor).eq('id', itemSelecionadoId);
+            updErrorNormal = retry.error;
+          }
 
           if (updErrorNormal) {
             console.error("Erro ao atualizar desbloqueio:", updErrorNormal);
@@ -2094,29 +2121,40 @@
           let existeDivergencia = false;
           if (desbloqueios && desbloqueios.length > 0) {
             for (let d of desbloqueios) {
-              if (d.status_fechamento && d.status_fechamento !== statusNegocio) {
+              if (d.status_fechamento && d.status_fechamento !== 'divergente' && d.status_fechamento !== statusNegocio) {
                 existeDivergencia = true;
                 break;
               }
             }
           }
 
+          // Objeto de atualização base da festa
+          const dadosAtualizacaoFesta = {
+            concluida: true,
+            status_fechamento: existeDivergencia ? 'divergente' : statusNegocio,
+            nota_atendimento: nota1,
+            nota_servico: nota2
+          };
+
+          if (comentario) {
+            dadosAtualizacaoFesta.comentario_avaliacao = comentario;
+          }
+
+          let { error: updFestaNormalErr } = await _supabase.from('festas').update(dadosAtualizacaoFesta).eq('id', itemSelecionadoId);
+
+          if (updFestaNormalErr && updFestaNormalErr.message.includes("comentario_avaliacao")) {
+            delete dadosAtualizacaoFesta.comentario_avaliacao;
+            const retry = await _supabase.from('festas').update(dadosAtualizacaoFesta).eq('id', itemSelecionadoId);
+            updFestaNormalErr = retry.error;
+          }
+
+          if (updFestaNormalErr) {
+            console.error("Erro ao atualizar festa:", updFestaNormalErr);
+            exibirModalAviso("⚠️ Erro no Supabase", updFestaNormalErr.message);
+            return;
+          }
+
           if (existeDivergencia) {
-            // ENCERRA A FESTA E REGISTRA DIVERGÊNCIA NO BANCO PARA REMOVER DAS PENDÊNCIAS DO PAI
-            const { error: updFestaErr } = await _supabase.from('festas').update({
-              concluida: true,
-              status_fechamento: 'divergente',
-              nota_atendimento: nota1,
-              nota_servico: nota2,
-              comentario_avaliacao: 'Conflito de informações registrado pelo sistema'
-            }).eq('id', itemSelecionadoId);
-
-            if (updFestaErr) {
-              console.error("Erro ao salvar divergência da festa:", updFestaErr);
-              exibirModalAviso("⚠️ Erro de Salvamento", updFestaErr.message);
-              return;
-            }
-
             exibirModalAviso(
               "⚠️ Informações Divergentes",
               `Identificamos uma divergência de informações entre o contratante e o fornecedor. A festa foi arquivada e encaminhada para verificação do suporte.`,
@@ -2127,21 +2165,6 @@
                 abrirFormularioSuporteSuporte();
               }
             );
-            return;
-          }
-
-          // Marcar festa como concluída no banco normalmente
-          const { error: updFestaNormalErr } = await _supabase.from('festas').update({
-            concluida: true,
-            status_fechamento: statusNegocio,
-            nota_atendimento: nota1,
-            nota_servico: nota2,
-            comentario_avaliacao: comentario
-          }).eq('id', itemSelecionadoId);
-
-          if (updFestaNormalErr) {
-            console.error("Erro ao atualizar festa:", updFestaNormalErr);
-            exibirModalAviso("⚠️ Erro no Supabase", updFestaNormalErr.message);
             return;
           }
 
